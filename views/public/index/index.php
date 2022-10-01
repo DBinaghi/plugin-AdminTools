@@ -1,3 +1,4 @@
+<title><?php echo __('Maintenance Mode'); ?></title>
 
 <style>
 	#maintenance_outer {
