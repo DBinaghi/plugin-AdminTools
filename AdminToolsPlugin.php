@@ -8,7 +8,10 @@ class AdminToolsPlugin extends Omeka_Plugin_AbstractPlugin
 		'initialize',
 		'config',
 		'config_form',
-		'admin_footer'
+		'admin_footer', 
+		'public_head',
+		'public_footer',
+		'neatline_public_static'
 	);
 
 	protected $_filters = array(
@@ -33,6 +36,10 @@ class AdminToolsPlugin extends Omeka_Plugin_AbstractPlugin
 		set_option('admin_tools_usermanual_url', '');
 		set_option('admin_tools_usermanual_label', 'User manual');
 		set_option('admin_tools_usermanual_link_positions', '');
+		set_option('admin_tools_cookiebar_active', 0);
+		set_option('admin_tools_cookiebar_text', 'We use cookies to track usage of this project.');
+		set_option('admin_tools_cookiebar_position', 'top');
+		set_option('admin_tools_cookiebar_policy_url', '');
 		set_option('admin_tools_limit_visibility_to_own_items_roles', '');
 		set_option('admin_tools_limit_visibility_to_own_collections_roles', '');
 		set_option('admin_tools_limit_visibility_to_own_exhibits_roles', '');
@@ -49,6 +56,10 @@ class AdminToolsPlugin extends Omeka_Plugin_AbstractPlugin
 		delete_option('admin_tools_usermanual_url');
 		delete_option('admin_tools_usermanual_label');
 		delete_option('admin_tools_usermanual_link_positions');
+		delete_option('admin_tools_cookiebar_active');
+		delete_option('admin_tools_cookiebar_text');
+		delete_option('admin_tools_cookiebar_position');
+		delete_option('admin_tools_cookiebar_policy_url');
 		delete_option('admin_tools_limit_visibility_to_own_items_roles');
 		delete_option('admin_tools_limit_visibility_to_own_collections_roles');
 		delete_option('admin_tools_limit_visibility_to_own_exhibits_roles');
@@ -74,6 +85,10 @@ class AdminToolsPlugin extends Omeka_Plugin_AbstractPlugin
 		set_option('admin_tools_usermanual_url',							$post['admin_tools_usermanual_url']);
 		set_option('admin_tools_usermanual_label',							$post['admin_tools_usermanual_label']);
 		set_option('admin_tools_usermanual_link_positions',					(isset($post['admin_tools_usermanual_link_positions']) ? serialize($post['admin_tools_usermanual_link_positions']) : ''));
+		set_option('admin_tools_cookiebar_active',							$post['admin_tools_cookiebar_active']);
+		set_option('admin_tools_cookiebar_text',							$post['admin_tools_cookiebar_text']);
+		set_option('admin_tools_cookiebar_position',						$post['admin_tools_cookiebar_position']);
+		set_option('admin_tools_cookiebar_policy_url',						$post['admin_tools_cookiebar_policy_url']);
 		set_option('admin_tools_limit_visibility_to_own_items_roles',		(isset($post['admin_tools_limit_visibility_to_own_items_roles']) ? serialize($post['admin_tools_limit_visibility_to_own_items_roles']) : ''));
 		set_option('admin_tools_limit_visibility_to_own_collections_roles',	(isset($post['admin_tools_limit_visibility_to_own_collections_roles']) ? serialize($post['admin_tools_limit_visibility_to_own_collections_roles']) : ''));
 		set_option('admin_tools_limit_visibility_to_own_exhibits_roles',	(isset($post['admin_tools_limit_visibility_to_own_exhibits_roles']) ? serialize($post['admin_tools_limit_visibility_to_own_exhibits_roles']) : ''));
@@ -99,6 +114,37 @@ class AdminToolsPlugin extends Omeka_Plugin_AbstractPlugin
 			}
 		}
 	}
+
+    public function hookPublicHead() {
+        if ((bool)get_option('admin_tools_cookiebar_active')) {
+			queue_js_file('vendor/jquery.cookiebar');    
+			queue_css_file('vendor/jquery.cookiebar');
+		}
+    }
+
+    public function hookPublicFooter() {
+		if ((bool)get_option('admin_tools_cookiebar_active')) {
+			echo get_view()->partial('cookie_bar.php', array(
+				'message' => get_option('admin_tools_cookiebar_text'),
+				'policyButton' => (bool)(get_option('admin_tools_cookiebar_policy_url') != ''),
+				'policyURL' => get_option('admin_tools_cookiebar_policy_url'),
+				'bottom' => (get_option('admin_tools_cookiebar_position') == 'bottom' ? 1 : 0)				
+			));
+		}
+    }
+
+    public function hookNeatlinePublicStatic($exhibit){
+		if ((bool)get_option('admin_tools_cookiebar_active')) {
+			queue_js_file('vendor/jquery.cookiebar');
+			queue_css_file('vendor/jquery.cookiebar');
+			echo get_view()->partial('cookie_bar.php', array(
+				'message' => get_option('admin_tools_cookiebar_text'),
+				'policyButton' => (bool)(get_option('admin_tools_cookiebar_policy_url') != ''),
+				'policyURL' => get_option('admin_tools_cookiebar_policy_url'),
+				'bottom' => (get_option('admin_tools_cookiebar_position') == 'bottom' ? 1 : 0)				
+			));
+		}
+    }
 
 	public function filterItemsBrowseParams($params)
 	{
