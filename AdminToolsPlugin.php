@@ -130,7 +130,7 @@
 			if ((bool)get_option('admin_tools_cookiebar_active')) {
 				echo get_view()->partial('cookie_bar.php', array(
 					'message' => get_option('admin_tools_cookiebar_text'),
-					'policyButton' => (bool)(get_option('admin_tools_cookiebar_policy_url') != ''),
+					'policyButton' => (get_option('admin_tools_cookiebar_policy_url') != '' ? 1 : 0),
 					'policyURL' => get_option('admin_tools_cookiebar_policy_url'),
 					'bottom' => (get_option('admin_tools_cookiebar_position') == 'bottom' ? 1 : 0)				
 				));
@@ -143,7 +143,7 @@
 				queue_css_file('vendor/jquery.cookiebar');
 				echo get_view()->partial('cookie_bar.php', array(
 					'message' => get_option('admin_tools_cookiebar_text'),
-					'policyButton' => (bool)(get_option('admin_tools_cookiebar_policy_url') != ''),
+					'policyButton' => (get_option('admin_tools_cookiebar_policy_url') != '' ? 1 : 0),
 					'policyURL' => get_option('admin_tools_cookiebar_policy_url'),
 					'bottom' => (get_option('admin_tools_cookiebar_position') == 'bottom' ? 1 : 0)				
 				));
