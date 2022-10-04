@@ -311,7 +311,7 @@
 			<label><?php echo __('Download Backup')?></label>	
 		</div>
 		<div class="inputs five columns omega">
-			<p class="explanation"><?php echo __('If checked, the backup SQL file will be downloadable (by default, it sits the Omeka\'s File directory).'); ?></p>
+			<p class="explanation"><?php echo __('If checked, the backup SQL file will be downloadable (by default, it sits the Omeka\'s Files directory).'); ?></p>
 			<?php echo $view->formCheckbox('admin_tools_backup_download', get_option('admin_tools_backup_download'), null, array('1', '0')); ?>
 		</div>
 	</div>
