@@ -11,12 +11,12 @@
 				if ($controller != 'users' || ($action != 'login' && $action != 'logout')) {
 					if (empty($user))  {
 						$request->setModuleName('admin-tools');
-						$request->setControllerName('index');
-						$request->setActionName('index');
+						$request->setControllerName('maintenance');
+						$request->setActionName('maintenance');
 					} elseif ((bool)get_option('admin_tools_maintenance_scope_extended') && !in_array($user->role, array('admin','super'))) {
 						$request->setModuleName('admin-tools');
-						$request->setControllerName('index');
-						$request->setActionName('index');
+						$request->setControllerName('maintenance');
+						$request->setActionName('maintenance');
 					}
 				}
 			}
