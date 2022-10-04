@@ -10,6 +10,8 @@ Plugin for Omeka Classic. Reunites several minor plugins and code snippets to gi
 - Public Edit Link: adds a edit link to Items/Collections/Exhibits/Files/Simple Pages to Public interface for logged-in users.
 - Database Backup: creates a backup copy of the Omeka database, storing it locally and also making it available for download.
 
+When installed, the plugin creates a Admin Tools page accessible to Super User from the Admin navigation sidebar; the page allows to put the website in maintenance mode, to clear the languages cache and to create a backup copy of Omeka's database. The plugin's configuration page lets fine tune this functions, plus many other ones.
+
 
 ## Installation
 Uncompress files and rename plugin folder "AdminTools".
