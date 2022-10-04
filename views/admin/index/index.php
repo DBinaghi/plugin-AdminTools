@@ -1,60 +1,57 @@
-<title><?php echo __('Maintenance Mode'); ?></title>
-
-<style>
-	#maintenance_outer {
-		display: table;
-		position: absolute;
-		top: 0;
-		left: 0;
-		height: 100%;
-		width: 100%;
+<?php
+	$head = array(
+		'bodyclass' => 'admin-tools index',
+		'title' => html_escape(__('Admin Tools')),
+		'content_class' => 'horizontal-nav'
+	);
+	if (isset($_GET['view'])) {
+		$active = $_GET['view'];
 	}
+	echo head($head);
+?>
 
-	#maintenance_middle {
-		display: table-cell;
-		vertical-align: middle;
+<?php
+	if (get_option('admin_tools_maintenance_active')) {
+		$sumOperation = 'disable';
+		$sumLabel = __('Stop Maintenance');
+		$sumColor = 'red';
+	} else {
+		$sumOperation = 'enable';
+		$sumLabel = __('Start Maintenance');
+		$sumColor = 'green';
 	}
+?>
 
-	#maintenance_inner {
-		margin-left: auto;
-		margin-right: auto;
-		width: 75%;
-		max-width: 800px;
-		padding: 20px; 
-		border: 2px solid black; 
-		border-radius: 10px; 
-		background-color: lightyellow;
-	}
+<?php echo flash(); ?>
 
-	.maintenance_text {
-		text-align: left; 
-		font: 32px Helvetica, sans-serif; 
-	}
-
-	.maintenance_text h1 {
-		font-size: 1.5em; 
-		margin: 0;
-	}
-
-	.maintenance_text h2 {
-		font-size: 0.8em; 
-		margin-bottom: 20px;
-		border-bottom: 2px solid black;
-		text-align: right;
-		font-style: italic;
-	}
-
-	.centered {
-		text-align: center;
-	}
-</style>
-
-<div id="maintenance_outer">
-	<div id="maintenance_middle">
-		<div id="maintenance_inner" class="maintenance_text">
-			<h2><?php echo get_option('site_title'); ?></h2>
-			<h1 class="centered"><?php echo get_option('admin_tools_maintenance_title'); ?></h1>
-			<p><?php echo get_option('admin_tools_maintenance_message'); ?> </p>
-		</div>
+<div class="field">
+	<div id="SUM-label" class="two columns alpha">
+		<label for="SUM"><?php echo __('Site Under Maintenance'); ?></label>
+	</div>
+	<div class="inputs five columns omega">
+		<p class="explanation"><?php echo __('Block out from Public interface not-logged in users (and also from Admin interface some logged-in users), displaying instead an "Under Maintenance" sign.'); ?></p>
+		<a id="SUM" class="add-page button <?php echo $sumColor; ?>" href="?op=SUM-<?php echo $sumOperation; ?>"><?php echo $sumLabel; ?></a>
 	</div>
 </div>
+
+<div class="field">
+	<div id="RC-label" class="two columns alpha">
+		<label for="RC"><?php echo __('Languages Cache'); ?></label>
+	</div>
+	<div class="inputs five columns omega">
+		<p class="explanation"><?php echo __('Reset all translations after language files have been changed manually.'); ?></p>
+		<a id="RC" class="add-page button green" href="?op=RC"><?php echo __('Reset Cache'); ?></a>
+	</div>
+</div>
+
+<div class="field">
+	<div id="BD-label" class="two columns alpha">
+		<label for="BD"><?php echo __('Database Backup'); ?></label>
+	</div>
+	<div class="inputs five columns omega">
+		<p class="explanation"><?php echo __('Backup the entire Omeka database into an SQL file and download it.'); ?></p>
+		<a id="BD" class="add-page button green" href="<?php echo ADMIN_TOOLS_BACKUP_FILENAME; ?>?op=BD" download="<?php echo 'OmekaDB-backup_' . date('Ymd_His') . '.sql' ?>"><?php echo __('Backup Dababase'); ?></a>
+	</div>
+</div>
+
+<?php echo foot(); ?>
