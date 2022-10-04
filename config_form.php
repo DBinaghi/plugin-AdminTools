@@ -42,22 +42,11 @@
 	<li><a href="#tab3"><?php echo __('Cookie Bar'); ?></a></li>
 	<li><a href="#tab4"><?php echo __('Limit Visibility'); ?></a></li>
 	<li><a href="#tab5"><?php echo __('Edit Link'); ?></a></li>
+	<li><a href="#tab6"><?php echo __('Backup'); ?></a></li>
 </ul>
 
-<div id="tab1" style="height: 1%; border: 1px solid #d8d8d8; padding: 10px 15px;">
-	<h2><?php echo __('Site under Maintenance') ?></h2>
-
-	<div class="field">
-		<div class="two columns alpha">
-			<?php echo $view->formLabel('admin_tools_maintenance_active', __('Maintenance Mode Active')); ?>
-		</div>
-		<div class="inputs five columns omega">
-			<p class="explanation">
-				<?php echo __('If checked, maintenance mode will be active.'); ?>
-			</p>
-			<?php echo $view->formCheckbox('admin_tools_maintenance_active', get_option('admin_tools_maintenance_active'), null, array('1', '0')); ?>
-		</div>
-	</div>
+<div id="tab1" style="height: 1%; border: 1px solid #d8d8d8; padding: 15px 15px;">
+	<h2><?php echo __('Site Under Maintenance') ?></h2>
 
 	<div class="field">
 		<div class="two columns alpha">
@@ -93,7 +82,7 @@
 
 	<div class="field">
 		<div class="two columns alpha">
-			<?php echo $view->formLabel('admin_tools_maintenance_scope_extended', __('Scope Extended')); ?>
+			<?php echo $view->formLabel('admin_tools_maintenance_scope_extended', __('Extend Scope')); ?>
 		</div>
 		<div class="inputs five columns omega">
 			<p class="explanation">
@@ -106,7 +95,7 @@
 	<div>&nbsp;</div>
 </div>
 
-<div id="tab2" style="height: 1%; border: 1px solid #d8d8d8; padding: 10px 15px;">
+<div id="tab2" style="height: 1%; border: 1px solid #d8d8d8; padding: 15px 15px;">
 	<h2><?php echo __('User Manual'); ?></h2>
 
 	<div class="field">
@@ -160,7 +149,7 @@
 	<div>&nbsp;</div>
 </div>
 
-<div id="tab3" style="height: 1%; border: 1px solid #d8d8d8; padding: 10px 15px;">
+<div id="tab3" style="height: 1%; border: 1px solid #d8d8d8; padding: 15px 15px;">
 	<h2><?php echo __('Cookie Bar'); ?></h2>
 	
 	<div class="field">
@@ -214,7 +203,7 @@
 	<div>&nbsp;</div>
 </div>
 
-<div id="tab4" style="height: 1%; border: 1px solid #d8d8d8; padding: 10px 15px;">
+<div id="tab4" style="height: 1%; border: 1px solid #d8d8d8; padding: 15px 15px;">
 	<h2><?php echo __('Limit Visibility to Own') ?></h2>
 
 	<div class="field">
@@ -222,7 +211,7 @@
 			<label><?php echo __('Limited Roles')?></label>	
 		</div>
 		<div class="inputs five columns omega">
-			<p class="explanation"><?php echo __("Roles allowed to see only their own records (in Admin mode). Please note that Super User's role cannot be limited."); ?></p>
+			<p class="explanation"><?php echo __('Roles allowed to see only their own records (in Admin mode). Please note that Super User\'s role cannot be limited.'); ?></p>
 
 			<table id="facets_elements-table">
 				<thead>
@@ -273,7 +262,7 @@
 	<div>&nbsp;</div>
 </div>
 
-<div id="tab5" style="height: 1%; border: 1px solid #d8d8d8; padding: 10px 15px;">
+<div id="tab5" style="height: 1%; border: 1px solid #d8d8d8; padding: 15px 15px;">
 	<h2><?php echo __('Public Edit Link') ?></h2>
 
 	<div class="field">
@@ -281,7 +270,7 @@
 			<label><?php echo __('Content Types')?></label>	
 		</div>
 		<div class="inputs five columns omega">
-			<p class="explanation"><?php echo __("Content types for which a link will be added to the public UI for quick editing (only when user is logged in)."); ?></p>
+			<p class="explanation"><?php echo __('Content types for which a link will be added to the public UI for quick editing (only when user is logged in).'); ?></p>
 
 			<?php
 				$contentTypes = array('Items', 'Collections', 'Exhibits', 'Files', 'Simple Pages');
@@ -306,8 +295,24 @@
 			<label><?php echo __('Open in New Tab')?></label>	
 		</div>
 		<div class="inputs five columns omega">
-			<p class="explanation"><?php echo __("If checked, opens editing page in new tab (recommended)."); ?></p>
+			<p class="explanation"><?php echo __('If checked, opens editing page in new tab (recommended).'); ?></p>
 			<?php echo $view->formCheckbox('admin_tools_public_edit_link_blank', get_option('admin_tools_public_edit_link_blank'), null, array('1', '0')); ?>
+		</div>
+	</div>
+	
+	<div>&nbsp;</div>
+</div>
+
+<div id="tab6" style="height: 1%; border: 1px solid #d8d8d8; padding: 15px 15px;">
+	<h2><?php echo __('Database Backup') ?></h2>
+
+	<div class="field">
+		<div class="two columns alpha">
+			<label><?php echo __('Download Backup')?></label>	
+		</div>
+		<div class="inputs five columns omega">
+			<p class="explanation"><?php echo __('If checked, the backup SQL file will be downloadable (by default, it sits the Omeka\'s File directory).'); ?></p>
+			<?php echo $view->formCheckbox('admin_tools_backup_download', get_option('admin_tools_backup_download'), null, array('1', '0')); ?>
 		</div>
 	</div>
 	
