@@ -1,0 +1,303 @@
+# Translation for the Admin Tools plugin for Omeka.
+# Copyright (C) 2022 Daniele Binaghi
+# This file is distributed under the same license as the Omeka package.
+# Daniele Binaghi <admin@bitoteko.it>, 2022
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Admin Tools\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-10-04 18:54+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: AdminToolsPlugin.php:116
+#: AdminToolsPlugin.php:222
+#: AdminToolsPlugin.php:260
+msgid "User Manual"
+msgstr ""
+
+#: AdminToolsPlugin.php:232
+#: AdminToolsPlugin.php:302
+msgid "** Maintenance Mode Active **"
+msgstr ""
+
+#: AdminToolsPlugin.php:247
+#: index.php:4
+msgid "Admin Tools"
+msgstr ""
+
+#: AdminToolsPlugin.php:322
+msgid "Edit"
+msgstr ""
+
+#: index.php:4
+msgid "Admin Tools"
+msgstr ""
+
+#: index.php:16
+msgid "Stop Maintenance"
+msgstr ""
+
+#: index.php:20
+msgid "Start Maintenance"
+msgstr ""
+
+#: index.php:29
+msgid "Site Under Maintenance"
+msgstr ""
+
+#: index.php:32
+msgid "Block out from Public interface not-logged in users (and also from Admin interface some logged-in users), displaying instead an \"Under Maintenance\" sign."
+msgstr ""
+
+#: index.php:39
+msgid "Languages Cache"
+msgstr ""
+
+#: index.php:42
+msgid "Reset all translations after language files have been changed manually."
+msgstr ""
+
+#: index.php:43
+msgid "Reset Cache"
+msgstr ""
+
+#: index.php:49
+msgid "Database Backup"
+msgstr ""
+
+#: index.php:52
+msgid "Backup the entire Omeka database into an SQL file and download it."
+msgstr ""
+
+#: index.php:53
+msgid "Backup Database"
+msgstr ""
+
+#: IndexController.php:12
+msgid "The website is online again."
+msgstr ""
+
+#: IndexController.php:16
+msgid "The \"Under Maintenance\" sign is on, and access to the website has been limited."
+msgstr ""
+
+#: IndexController.php:21
+msgid "The translations cache has been reset."
+msgstr ""
+
+#: IndexController.php:25
+msgid "A backup copy of the Omeka database has been created."
+msgstr ""
+
+#: maintenance.php:1
+msgid "Maintenance Mode"
+msgstr ""
+
+#: cookie_bar.php:5
+msgid "I understand"
+msgstr ""
+
+#: cookie_bar.php:7
+msgid "Privacy Policy"
+msgstr ""
+
+#: config_form.php:40
+msgid "Maintenance"
+msgstr ""
+
+#: config_form.php:41
+msgid "User Manual"
+msgstr ""
+
+#: config_form.php:42
+msgid "Cookie Bar"
+msgstr ""
+
+#: config_form.php:43
+msgid "Limit Visibility"
+msgstr ""
+
+#: config_form.php:44
+msgid "Edit Link"
+msgstr ""
+
+#: config_form.php:45
+msgid "Backup"
+msgstr ""
+
+#: config_form.php:49
+msgid "Site Under Maintenance"
+msgstr ""
+
+#: config_form.php:53
+msgid "Title"
+msgstr ""
+
+#: config_form.php:57
+msgid "The title of the message to display to visitors when the site is in maintenance mode."
+msgstr ""
+
+#: config_form.php:65
+msgid "Message"
+msgstr ""
+
+#: config_form.php:69
+msgid "The message to display to visitors when the site is in maintenance mode."
+msgstr ""
+
+#: config_form.php:85
+msgid "Extend Scope"
+msgstr ""
+
+#: config_form.php:89
+msgid "If checked, site will not be accessible even to logged-in users (excluding Super User and Admin roles)."
+msgstr ""
+
+#: config_form.php:99
+msgid "User Manual"
+msgstr ""
+
+#: config_form.php:103
+msgid "URL"
+msgstr ""
+
+#: config_form.php:107
+msgid "The URL of the user manual to be made available to logged-in users."
+msgstr ""
+
+#: config_form.php:115
+msgid "Label"
+msgstr ""
+
+#: config_form.php:119
+msgid "The label to be shown to logged-in users."
+msgstr ""
+
+#: config_form.php:127
+msgid "Link Position"
+msgstr ""
+
+#: config_form.php:131
+msgid "Choose where the user manual link should be displayed."
+msgstr ""
+
+#: config_form.php:134
+msgid "Sidebar"
+msgstr ""
+
+#: config_form.php:134
+msgid "Topbar"
+msgstr ""
+
+#: config_form.php:134
+msgid "Footer"
+msgstr ""
+
+#: config_form.php:153
+#: config_form.php:157
+msgid "Cookie Bar"
+msgstr ""
+
+#: config_form.php:161
+msgid "If checked, a cookie bar with a warning will be shown to visitors (public UI)."
+msgstr ""
+
+#: config_form.php:169
+msgid "Text"
+msgstr ""
+
+#: config_form.php:173
+msgid "The text to be shown in the cookie bar."
+msgstr ""
+
+#: config_form.php:181
+msgid "Position"
+msgstr ""
+
+#: config_form.php:185
+msgid "The position of the cookie bar."
+msgstr ""
+
+#: config_form.php:187
+msgid "Top of page"
+msgstr ""
+
+#: config_form.php:187
+msgid "Bottom of page"
+msgstr ""
+
+#: config_form.php:193
+msgid "Privacy Policy URL"
+msgstr ""
+
+#: config_form.php:197
+msgid "The URL of the Privacy Policy document for the website; if empty, no link will be shown."
+msgstr ""
+
+#: config_form.php:207
+msgid "Limit Visibility to Own"
+msgstr ""
+
+#: config_form.php:211
+msgid "Limited Roles"
+msgstr ""
+
+#: config_form.php:214
+msgid "Roles allowed to see only their own records (in Admin mode). Please note that Super User's role cannot be limited."
+msgstr ""
+
+#: config_form.php:219
+msgid "Role"
+msgstr ""
+
+#: config_form.php:220
+msgid "Item"
+msgstr ""
+
+#: config_form.php:221
+msgid "Collection"
+msgstr ""
+
+#: config_form.php:222
+msgid "Exhibit
+msgstr ""
+
+#: config_form.php:266
+msgid "Public Edit Link"
+msgstr ""
+
+#: config_form.php:270
+msgid "Content Types"
+msgstr ""
+
+#: config_form.php:273
+msgid "Content types for which a link will be added to the public UI for quick editing (only when user is logged in)."
+msgstr ""
+
+#: config_form.php:295
+msgid "Open in New Tab"
+msgstr ""
+
+#: config_form.php:298
+msgid "If checked, opens editing page in new tab (recommended)."
+msgstr ""
+
+#: config_form.php:307
+msgid "Database Backup"
+msgstr ""
+
+#: config_form.php:311
+msgid "Download Backup"
+msgstr ""
+
+#: config_form.php:311
+msgid "If checked, the backup SQL file will be downloadable (by default, it sits the Omeka's File directory)."
+msgstr ""
