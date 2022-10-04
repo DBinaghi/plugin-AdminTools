@@ -17,33 +17,6 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: index.php:4
-msgid "Admin Tools"
-msgstr ""
-
-#: index.php:44
-msgid "Stop Maintenance"
-msgstr "Interrompi manutenzione"
-
-#: index.php:48
-msgid "Start Maitenance"
-msgstr "Inizia manutenzione"
-
-#: index.php:57
-msgid "Site Under Maintenance"
-msgstr "Sito in manutenzione"
-
-#: index.php:60
-msgid "Block out from Public interface not-logged in users (and also from Admin interface some logged-in users), displaying instead an \"Under Maintenance\" sign."
-msgstr "Blocca l'accesso all'interfaccia pubblica agli utenti non collegati (e anche all'interfaccia amministrativa per alcuni utenti collegati), mostrando invece un cartello \"In manutenzione\"."
-
-#: index.php:67
-msgid "Languages Cache"
-msgstr "Cache traduzioni"
-
-#: index.php:70
-msgid "Reset all translations after language files have been changed manually."
-msgstr "Ripristina tutte le traduzioni dopo che i file di lingua sono stati modificati manualmente."
 
 #: index.php:71
 msgid "Reset Cache"
@@ -60,3 +33,272 @@ msgstr "Esegue una copia di backup dell'intera base dati Omeka in un file SQL e 
 #: index.php:81
 msgid "Backup Database"
 msgstr "Esegui backup"
+
+#: AdminToolsPlugin.php:116
+#: AdminToolsPlugin.php:222
+#: AdminToolsPlugin.php:260
+#: config_form.php:41
+#: config_form.php:99
+msgid "User Manual"
+msgstr "Manuale utente"
+
+#: AdminToolsPlugin.php:232
+#: AdminToolsPlugin.php:302
+msgid "** Maintenance Mode Active **"
+msgstr "** Modalità manutenzione attiva **"
+
+#: AdminToolsPlugin.php:247
+#: index.php:4
+msgid "Admin Tools"
+msgstr "Strumenti amministrativi"
+
+#: AdminToolsPlugin.php:322
+msgid "Edit"
+msgstr "Modifica"
+
+#: index.php:16
+msgid "Stop Maintenance"
+msgstr "Interrompi manutenzione"
+
+#: index.php:20
+msgid "Start Maintenance"
+msgstr "Avvia manutenzione"
+
+#: index.php:29
+#: config_form.php:49
+msgid "Site Under Maintenance"
+msgstr "Sito in manutenzione"
+
+#: index.php:32
+msgid "Block out from Public interface not-logged in users (and also from Admin interface some logged-in users), displaying instead an \"Under Maintenance\" sign."
+msgstr "Blocca l'accesso all'interfaccia pubblica agli utenti non collegati (e anche all'interfaccia amministrativa per alcuni utenti collegati), mostrando invece un cartello \"In manutenzione\"."
+
+#: index.php:39
+msgid "Languages Cache"
+msgstr "Cache traduzioni"
+
+#: index.php:42
+msgid "Reset all translations after language files have been changed manually."
+msgstr "Ripristina tutte le traduzioni dopo che uno o più file di lingua sono stati modificati manualmente."
+
+#: index.php:43
+msgid "Reset Cache"
+msgstr "Ripristina cache"
+
+#: index.php:49
+msgid "Database Backup"
+msgstr "Esegui backup"
+
+#: index.php:52
+msgid "Backup the entire Omeka database into an SQL file and download it."
+msgstr "Effettua un backup dell'intera base dati Omeka in un file SQL e lo rende scaricabile."
+
+#: index.php:53
+msgid "Backup Database"
+msgstr "Effettua backup"
+
+#: IndexController.php:12
+msgid "The website is online again."
+msgstr "Il sito web è nuovamente online."
+
+#: IndexController.php:16
+msgid "The \"Under Maintenance\" sign is on, and access to the website has been limited."
+msgstr "Il cartello \"Sito in manutenzione\" è attivo, e l'accesso al sito è stato limitato."
+
+#: IndexController.php:21
+msgid "The translations cache has been reset."
+msgstr "La cache traduzioni è stata ripristinata."
+
+#: IndexController.php:25
+msgid "A backup copy of the Omeka database has been created."
+msgstr "Una copia di backup della base dati Omeka è stata creata."
+
+#: maintenance.php:1
+msgid "Maintenance Mode"
+msgstr "Modalità manutenzione"
+
+#: cookie_bar.php:5
+msgid "I understand"
+msgstr "Capisco"
+
+#: cookie_bar.php:7
+msgid "Privacy Policy"
+msgstr "Politica privacy"
+
+#: config_form.php:40
+msgid "Maintenance"
+msgstr "Manutenzione"
+
+#: config_form.php:42
+#: config_form.php:153
+#: config_form.php:157
+msgid "Cookie Bar"
+msgstr "Barra cookie"
+
+#: config_form.php:43
+msgid "Limit Visibility"
+msgstr "Limita visibilità"
+
+#: config_form.php:44
+msgid "Edit Link"
+msgstr "Collegamento modifiche"
+
+#: config_form.php:45
+msgid "Backup"
+msgstr "Backup"
+
+#: config_form.php:53
+msgid "Title"
+msgstr "Titolo"
+
+#: config_form.php:57
+msgid "The title of the message to display to visitors when the site is in maintenance mode."
+msgstr "Il titolo del messaggio da mostrare ai visitatori quando il sito è in modalità manutenzione."
+
+#: config_form.php:65
+msgid "Message"
+msgstr "Messaggio"
+
+#: config_form.php:69
+msgid "The message to display to visitors when the site is in maintenance mode."
+msgstr "Il messaggio da mostrare ai visitatori quando il sito è in modalità manutenzione."
+
+#: config_form.php:85
+msgid "Extend Scope"
+msgstr "Estendi ambito"
+
+#: config_form.php:89
+msgid "If checked, site will not be accessible even to logged-in users (excluding Super User and Admin roles)."
+msgstr "Se selezionata, il sito non sarà accessibile neppure ad utenti connessi (con eccezione dei ruoli Super User e Admin)."
+
+#: config_form.php:103
+msgid "URL"
+msgstr "URL"
+
+#: config_form.php:107
+msgid "The URL of the user manual to be made available to logged-in users."
+msgstr "L'URL del manuale utente da rendere disponibile agli utenti connessi."
+
+#: config_form.php:115
+msgid "Label"
+msgstr "Etichetta"
+
+#: config_form.php:119
+msgid "The label to be shown to logged-in users."
+msgstr "L'etichetta da mostrarsi agli utenti connessi."
+
+#: config_form.php:127
+msgid "Link Position"
+msgstr "Posizione collegamento"
+
+#: config_form.php:131
+msgid "Choose where the user manual link should be displayed."
+msgstr "Scegli dove verrà visualizzato il collegamento al manuale utente."
+
+#: config_form.php:134
+msgid "Sidebar"
+msgstr "Barra laterale"
+
+#: config_form.php:134
+msgid "Topbar"
+msgstr "Barra superiore"
+
+#: config_form.php:134
+msgid "Footer"
+msgstr "Piè di pagina"
+
+#: config_form.php:161
+msgid "If checked, a cookie bar with a warning will be shown to visitors (public UI)."
+msgstr "Se selezionata, una barra cookie con una notifica verrà mostrata ai visitatori (interfaccia pubblica)."
+
+#: config_form.php:169
+msgid "Text"
+msgstr "testo"
+
+#: config_form.php:173
+msgid "The text to be shown in the cookie bar."
+msgstr "Il testo da mostrare nella barra cookie."
+
+#: config_form.php:181
+msgid "Position"
+msgstr "Posizione"
+
+#: config_form.php:185
+msgid "The position of the cookie bar."
+msgstr "La posizione della barra cookie."
+
+#: config_form.php:187
+msgid "Top of page"
+msgstr "Intestazione"
+
+#: config_form.php:187
+msgid "Bottom of page"
+msgstr "Pié di pagina"
+
+#: config_form.php:193
+msgid "Privacy Policy URL"
+msgstr "URL politica privacy"
+
+#: config_form.php:197
+msgid "The URL of the Privacy Policy document for the website; if empty, no link will be shown."
+msgstr "L'URL del documento di politica privacy del sito; se vuoto, nessun collegamento verrà mostrato."
+
+#: config_form.php:207
+msgid "Limit Visibility to Own"
+msgstr "Limita visibilità al proprio"
+
+#: config_form.php:211
+msgid "Limited Roles"
+msgstr "Ruoli limitati"
+
+#: config_form.php:214
+msgid "Roles allowed to see only their own records (in Admin mode). Please note that Super User's role cannot be limited."
+msgstr "Ruoli a cui è permesso vedere solo i propri record (nell'interfaccia amministrativa). Si prega di notare che il ruolo Super User non può essere limitato."
+
+#: config_form.php:219
+msgid "Role"
+msgstr "Ruolo"
+
+#: config_form.php:220
+msgid "Item"
+msgstr "Documento"
+
+#: config_form.php:221
+msgid "Collection"
+msgstr "Collezione"
+
+#: config_form.php:222
+msgid "Exhibit
+msgstr "Esposizione"
+
+#: config_form.php:266
+msgid "Public Edit Link"
+msgstr "Collegamento di modifica pubblico"
+
+#: config_form.php:270
+msgid "Content Types"
+msgstr "Tipologie contenuto"
+
+#: config_form.php:273
+msgid "Content types for which a link will be added to the public UI for quick editing (only when user is logged in)."
+msgstr "Tipologie contenuto per le quali verrà aggiunto alla interfaccia pubblica un collegamento per modifica rapida (solo quando l'utente è connesso)."
+
+#: config_form.php:295
+msgid "Open in New Tab"
+msgstr "Apri in nuova scheda"
+
+#: config_form.php:298
+msgid "If checked, opens editing page in new tab (recommended)."
+msgstr "Se selezionata, apre la pagina di modifica in una nuova scheda (raccomandato)."
+
+#: config_form.php:307
+msgid "Database Backup"
+msgstr "Backup base dati"
+
+#: config_form.php:311
+msgid "Download Backup"
+msgstr "Scarica backup"
+
+#: config_form.php:311
+msgid "If checked, the backup SQL file will be downloadable (by default, it sits the Omeka's File directory)."
+msgstr "Se selezionata, il file SQL del backup sarà scaricabile (per default, viene creato nella cartella File di Omeka)."
