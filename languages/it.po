@@ -213,7 +213,7 @@ msgstr "Se selezionata, una barra cookie con una notifica verrà mostrata ai vis
 
 #: config_form.php:169
 msgid "Text"
-msgstr "testo"
+msgstr "Testo"
 
 #: config_form.php:173
 msgid "The text to be shown in the cookie bar."
@@ -245,7 +245,7 @@ msgstr "L'URL del documento di politica privacy del sito; se vuoto, nessun colle
 
 #: config_form.php:207
 msgid "Limit Visibility to Own"
-msgstr "Limita visibilità al proprio"
+msgstr "Limita visibilità"
 
 #: config_form.php:211
 msgid "Limited Roles"
@@ -253,7 +253,7 @@ msgstr "Ruoli limitati"
 
 #: config_form.php:214
 msgid "Roles allowed to see only their own records (in Admin mode). Please note that Super User's role cannot be limited."
-msgstr "Ruoli a cui è permesso vedere solo i propri record (nell'interfaccia amministrativa). Si prega di notare che il ruolo Super User non può essere limitato."
+msgstr "Ruoli a cui è permesso vedere solo i propri record (nell'interfaccia amministrativa). N.B.: il ruolo Super User non può essere limitato."
 
 #: config_form.php:219
 msgid "Role"
@@ -273,7 +273,7 @@ msgstr "Esposizione"
 
 #: config_form.php:266
 msgid "Public Edit Link"
-msgstr "Collegamento di modifica pubblico"
+msgstr "Modifica rapida"
 
 #: config_form.php:270
 msgid "Content Types"
@@ -301,4 +301,4 @@ msgstr "Scarica backup"
 
 #: config_form.php:311
 msgid "If checked, the backup SQL file will be downloadable (by default, it sits the Omeka's File directory)."
-msgstr "Se selezionata, il file SQL del backup sarà scaricabile (per default, viene creato nella cartella File di Omeka)."
+msgstr "Se selezionata, il file SQL del backup sarà scaricabile (per default, viene solo creato nella cartella File di Omeka)."

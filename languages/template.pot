@@ -20,6 +20,8 @@ msgstr ""
 #: AdminToolsPlugin.php:116
 #: AdminToolsPlugin.php:222
 #: AdminToolsPlugin.php:260
+#: config_form.php:41
+#: config_form.php:99
 msgid "User Manual"
 msgstr ""
 
@@ -37,10 +39,6 @@ msgstr ""
 msgid "Edit"
 msgstr ""
 
-#: index.php:4
-msgid "Admin Tools"
-msgstr ""
-
 #: index.php:16
 msgid "Stop Maintenance"
 msgstr ""
@@ -50,6 +48,7 @@ msgid "Start Maintenance"
 msgstr ""
 
 #: index.php:29
+#: config_form.php:49
 msgid "Site Under Maintenance"
 msgstr ""
 
@@ -113,11 +112,9 @@ msgstr ""
 msgid "Maintenance"
 msgstr ""
 
-#: config_form.php:41
-msgid "User Manual"
-msgstr ""
-
 #: config_form.php:42
+#: config_form.php:153
+#: config_form.php:157
 msgid "Cookie Bar"
 msgstr ""
 
@@ -131,10 +128,6 @@ msgstr ""
 
 #: config_form.php:45
 msgid "Backup"
-msgstr ""
-
-#: config_form.php:49
-msgid "Site Under Maintenance"
 msgstr ""
 
 #: config_form.php:53
@@ -159,10 +152,6 @@ msgstr ""
 
 #: config_form.php:89
 msgid "If checked, site will not be accessible even to logged-in users (excluding Super User and Admin roles)."
-msgstr ""
-
-#: config_form.php:99
-msgid "User Manual"
 msgstr ""
 
 #: config_form.php:103
@@ -199,11 +188,6 @@ msgstr ""
 
 #: config_form.php:134
 msgid "Footer"
-msgstr ""
-
-#: config_form.php:153
-#: config_form.php:157
-msgid "Cookie Bar"
 msgstr ""
 
 #: config_form.php:161
