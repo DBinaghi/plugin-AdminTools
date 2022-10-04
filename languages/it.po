@@ -71,7 +71,7 @@ msgstr "Ripristina cache"
 
 #: index.php:49
 msgid "Database Backup"
-msgstr "Esegui backup"
+msgstr "Backup base dati"
 
 #: index.php:52
 msgid "Backup the entire Omeka database into an SQL file and download it."
