@@ -53,7 +53,7 @@
 		<?php if (get_option('admin_tools_backup_download')): ?>
 			<a id="BD" class="add-page button green" href="<?php echo ADMIN_TOOLS_BACKUP_FILENAME; ?>?op=BD" download="<?php echo 'OmekaDB-backup_' . date('Ymd_His') . '.sql' ?>"><?php echo __('Backup Dababase'); ?></a>
 		<?php else: ?>
-			<a id="BD" class="add-page button green" href="?op=BD"><?php echo __('Backup Dababase'); ?></a>
+			<a id="BD" class="add-page button green" href="?op=BD"><?php echo __('Backup Database'); ?></a>
 		<?php endif; ?>
 	</div>
 </div>
