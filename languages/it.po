@@ -18,22 +18,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 
-#: index.php:71
-msgid "Reset Cache"
-msgstr "Ripristina cache"
-
-#: index.php:77
-msgid "Database Backup"
-msgstr "Backup database"
-
-#: index.php:80
-msgid "Backup the entire Omeka database into an SQL file and download it."
-msgstr "Esegue una copia di backup dell'intera base dati Omeka in un file SQL e scaricalo."
-
-#: index.php:81
-msgid "Backup Database"
-msgstr "Esegui backup"
-
 #: AdminToolsPlugin.php:116
 #: AdminToolsPlugin.php:222
 #: AdminToolsPlugin.php:260
@@ -93,7 +77,8 @@ msgstr "Esegui backup"
 msgid "Backup the entire Omeka database into an SQL file and download it."
 msgstr "Effettua un backup dell'intera base dati Omeka in un file SQL e lo rende scaricabile."
 
-#: index.php:53
+#: index.php:54
+#: index.php:56
 msgid "Backup Database"
 msgstr "Effettua backup"
 

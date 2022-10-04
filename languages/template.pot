@@ -76,7 +76,8 @@ msgstr ""
 msgid "Backup the entire Omeka database into an SQL file and download it."
 msgstr ""
 
-#: index.php:53
+#: index.php:54
+#: index.php:56
 msgid "Backup Database"
 msgstr ""
 
