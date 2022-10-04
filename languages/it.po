@@ -1,0 +1,62 @@
+# Translation for the Admin Tools plugin for Omeka.
+# Copyright (C) 2022 Daniele Binaghi
+# This file is distributed under the same license as the Omeka package.
+# Daniele Binaghi <admin@bitoteko.it>, 2022
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Admin Tools\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-10-04 18:54+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Daniele Binaghi <admin@bitoteko.it>\n"
+"Language-Team: Italian\n"
+"Language: it\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: index.php:4
+msgid "Admin Tools"
+msgstr ""
+
+#: index.php:44
+msgid "Stop Maintenance"
+msgstr "Interrompi manutenzione"
+
+#: index.php:48
+msgid "Start Maitenance"
+msgstr "Inizia manutenzione"
+
+#: index.php:57
+msgid "Site Under Maintenance"
+msgstr "Sito in manutenzione"
+
+#: index.php:60
+msgid "Block out from Public interface not-logged in users (and also from Admin interface some logged-in users), displaying instead an \"Under Maintenance\" sign."
+msgstr "Blocca l'accesso all'interfaccia pubblica agli utenti non collegati (e anche all'interfaccia amministrativa per alcuni utenti collegati), mostrando invece un cartello \"In manutenzione\"."
+
+#: index.php:67
+msgid "Languages Cache"
+msgstr "Cache traduzioni"
+
+#: index.php:70
+msgid "Reset all translations after language files have been changed manually."
+msgstr "Ripristina tutte le traduzioni dopo che i file di lingua sono stati modificati manualmente."
+
+#: index.php:71
+msgid "Reset Cache"
+msgstr "Ripristina cache"
+
+#: index.php:77
+msgid "Database Backup"
+msgstr "Backup database"
+
+#: index.php:80
+msgid "Backup the entire Omeka database into an SQL file and download it."
+msgstr "Esegue una copia di backup dell'intera base dati Omeka in un file SQL e scaricalo."
+
+#: index.php:81
+msgid "Backup Database"
+msgstr "Esegui backup"
