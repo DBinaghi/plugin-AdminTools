@@ -107,7 +107,7 @@
 
 		public function hookAdminFooter()
 		{
-			if (get_option('admin_tools_usermanual_link_positions') != '') {
+			if (null !== current_user() && get_option('admin_tools_usermanual_link_positions') != '') {
 				$positions = unserialize(get_option('admin_tools_usermanual_link_positions'));
 				if (!empty($positions) && in_array('Footer', $positions)) {
 					$url = get_option('admin_tools_usermanual_url');
@@ -119,15 +119,19 @@
 			}
 		}
 
-		public function hookPublicHead() {
-			if ((bool)get_option('admin_tools_cookiebar_active')) {
+		public function hookPublicHead() 
+		{
+			$user = current_user();
+			if (!isset($user) && (bool)get_option('admin_tools_cookiebar_active')) {
 				queue_js_file('vendor/jquery.cookiebar');    
 				queue_css_file('vendor/jquery.cookiebar');
 			}
 		}
 
-		public function hookPublicFooter() {
-			if ((bool)get_option('admin_tools_cookiebar_active')) {
+		public function hookPublicFooter() 
+		{
+			$user = current_user();
+			if (!isset($user) && (bool)get_option('admin_tools_cookiebar_active')) {
 				echo get_view()->partial('cookie_bar.php', array(
 					'message' => get_option('admin_tools_cookiebar_text'),
 					'policyButton' => (get_option('admin_tools_cookiebar_policy_url') != '' ? 1 : 0),
@@ -137,8 +141,10 @@
 			}
 		}
 
-		public function hookNeatlinePublicStatic($exhibit){
-			if ((bool)get_option('admin_tools_cookiebar_active')) {
+		public function hookNeatlinePublicStatic($exhibit)
+		{
+			$user = current_user();
+			if (!isset($user) && (bool)get_option('admin_tools_cookiebar_active')) {
 				queue_js_file('vendor/jquery.cookiebar');
 				queue_css_file('vendor/jquery.cookiebar');
 				echo get_view()->partial('cookie_bar.php', array(
@@ -276,7 +282,7 @@
 			$view = get_view();
 			$publicEditLinkTypes = unserialize(get_option('admin_tools_public_edit_link_types')); 
 			
-			if (isset($user)) {
+			if (isset($user) && !empty($publicEditLinkTypes)) {
 				$acl = get_acl();
 				if (isset(get_view()->item) && $acl->isAllowed($user, $view->item, 'edit') && in_array('Items', $publicEditLinkTypes)) {
 					$uri = admin_url('/items/edit/' . metadata('items', 'id'));
