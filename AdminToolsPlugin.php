@@ -230,7 +230,7 @@
 			if ((bool)get_option('admin_tools_maintenance_active')) {
 				array_unshift($nav, array(
 					'label' => __('** Maintenance Mode Active **'),
-					'uri' => admin_url('/plugins/config?name=AdminTools'),
+					'uri' => admin_url('/admin-tools'),
 					'id' => 'maintenance_alert'
 				));
 			}
@@ -300,7 +300,7 @@
 			if ((bool)get_option('admin_tools_maintenance_active')) {
 				array_unshift($navLinks, array(
 					'label' => '** Maintenance Mode Active **',
-					'uri' => admin_url('/plugins/config?name=AdminTools')
+					'uri' => admin_url('/admin-tools')
 				));
 			}
 
