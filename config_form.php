@@ -1,11 +1,6 @@
 <?php 
 	$view = get_view();
 	$bExhibit = (bool)(plugin_is_active('ExhibitBuilder'));
-	
-	if ((bool)get_option('admin_tools_maintenance_active')) {
-        $flash = Zend_Controller_Action_HelperBroker::getStaticHelper('FlashMessenger');
-        $flash->addMessage(__('Warning: the site is in maintenance mode! Uncheck the checkbox below and save settings to make the site available again.'), 'alert');
-	}
 ?>
 
 <?php echo js_tag('vendor/tinymce/tinymce.min'); ?>
