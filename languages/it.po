@@ -285,5 +285,5 @@ msgid "Download Backup"
 msgstr "Scarica backup"
 
 #: config_form.php:311
-msgid "If checked, the backup SQL file will be downloadable (by default, it sits the Omeka's File directory)."
-msgstr "Se selezionata, il file SQL del backup sarà scaricabile (per default, viene solo creato nella cartella File di Omeka)."
+msgid "If checked, the backup SQL file will be downloadable (by default, it sits the Omeka's Files directory)."
+msgstr "Se selezionata, il file SQL del backup sarà scaricabile (per default, viene solo creato nella cartella Files di Omeka)."
