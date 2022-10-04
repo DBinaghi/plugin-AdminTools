@@ -161,8 +161,8 @@
 			
 			$indexResource = new Zend_Acl_Resource('AdminTools_Index');
 			$acl->add($indexResource);
-
 			$acl->allow(array('super'), array('AdminTools_Index'));
+			$acl->deny(array('admin'), array('AdminTools_Index'));
 		}
 
 		public function filterItemsBrowseParams($params)
