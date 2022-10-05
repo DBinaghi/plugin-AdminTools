@@ -67,19 +67,22 @@
 				$create = $db->query($query)->fetch();
 				$return .= $create[1] . ';nnnn';
 
+				fwrite($handle, str_replace('nnnn', PHP_EOL, $return));
+				$return = '';
+				
 				// Populate table
 				$query = 'SELECT * FROM ' . $table;
 				$select = $db->query($query)->fetchAll();
 				if (count($select) > 0) {
 					$num_fields = count($select[0]);
-					for($i = 0 ; $i < count($select) ; $i++)
+					for ($i = 0 ; $i < count($select) ; $i++)
 					{
 						if ($i == 0) {
 							$return .= 'INSERT INTO ' . $table . ' VALUES nnnn';
 						}
-						for($j = 0 ; $j < $num_fields ; $j++)
+						for ($j = 0 ; $j < $num_fields ; $j++)
 						{
-							if($j == 0) {
+							if ($j == 0) {
 								$return .= '(';
 							}
 							$select[$i][$j] = addslashes($select[$i][$j]);
@@ -97,6 +100,9 @@
 						} else {
 							$return .= '),nnnn';
 						}
+						
+						fwrite($handle, str_replace('nnnn', PHP_EOL, $return));
+						$return = '';
 					}
 				}
 				$return .= 'nnnnnnnn';
