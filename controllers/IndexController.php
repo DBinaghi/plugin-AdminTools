@@ -38,14 +38,22 @@
 			$db = get_db();
 			$db->setFetchMode(Zend_Db::FETCH_NUM);
 
+			// Remove previous file if existing
+			if (file_exists(ADMIN_TOOLS_BACKUP_FILENAME)) {
+				unlink(ADMIN_TOOLS_BACKUP_FILENAME);
+			}
+
 			// Retrieve all tables
 			$query = 'SHOW TABLES';
 			$tables = $db->query($query)->fetchAll();
-
+			
+			$handle = fopen(ADMIN_TOOLS_BACKUP_FILENAME, 'a');
+			
 			// Iterate over each database table
-			$return = '';
 			foreach ($tables as $table)
 			{
+				$return = '';
+
 				$table = $table[0];
 
 				// Add comment
@@ -62,7 +70,7 @@
 				// Populate table
 				$query = 'SELECT * FROM ' . $table;
 				$select = $db->query($query)->fetchAll();
-				if(count($select) > 0) {
+				if (count($select) > 0) {
 					$num_fields = count($select[0]);
 					for($i = 0 ; $i < count($select) ; $i++)
 					{
@@ -92,15 +100,14 @@
 					}
 				}
 				$return .= 'nnnnnnnn';
+
+				fwrite($handle, str_replace('nnnn', PHP_EOL, $return));
 			}		
+
+			fclose($handle);
 					
 			// Restore default mode
 			$db->setFetchMode(Zend_Db::FETCH_ASSOC);
-
-			// Save it into an SQL file
-			$handle = fopen(ADMIN_TOOLS_BACKUP_FILENAME, 'w+');
-			fwrite($handle, str_replace('nnnn', PHP_EOL, $return));
-			fclose($handle);
 
 			if (get_option('admin_tools_backup_download')) {
 				header('Content-type: text/plain');
