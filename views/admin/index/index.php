@@ -4,13 +4,7 @@
 		'title' => html_escape(__('Admin Tools')),
 		'content_class' => 'horizontal-nav'
 	);
-	if (isset($_GET['view'])) {
-		$active = $_GET['view'];
-	}
-	echo head($head);
-?>
 
-<?php
 	if (get_option('admin_tools_maintenance_active')) {
 		$sumOperation = 'disable';
 		$sumLabel = __('Stop Maintenance');
@@ -20,6 +14,8 @@
 		$sumLabel = __('Start Maintenance');
 		$sumColor = 'green';
 	}
+
+	echo head($head);
 ?>
 
 <?php echo flash(); ?>
