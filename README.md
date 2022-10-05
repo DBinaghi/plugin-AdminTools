@@ -5,10 +5,10 @@
 Plugin for Omeka Classic. Reunites several minor plugins and code snippets to give site administrators extra tools:
 - **Site Under Maintenance**: blocks out from Public interface not-logged in users (and also from Admin interface some logged-in users), displaying instead an "Under Maintenance" sign.
 - **User Manual**: allows for a User Manual (or other document) to be made available for logged-in users.
-- **Cookie Bar**: adds to Public interface a header or footer bar with informations about cookies and privacy policy via the jQuery cookiebar widget.
+- **Cookie Bar**: adds to Public interface a header or footer bar with simple information about cookies and privacy policy via the jQuery cookiebar widget.
 - **Limit Visibility to Own**: limits Item/Collection/Exhibit visibility to only the ones created by the user (Admin interface).
 - **Public Edit Link**: adds a edit link to Items/Collections/Exhibits/Files/Simple Pages to Public interface for logged-in users.
-- **Database Backup**: creates a backup copy of the Omeka database, storing it locally and also making it available for download.
+- **Database Backup**: creates a backup copy of the Omeka database, storing it locally (in Omeka's **files** directory) and also making it available for download.
 
 When installed, the plugin creates an **Admin Tools** page accessible to Super User from the admin navigation sidebar; through the page one can put the website in maintenance mode, clear the languages cache and create a backup copy of Omeka's database. The plugin's configuration page lets fine tune this functions, plus many other ones.
 
