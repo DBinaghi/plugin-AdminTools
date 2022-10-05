@@ -26,7 +26,7 @@
 						break;
 				}
 			}
-				
+			
 			if ($message != '') {
 				$flash = Zend_Controller_Action_HelperBroker::getStaticHelper('FlashMessenger');
 				$flash->addMessage($message, 'success');
@@ -94,7 +94,7 @@
 				$return .= 'nnnnnnnn';
 			}		
 					
-			// Reestablish default mode
+			// Restore default mode
 			$db->setFetchMode(Zend_Db::FETCH_ASSOC);
 
 			// Save it into an SQL file
@@ -102,7 +102,14 @@
 			fwrite($handle, str_replace('nnnn', PHP_EOL, $return));
 			fclose($handle);
 
-			$this->view->fileName = ADMIN_TOOLS_BACKUP_FILENAME;
+			if (get_option('admin_tools_backup_download')) {
+				header('Content-type: text/plain');
+				header('Content-Disposition: attachment; filename="OmekaDB-backup_' . date('Ymd_His') . '.sql"');
+				readfile(ADMIN_TOOLS_BACKUP_FILENAME);
+				exit;
+			}
+	  
+			// $this->view->fileName = ADMIN_TOOLS_BACKUP_FILENAME;
 		}
 	}
 ?>
