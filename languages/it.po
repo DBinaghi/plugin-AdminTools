@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-
+#: AdminToolsPlugin.php:53
 #: AdminToolsPlugin.php:116
 #: AdminToolsPlugin.php:222
 #: AdminToolsPlugin.php:260
@@ -26,17 +26,21 @@ msgstr ""
 msgid "User Manual"
 msgstr "Manuale utente"
 
-#: AdminToolsPlugin.php:232
-#: AdminToolsPlugin.php:302
+#: AdminToolsPlugin.php:56
+msgid "We use cookies to track usage of this project."
+msgstr "Utilizziamo cookie per tracciare l'utilizzo di questo progetto."
+
+#: AdminToolsPlugin.php:247
+#: AdminToolsPlugin.php:317
 msgid "** Maintenance Mode Active **"
 msgstr "** Modalità manutenzione attiva **"
 
-#: AdminToolsPlugin.php:247
+#: AdminToolsPlugin.php:262
 #: index.php:4
 msgid "Admin Tools"
 msgstr "Strumenti amministrativi"
 
-#: AdminToolsPlugin.php:322
+#: AdminToolsPlugin.php:337
 msgid "Edit"
 msgstr "Modifica"
 
