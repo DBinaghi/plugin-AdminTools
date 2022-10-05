@@ -1,4 +1,18 @@
 <?php
+	/**
+	 * AdminTools plugin
+	 *
+	 * @package AdminTools
+	 * @copyright Copyright 2022 Daniele Binaghi et al.
+	 * @license https://www.cecill.info/licences/Licence_CeCILL_V2.1-en.html CeCILL v2.1
+	 */
+
+	/**
+	 * AdminTools plugin class
+	 * 
+	 * @package AdminTools
+	 */
+
 	define('ADMIN_TOOLS_BACKUP_FILENAME', '../files/DatabaseBackup.sql');
 
 	class AdminToolsPlugin extends Omeka_Plugin_AbstractPlugin
@@ -156,11 +170,6 @@
 			}
 		}
 		
-		/**
-		 * Define the ACL.
-		 * 
-		 * @param array $args
-		 */
 		public function hookDefineAcl($args)
 		{
 			$acl = $args['acl']; // get the Zend_Acl
