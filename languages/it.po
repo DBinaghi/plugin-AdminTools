@@ -44,47 +44,66 @@ msgstr "Strumenti amministrativi"
 msgid "Edit"
 msgstr "Modifica"
 
-#: index.php:16
+#: index.php:10
 msgid "Stop Maintenance"
 msgstr "Interrompi manutenzione"
 
-#: index.php:20
+#: index.php:14
 msgid "Start Maintenance"
 msgstr "Avvia manutenzione"
 
-#: index.php:29
+#: index.php:25
 #: config_form.php:49
 msgid "Site Under Maintenance"
 msgstr "Sito in manutenzione"
 
-#: index.php:32
+#: index.php:28
 msgid "Block out from Public interface not-logged in users (and also from Admin interface some logged-in users), displaying instead an \"Under Maintenance\" sign."
 msgstr "Blocca l'accesso all'interfaccia pubblica agli utenti non collegati (e anche all'interfaccia amministrativa per alcuni utenti collegati), mostrando invece un cartello \"In manutenzione\"."
 
-#: index.php:39
+#: index.php:35
 msgid "Languages Cache"
 msgstr "Cache traduzioni"
 
-#: index.php:42
+#: index.php:38
 msgid "Reset all translations after language files have been changed manually."
 msgstr "Ripristina tutte le traduzioni dopo che uno o più file di lingua sono stati modificati manualmente."
 
-#: index.php:43
+#: index.php:39
 msgid "Reset Cache"
 msgstr "Ripristina cache"
 
-#: index.php:49
+#: index.php:45
 msgid "Database Backup"
 msgstr "Backup base dati"
 
-#: index.php:52
+#: index.php:48
 msgid "Backup the entire Omeka database into an SQL file and download it."
 msgstr "Effettua un backup dell'intera base dati Omeka in un file SQL e lo rende scaricabile."
 
-#: index.php:54
-#: index.php:56
+#: index.php:49
 msgid "Backup Database"
 msgstr "Effettua backup"
+
+#: index.php:55
+msgid "Sessions Table"
+msgstr "Tabella Sessioni"
+
+#: index.php:58
+msgid "Trim Omeka's Sessions table (at the moment, the table contains %s records)."
+msgstr "Riduce la tabella Sessioni di Omeka (al momento, la tabella contiene %s record)."
+
+#: index.php:59
+msgid "Trim Table (1 week)"
+msgstr "Riduci tabella (1 settimana)"
+
+#: index.php:60
+msgid "Trim Table (1 month)"
+msgstr "Riduci tabella (1 mese)"
+
+#: index.php:61
+msgid "Trim Table (1 year)"
+msgstr "Riduci tabella (1 anno)"
 
 #: IndexController.php:12
 msgid "The website is online again."
@@ -98,7 +117,19 @@ msgstr "Il cartello \"Sito in manutenzione\" è attivo, e l'accesso al sito è s
 msgid "The translations cache has been reset."
 msgstr "La cache traduzioni è stata ripristinata."
 
-#: IndexController.php:25
+#: IndexController.php:28
+msgid "Omeka's Sessions table has been trimmed up to 1 week ago."
+msgstr "La tabella Sessioni di Omeka è stata ridotta all'ultima settimana."
+
+#: IndexController.php:31
+msgid "Omeka's Sessions table has been trimmed up to 1 week ago."
+msgstr "La tabella Sessioni di Omeka è stata ridotta all'ultimo mese."
+
+#: IndexController.php:34
+msgid "Omeka's Sessions table has been trimmed up to 1 week ago."
+msgstr "La tabella Sessioni di Omeka è stata ridotta all'ultimo anno."
+
+#: IndexController.php:127
 msgid "A backup copy of the Omeka database has been created."
 msgstr "Una copia di backup della base dati Omeka è stata creata."
 
