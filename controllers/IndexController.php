@@ -22,7 +22,16 @@
 						break;
 					case "BD":
 						$this->backupDB();
-						$message = __('A backup copy of the Omeka database has been created.');
+						break;
+					case "TSTW":
+						$this->trimSessionsTable('W');
+						$message = __('Omeka\'s Sessions table has been trimmed up to 1 week ago.');
+					case "TSTM":
+						$this->trimSessionsTable('M');
+						$message = __('Omeka\'s Sessions table has been trimmed up to 1 month ago.');
+					case "TSTY":
+						$this->trimSessionsTable('Y');
+						$message = __('Omeka\'s Sessions table has been trimmed up to 1 year ago.');
 						break;
 				}
 			}
@@ -31,6 +40,8 @@
 				$flash = Zend_Controller_Action_HelperBroker::getStaticHelper('FlashMessenger');
 				$flash->addMessage($message, 'success');
 			}
+			
+			$this->view->sessionsCount = $this->_getSessionsCount();
 		}
 		
 		public function backupDB()
@@ -38,26 +49,19 @@
 			$db = get_db();
 			$db->setFetchMode(Zend_Db::FETCH_NUM);
 
-			// Remove previous file if existing
-			if (file_exists(ADMIN_TOOLS_BACKUP_FILENAME)) {
-				unlink(ADMIN_TOOLS_BACKUP_FILENAME);
-			}
+			$handle = fopen(ADMIN_TOOLS_BACKUP_FILENAME, 'w+');
 
 			// Retrieve all tables
 			$query = 'SHOW TABLES';
 			$tables = $db->query($query)->fetchAll();
 			
-			$handle = fopen(ADMIN_TOOLS_BACKUP_FILENAME, 'a');
-			
 			// Iterate over each database table
 			foreach ($tables as $table)
 			{
-				$return = '';
-
 				$table = $table[0];
 
 				// Add comment
-				$return .= '/* Table ' . $table . ' /nnnn';
+				$return = '/* Table ' . $table . ' /nnnn';
 
 				// Delete table
 				$return .= 'DROP TABLE IF EXISTS ' . $table . ';nnnn';
@@ -67,53 +71,60 @@
 				$create = $db->query($query)->fetch();
 				$return .= $create[1] . ';nnnn';
 
+				// Populate table
+				$return .= 'INSERT INTO ' . $table . ' VALUES nnnn';
+
 				fwrite($handle, str_replace('nnnn', PHP_EOL, $return));
 				$return = '';
 				
-				// Populate table
 				$query = 'SELECT * FROM ' . $table;
-				$select = $db->query($query)->fetchAll();
-				if (count($select) > 0) {
-					$num_fields = count($select[0]);
-					for ($i = 0 ; $i < count($select) ; $i++)
+				$stmt = $db->query($query);
+				$count = $stmt->rowCount();
+				$j = 1;
+				while ($row = $stmt->fetch()) {
+					$num_fields = count($row);
+					for ($i = 0 ; $i < $num_fields ; $i++)
 					{
 						if ($i == 0) {
-							$return .= 'INSERT INTO ' . $table . ' VALUES nnnn';
-						}
-						for ($j = 0 ; $j < $num_fields ; $j++)
-						{
-							if ($j == 0) {
-								$return .= '(';
-							}
-							$select[$i][$j] = addslashes($select[$i][$j]);
-							if (isset($select[$i][$j])) {
-								$return .= '"' . $select[$i][$j] . '"';
-							} else {
-								$return .= '""';
-							}
-							if ($j < ($num_fields - 1)) {
-								$return .= ',';
-							}
-						}
-						if ($i == count($select) - 1) {
-							$return .= ');nnnn';
-						} else {
-							$return .= '),nnnn';
+							$return = '(';
 						}
 						
-						fwrite($handle, str_replace('nnnn', PHP_EOL, $return));
-						$return = '';
+						$row[$i] = addslashes($row[$i]);
+						if (isset($row[$i])) {
+							$return .= '"' . $row[$i] . '"';
+						} else {
+							$return .= '""';
+						}
+						if ($i < ($num_fields - 1)) {
+							$return .= ',';
+						} else {
+							$return .= ')';
+						}
 					}
-				}
-				$return .= 'nnnnnnnn';
+					
+					if ($j < $count) {
+						$return .= ',nnnn';
+					} else {
+						$return .= ';nnnn';
+					}
 
+					fwrite($handle, str_replace('nnnn', PHP_EOL, $return));
+					$return = '';
+					
+					$j++;
+				}
+				
+				$return = 'nnnnnnnn';
 				fwrite($handle, str_replace('nnnn', PHP_EOL, $return));
 			}		
 
 			fclose($handle);
 					
-			// Restore default mode
+			// Restore default fetch mode
 			$db->setFetchMode(Zend_Db::FETCH_ASSOC);
+
+			$flash = Zend_Controller_Action_HelperBroker::getStaticHelper('FlashMessenger');
+			$flash->addMessage(__('A backup copy of the Omeka database has been created.'), 'success');
 
 			if (get_option('admin_tools_backup_download')) {
 				header('Content-type: text/plain');
@@ -121,8 +132,36 @@
 				readfile(ADMIN_TOOLS_BACKUP_FILENAME);
 				exit;
 			}
-	  
-			// $this->view->fileName = ADMIN_TOOLS_BACKUP_FILENAME;
+		}
+		
+		private function _getSessionsCount() 
+		{
+			$table = $this->_helper->db->getTable('Session');
+			return $table->count();			
+		}
+		
+		public function trimSessionsTable($period)
+		{
+			$date = new DateTime();
+			switch($period) {
+				case 'W':
+					$date->modify("-1 week");
+					break;
+				case 'M':
+					$date->modify("-1 month");
+					break;
+				case 'Y':
+					$date->modify("-1 year");
+					break;
+				default:
+					return false;
+			}
+			
+			$db = get_db();
+			$timestamp = $date->getTimeStamp();
+			$table = $db->getTableName('Session');
+			$query = 'DELETE FROM ' . $table . ' WHERE modified < ' . $timestamp;
+			$db->query($query);
 		}
 	}
 ?>
