@@ -24,14 +24,19 @@
 						$this->backupDB();
 						break;
 					case "TSTW":
-						$this->trimSessionsTable('W');
-						$message = __('Omeka\'s Sessions table has been trimmed up to 1 week ago.');
+						if ($this->trimSessionsTable('W')) {
+							$message = __('Omeka\'s Sessions table has been trimmed up to 1 week ago.');
+						}
+						break;
 					case "TSTM":
-						$this->trimSessionsTable('M');
-						$message = __('Omeka\'s Sessions table has been trimmed up to 1 month ago.');
+						if ($this->trimSessionsTable('M')) {
+							$message = __('Omeka\'s Sessions table has been trimmed up to 1 month ago.');
+						}
+						break;
 					case "TSTY":
-						$this->trimSessionsTable('Y');
-						$message = __('Omeka\'s Sessions table has been trimmed up to 1 year ago.');
+						if ($this->trimSessionsTable('Y')) {
+							$message = __('Omeka\'s Sessions table has been trimmed up to 1 year ago.');
+						}
 						break;
 				}
 			}
@@ -136,8 +141,8 @@
 		
 		private function _getSessionsCount() 
 		{
-			$table = $this->_helper->db->getTable('Session');
-			return $table->count();			
+			$db = get_db();
+			return $db->getTable('Session')->count();			
 		}
 		
 		public function trimSessionsTable($period)
@@ -158,10 +163,10 @@
 			}
 			
 			$db = get_db();
-			$timestamp = $date->getTimeStamp();
-			$table = $db->getTableName('Session');
-			$query = 'DELETE FROM ' . $table . ' WHERE modified < ' . $timestamp;
+			$query = 'DELETE FROM ' . $db->getTableName('Session') . ' WHERE modified < ' . $date->getTimeStamp();
 			$db->query($query);
+			
+			return true;
 		}
 	}
 ?>
