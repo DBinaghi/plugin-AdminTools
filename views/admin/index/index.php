@@ -50,4 +50,16 @@
 	</div>
 </div>
 
+<div class="field">
+	<div id="TST-label" class="two columns alpha">
+		<label for="TST"><?php echo __('Sessions Table'); ?></label>
+	</div>
+	<div class="inputs five columns omega">
+		<p class="explanation"><?php echo __('Trim Omeka\'s Sessions table (at the moment, the table contains %s records).', number_format($this->sessionsCount)); ?></p>
+		<a id="TSTW" class="button green" href="?op=TSTW"><?php echo __('Trim Table (1 week)'); ?></a>
+		<a id="TSTM" class="button green" href="?op=TSTM"><?php echo __('Trim Table (1 month)'); ?></a>
+		<a id="TSTY" class="button green" href="?op=TSTY"><?php echo __('Trim Table (1 year)'); ?></a>
+	</div>
+</div>
+
 <?php echo foot(); ?>
