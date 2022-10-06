@@ -122,11 +122,11 @@ msgid "Omeka's Sessions table has been trimmed up to 1 week ago."
 msgstr "La tabella Sessioni di Omeka è stata ridotta all'ultima settimana."
 
 #: IndexController.php:31
-msgid "Omeka's Sessions table has been trimmed up to 1 week ago."
+msgid "Omeka's Sessions table has been trimmed up to 1 month ago."
 msgstr "La tabella Sessioni di Omeka è stata ridotta all'ultimo mese."
 
 #: IndexController.php:34
-msgid "Omeka's Sessions table has been trimmed up to 1 week ago."
+msgid "Omeka's Sessions table has been trimmed up to 1 year ago."
 msgstr "La tabella Sessioni di Omeka è stata ridotta all'ultimo anno."
 
 #: IndexController.php:127
