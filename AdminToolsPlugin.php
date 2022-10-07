@@ -62,6 +62,7 @@
 			set_option('admin_tools_public_edit_link_types', '');
 			set_option('admin_tools_public_edit_link_blank', 1);
 			set_option('admin_tools_backup_download', 1);
+			set_option('admin_tools_sessions_count', 0);
 		}
 
 		public function hookUninstall()
@@ -83,6 +84,7 @@
 			delete_option('admin_tools_public_edit_link_types');
 			delete_option('admin_tools_public_edit_link_blank');
 			delete_option('admin_tools_backup_download');
+			delete_option('admin_tools_sessions_count');
 		}
 		
 		public function hookInitialize()
@@ -112,6 +114,7 @@
 			set_option('admin_tools_public_edit_link_types',					(isset($post['admin_tools_public_edit_link_types']) ? serialize($post['admin_tools_public_edit_link_types']) : ''));
 			set_option('admin_tools_public_edit_link_blank',					$post['admin_tools_public_edit_link_blank']);
 			set_option('admin_tools_backup_download',							$post['admin_tools_backup_download']);
+			set_option('admin_tools_sessions_count',							$post['admin_tools_sessions_count']);
 		}
 		
 		public function hookConfigForm()
