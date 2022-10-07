@@ -21,7 +21,13 @@
 						$message = __('The translations cache has been reset.');
 						break;
 					case "BD":
-						$this->backupDB();
+					
+						include_once('src/Ifsnop/Mysqldump/Mysqldump.php');
+						$dump = new Ifsnop\Mysqldump\Mysqldump('mysql:host=localhost;dbname=omeka', 'omeka_usr', 'password');
+						$dump->start(ADMIN_TOOLS_BACKUP_FILENAME);
+						$message = __('A backup copy of the Omeka database has been created.');
+		
+						//$this->backupDB();
 						break;
 					case "TSTW":
 						if ($this->trimSessionsTable('W')) {
@@ -54,7 +60,7 @@
 			$db = get_db();
 			$db->setFetchMode(Zend_Db::FETCH_NUM);
 
-			$handle = fopen(ADMIN_TOOLS_BACKUP_FILENAME, 'w+');
+			$handle = fopen(ADMIN_TOOLS_BACKUP_FILENAME, 'w');
 
 			// Retrieve all tables
 			$query = 'SHOW TABLES';
@@ -91,7 +97,7 @@
 					for ($i = 0 ; $i < $num_fields ; $i++)
 					{
 						if ($i == 0) {
-							$return = '(';
+							$return .= '(';
 						}
 						
 						$row[$i] = addslashes($row[$i]);
@@ -113,13 +119,15 @@
 						$return .= ';nnnn';
 					}
 
-					fwrite($handle, str_replace('nnnn', PHP_EOL, $return));
-					$return = '';
+					if (fmod($j, 1000) == 0) {
+						fwrite($handle, str_replace('nnnn', PHP_EOL, $return));
+						$return = '';
+					}
 					
 					$j++;
 				}
 				
-				$return = 'nnnnnnnn';
+				$return .= 'nnnnnnnn';
 				fwrite($handle, str_replace('nnnn', PHP_EOL, $return));
 			}		
 
@@ -131,10 +139,19 @@
 			$flash = Zend_Controller_Action_HelperBroker::getStaticHelper('FlashMessenger');
 			$flash->addMessage(__('A backup copy of the Omeka database has been created.'), 'success');
 
-			if (get_option('admin_tools_backup_download')) {
+			if (get_option('admin_tools_backup_download') && file_exists(ADMIN_TOOLS_BACKUP_FILENAME)) {
 				header('Content-type: text/plain');
 				header('Content-Disposition: attachment; filename="OmekaDB-backup_' . date('Ymd_His') . '.sql"');
-				readfile(ADMIN_TOOLS_BACKUP_FILENAME);
+				header('Content-Length: ' . filesize(ADMIN_TOOLS_BACKUP_FILENAME));
+				//readfile(ADMIN_TOOLS_BACKUP_FILENAME);
+				$myInputStream = fopen(ADMIN_TOOLS_BACKUP_FILENAME, 'rb');
+				$myOutputStream = fopen('php://output', 'wb');
+
+				stream_copy_to_stream($myInputStream, $myOutputStream);
+
+				fclose($myOutputStream);
+				fclose($myInputStream);
+				
 				exit;
 			}
 		}
