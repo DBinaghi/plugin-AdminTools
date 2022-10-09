@@ -21,12 +21,50 @@
 						$message = __('The translations cache has been reset.');
 						break;
 					case "BD":
-					
+						$dbFile = '..\db.ini';
+						if (!file_exists($dbFile)) {
+							throw new Zend_Config_Exception('Your Omeka database configuration file is missing.');
+						}
+						if (!is_readable($dbFile)) {
+							throw new Zend_Config_Exception('Your Omeka database configuration file cannot be read by the application.');
+						}
+						$dbIni = new Zend_Config_Ini($dbFile, 'database');
+						$connectionParams = $dbIni->toArray();
+						$isCompressed = get_option('admin_tools_backup_compress');
+						$outputFile = ($isCompressed ? str_replace('.sql', '.gz', ADMIN_TOOLS_BACKUP_FILENAME) : ADMIN_TOOLS_BACKUP_FILENAME);
+						
 						include_once('src/Ifsnop/Mysqldump/Mysqldump.php');
-						$dump = new Ifsnop\Mysqldump\Mysqldump('mysql:host=localhost;dbname=omeka', 'omeka_usr', 'password');
-						$dump->start(ADMIN_TOOLS_BACKUP_FILENAME);
-						$message = __('A backup copy of the Omeka database has been created.');
+						
+						$dumper = new Ifsnop\Mysqldump\Mysqldump(
+							'mysql:host=' . $connectionParams['host'] . ';dbname=' . $connectionParams['dbname'], 
+							$connectionParams['username'], 
+							$connectionParams['password'],
+							array(
+								'compress' => ($isCompressed ? Ifsnop\Mysqldump\Mysqldump::GZIP : Ifsnop\Mysqldump\Mysqldump::NONE)
+							)
+						);
+						
+						if (get_option('admin_tools_backup_sessions_ignore')) {
+							$dumper->setTableLimits(array(
+								get_db()->getTableName('Session') => 0
+							));
+						}
+						
+						$dumper->start($outputFile);
+						$message = __('A %s backup copy of the Omeka database has been created.', ($isCompressed ? __('compressed') : ''));
 		
+						if (get_option('admin_tools_backup_download') && file_exists($outputFile)) {
+							header('Content-type: ' . ($isCompressed ? 'application/gzip' : 'text/plain'));
+							header('Content-Disposition: attachment; filename="OmekaDB-backup_' . date('Ymd_His') . ($isCompressed ? '.gz' : '.sql') . '"');
+							header('Content-Length: ' . filesize($outputFile));
+							$myInputStream = fopen($outputFile, 'rb');
+							$myOutputStream = fopen('php://output', 'wb');
+							stream_copy_to_stream($myInputStream, $myOutputStream);
+							fclose($myOutputStream);
+							fclose($myInputStream);
+							
+							exit;
+						}
 						//$this->backupDB();
 						break;
 					case "TSTW":
@@ -54,107 +92,7 @@
 			
 			$this->view->sessionsCount = $this->_getSessionsCount();
 		}
-		
-		public function backupDB()
-		{
-			$db = get_db();
-			$db->setFetchMode(Zend_Db::FETCH_NUM);
 
-			$handle = fopen(ADMIN_TOOLS_BACKUP_FILENAME, 'w');
-
-			// Retrieve all tables
-			$query = 'SHOW TABLES';
-			$tables = $db->query($query)->fetchAll();
-			
-			// Iterate over each database table
-			foreach ($tables as $table)
-			{
-				$table = $table[0];
-
-				// Add comment
-				$return = '/* Table ' . $table . ' /nnnn';
-
-				// Delete table
-				$return .= 'DROP TABLE IF EXISTS ' . $table . ';nnnn';
-
-				// Create table
-				$query = 'SHOW CREATE TABLE ' . $table;
-				$create = $db->query($query)->fetch();
-				$return .= $create[1] . ';nnnn';
-
-				// Populate table
-				$return .= 'INSERT INTO ' . $table . ' VALUES nnnn';
-
-				fwrite($handle, str_replace('nnnn', PHP_EOL, $return));
-				$return = '';
-				
-				$query = 'SELECT * FROM ' . $table;
-				$stmt = $db->query($query);
-				$count = $stmt->rowCount();
-				$j = 1;
-				while ($row = $stmt->fetch()) {
-					$num_fields = count($row);
-					for ($i = 0 ; $i < $num_fields ; $i++)
-					{
-						if ($i == 0) {
-							$return .= '(';
-						}
-						
-						$row[$i] = addslashes($row[$i]);
-						if (isset($row[$i])) {
-							$return .= '"' . $row[$i] . '"';
-						} else {
-							$return .= '""';
-						}
-						if ($i < ($num_fields - 1)) {
-							$return .= ',';
-						} else {
-							$return .= ')';
-						}
-					}
-					
-					if ($j < $count) {
-						$return .= ',nnnn';
-					} else {
-						$return .= ';nnnn';
-					}
-
-					if (fmod($j, 1000) == 0) {
-						fwrite($handle, str_replace('nnnn', PHP_EOL, $return));
-						$return = '';
-					}
-					
-					$j++;
-				}
-				
-				$return .= 'nnnnnnnn';
-				fwrite($handle, str_replace('nnnn', PHP_EOL, $return));
-			}		
-
-			fclose($handle);
-					
-			// Restore default fetch mode
-			$db->setFetchMode(Zend_Db::FETCH_ASSOC);
-
-			$flash = Zend_Controller_Action_HelperBroker::getStaticHelper('FlashMessenger');
-			$flash->addMessage(__('A backup copy of the Omeka database has been created.'), 'success');
-
-			if (get_option('admin_tools_backup_download') && file_exists(ADMIN_TOOLS_BACKUP_FILENAME)) {
-				header('Content-type: text/plain');
-				header('Content-Disposition: attachment; filename="OmekaDB-backup_' . date('Ymd_His') . '.sql"');
-				header('Content-Length: ' . filesize(ADMIN_TOOLS_BACKUP_FILENAME));
-				//readfile(ADMIN_TOOLS_BACKUP_FILENAME);
-				$myInputStream = fopen(ADMIN_TOOLS_BACKUP_FILENAME, 'rb');
-				$myOutputStream = fopen('php://output', 'wb');
-
-				stream_copy_to_stream($myInputStream, $myOutputStream);
-
-				fclose($myOutputStream);
-				fclose($myInputStream);
-				
-				exit;
-			}
-		}
 		
 		private function _getSessionsCount() 
 		{
@@ -180,7 +118,7 @@
 			}
 			
 			$db = get_db();
-			$query = 'DELETE FROM ' . $db->getTableName('Session') . ' WHERE modified < ' . $date->getTimeStamp();
+			$query = 'DELETE FROM ' . $db->getTableName('Session') . ' WHERE modified > ' . $date->getTimeStamp();
 			$db->query($query);
 			
 			return true;
