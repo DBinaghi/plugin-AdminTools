@@ -304,6 +304,26 @@
 
 	<div class="field">
 		<div class="two columns alpha">
+			<label><?php echo __('Ignore Sessions')?></label>	
+		</div>
+		<div class="inputs five columns omega">
+			<p class="explanation"><?php echo __('If checked, the backup will ignore the data contained in Sessions table.'); ?></p>
+			<?php echo $view->formCheckbox('admin_tools_backup_sessions_ignore', get_option('admin_tools_backup_sessions_ignore'), null, array('1', '0')); ?>
+		</div>
+	</div>
+
+	<div class="field">
+		<div class="two columns alpha">
+			<label><?php echo __('Compress Backup')?></label>	
+		</div>
+		<div class="inputs five columns omega">
+			<p class="explanation"><?php echo __('If checked, the backup SQL file will be compressed (format: GZIP).'); ?></p>
+			<?php echo $view->formCheckbox('admin_tools_backup_compress', get_option('admin_tools_backup_compress'), null, array('1', '0')); ?>
+		</div>
+	</div>
+
+	<div class="field">
+		<div class="two columns alpha">
 			<label><?php echo __('Download Backup')?></label>	
 		</div>
 		<div class="inputs five columns omega">
