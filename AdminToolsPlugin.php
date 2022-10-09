@@ -61,6 +61,8 @@
 			set_option('admin_tools_limit_visibility_to_own_exhibits_roles', '');
 			set_option('admin_tools_public_edit_link_types', '');
 			set_option('admin_tools_public_edit_link_blank', 1);
+			set_option('admin_tools_backup_sessions_ignore', 1);
+			set_option('admin_tools_backup_compress', 0);
 			set_option('admin_tools_backup_download', 1);
 			set_option('admin_tools_sessions_count', 0);
 		}
@@ -83,6 +85,8 @@
 			delete_option('admin_tools_limit_visibility_to_own_exhibits_roles');
 			delete_option('admin_tools_public_edit_link_types');
 			delete_option('admin_tools_public_edit_link_blank');
+			delete_option('admin_tools_backup_sessions_ignore');
+			delete_option('admin_tools_backup_compress');
 			delete_option('admin_tools_backup_download');
 			delete_option('admin_tools_sessions_count');
 		}
@@ -113,6 +117,8 @@
 			set_option('admin_tools_limit_visibility_to_own_exhibits_roles',	(isset($post['admin_tools_limit_visibility_to_own_exhibits_roles']) ? serialize($post['admin_tools_limit_visibility_to_own_exhibits_roles']) : ''));
 			set_option('admin_tools_public_edit_link_types',					(isset($post['admin_tools_public_edit_link_types']) ? serialize($post['admin_tools_public_edit_link_types']) : ''));
 			set_option('admin_tools_public_edit_link_blank',					$post['admin_tools_public_edit_link_blank']);
+			set_option('admin_tools_backup_sessions_ignore',					$post['admin_tools_backup_sessions_ignore']);
+			set_option('admin_tools_backup_compress',							$post['admin_tools_backup_compress']);
 			set_option('admin_tools_backup_download',							$post['admin_tools_backup_download']);
 			set_option('admin_tools_sessions_count',							$post['admin_tools_sessions_count']);
 		}
