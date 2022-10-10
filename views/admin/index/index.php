@@ -1,134 +1,66 @@
 <?php
-	class AdminTools_IndexController extends Omeka_Controller_AbstractActionController
-	{
-		public function indexAction()
-		{
-			$message = '';
-			
-			if (isset($_GET["op"])) {
-				switch ($_GET["op"]) {
-					case "SUM-disable":
-						set_option('admin_tools_maintenance_active', 0);
-						$message = __('The website is online again.');
-						break;
-					case "SUM-enable":
-						set_option('admin_tools_maintenance_active', 1);
-						$message = __('The "Under Maintenance" sign is on, and access to the website has been limited.');
-						break;
-					case "RC":
-						$cache = Zend_Registry::get('Zend_Translate');
-						$cache::clearCache();
-						$message = __('The translations cache has been reset.');
-						break;
-					case "BD":
-						$dbFile = '../db.ini';
-						if (!file_exists($dbFile)) {
-							throw new Zend_Config_Exception('Your Omeka database configuration file is missing.');
-						}
-						if (!is_readable($dbFile)) {
-							throw new Zend_Config_Exception('Your Omeka database configuration file cannot be read by the application.');
-						}
-						$dbIni = new Zend_Config_Ini($dbFile, 'database');
-						$connectionParams = $dbIni->toArray();
-						$isCompressed = get_option('admin_tools_backup_compress');
-						$outputFile = ($isCompressed ? str_replace('.sql', '.gz', ADMIN_TOOLS_BACKUP_FILENAME) : ADMIN_TOOLS_BACKUP_FILENAME);
-						
-						include_once('src/Ifsnop/Mysqldump/Mysqldump.php');
-						
-						$dumper = new Ifsnop\Mysqldump\Mysqldump(
-							'mysql:host=' . $connectionParams['host'] . ';dbname=' . $connectionParams['dbname'], 
-							$connectionParams['username'], 
-							$connectionParams['password'],
-							array(
-								'compress' => ($isCompressed ? Ifsnop\Mysqldump\Mysqldump::GZIP : Ifsnop\Mysqldump\Mysqldump::NONE)
-							)
-						);
-						
-						if (get_option('admin_tools_backup_sessions_ignore')) {
-							$dumper->setTableLimits(array(
-								get_db()->getTableName('Session') => 0
-							));
-						}
-						
-						$dumper->start($outputFile);
-						$message = __('A %s backup copy of the Omeka database has been created.', ($isCompressed ? __('compressed') : ''));
-		
-						if (get_option('admin_tools_backup_download') && file_exists($outputFile)) {
-							header('Content-type: ' . ($isCompressed ? 'application/gzip' : 'text/plain'));
-							header('Content-Disposition: attachment; filename="OmekaDB-backup_' . date('Ymd_His') . ($isCompressed ? '.gz' : '.sql') . '"');
-							header('Content-Length: ' . filesize($outputFile));
-							$myInputStream = fopen($outputFile, 'rb');
-							$myOutputStream = fopen('php://output', 'wb');
-							stream_copy_to_stream($myInputStream, $myOutputStream);
-							fclose($myOutputStream);
-							fclose($myInputStream);
-							
-							exit;
-						}
-						//$this->backupDB();
-						break;
-					case "TSTW":
-						if ($this->trimSessionsTable('W')) {
-							$message = __('Omeka\'s Sessions table has been trimmed up to 1 week ago.');
-						}
-						break;
-					case "TSTM":
-						if ($this->trimSessionsTable('M')) {
-							$message = __('Omeka\'s Sessions table has been trimmed up to 1 month ago.');
-						}
-						break;
-					case "TSTY":
-						if ($this->trimSessionsTable('Y')) {
-							$message = __('Omeka\'s Sessions table has been trimmed up to 1 year ago.');
-						}
-						break;
-					case "TSTE":
-						if ($this->trimSessionsTable('E')) {
-							$message = __('Omeka\'s Sessions table has been trimmed up to all unexpired sessions.');
-						}
-						break;
-				}
-			}
-			
-			if ($message != '') {
-				$flash = Zend_Controller_Action_HelperBroker::getStaticHelper('FlashMessenger');
-				$flash->addMessage($message, 'success');
-			}
-			
-			$this->view->sessionsCount = $this->_getSessionsCount();
-		}
+	$head = array(
+		'bodyclass' => 'admin-tools index',
+		'title' => html_escape(__('Admin Tools')),
+		'content_class' => 'horizontal-nav'
+	);
 
-		
-		private function _getSessionsCount() 
-		{
-			$db = get_db();
-			return $db->getTable('Session')->count();			
-		}
-		
-		public function trimSessionsTable($period)
-		{
-			$date = new DateTime();
-			$db = get_db();
-
-			switch($period) {
-				case 'W':
-					$query = 'DELETE FROM ' . $db->getTableName('Session') . ' WHERE modified < ' . $date->modify("-1 week")->getTimeStamp();
-					break;
-				case 'M':
-					$query = 'DELETE FROM ' . $db->getTableName('Session') . ' WHERE modified < ' . $date->modify("-1 month")->getTimeStamp();
-					break;
-				case 'Y':
-					$query = 'DELETE FROM ' . $db->getTableName('Session') . ' WHERE modified < ' . $date->modify("-1 year")->getTimeStamp();
-					break;
-				case 'E':
-					$query = 'DELETE FROM ' . $db->getTableName('Session') . ' WHERE modified+lifetime < ' . $date->getTimeStamp();
-					break;
-				default:
-					return false;
-			}
-
-			$db->query($query);
-			return true;
-		}
+	if (get_option('admin_tools_maintenance_active')) {
+		$sumOperation = 'disable';
+		$sumLabel = __('Stop Maintenance');
+		$sumColor = 'red';
+	} else {
+		$sumOperation = 'enable';
+		$sumLabel = __('Start Maintenance');
+		$sumColor = 'green';
 	}
+
+	echo head($head);
 ?>
+
+<?php echo flash(); ?>
+
+<div class="field">
+	<div id="SUM-label" class="two columns alpha">
+		<label for="SUM"><?php echo __('Site Under Maintenance'); ?></label>
+	</div>
+	<div class="inputs five columns omega">
+		<p class="explanation"><?php echo __('Block out from Public interface not-logged in users (and also from Admin interface some logged-in users), displaying instead an "Under Maintenance" sign.'); ?></p>
+		<a id="SUM" class="button <?php echo $sumColor; ?>" href="?op=SUM-<?php echo $sumOperation; ?>"><?php echo $sumLabel; ?></a>
+	</div>
+</div>
+
+<div class="field">
+	<div id="RC-label" class="two columns alpha">
+		<label for="RC"><?php echo __('Languages Cache'); ?></label>
+	</div>
+	<div class="inputs five columns omega">
+		<p class="explanation"><?php echo __('Update all translations after language files have been changed manually.'); ?></p>
+		<a id="RC" class="button green" href="?op=RC"><?php echo __('Reset Cache'); ?></a>
+	</div>
+</div>
+
+<div class="field">
+	<div id="BD-label" class="two columns alpha">
+		<label for="BD"><?php echo __('Database Backup'); ?></label>
+	</div>
+	<div class="inputs five columns omega">
+		<p class="explanation"><?php echo __('Backup the entire Omeka database into an SQL file.'); ?></p>
+		<a id="BD" class="button green" href="?op=BD"><?php echo __('Backup Database'); ?></a>
+	</div>
+</div>
+
+<div class="field">
+	<div id="TST-label" class="two columns alpha">
+		<label for="TST"><?php echo __('Sessions Table'); ?></label>
+	</div>
+	<div class="inputs five columns omega">
+		<p class="explanation"><?php echo __('Trim Omeka\'s Sessions table') . (get_option('admin_tools_sessions_count') ? ' ' . __('(at the moment, the table contains %s records)', number_format($this->sessionsCount)) : '') . __('. Choose whether to delete sessions older than 1 week/month/year or all expired ones.'); ?></p>
+		<a id="TSTW" class="button green" href="?op=TSTW"><?php echo __('Trim (+1 week)'); ?></a>
+		<a id="TSTM" class="button green" href="?op=TSTM"><?php echo __('Trim (+1 month)'); ?></a>
+		<a id="TSTY" class="button green" href="?op=TSTY"><?php echo __('Trim (+1 year)'); ?></a>
+		<a id="TSTE" class="button green" href="?op=TSTE"><?php echo __('Trim (expired)'); ?></a>
+	</div>
+</div>
+
+<?php echo foot(); ?>
