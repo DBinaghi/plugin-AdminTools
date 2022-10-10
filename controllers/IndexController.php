@@ -21,7 +21,7 @@
 						$message = __('The translations cache has been reset.');
 						break;
 					case "BD":
-						$dbFile = '..\db.ini';
+						$dbFile = '../db.ini';
 						if (!file_exists($dbFile)) {
 							throw new Zend_Config_Exception('Your Omeka database configuration file is missing.');
 						}
@@ -82,6 +82,11 @@
 							$message = __('Omeka\'s Sessions table has been trimmed up to 1 year ago.');
 						}
 						break;
+					case "TSTE":
+						if ($this->trimSessionsTable('E')) {
+							$message = __('Omeka\'s Sessions table has been trimmed up to all unexpired sessions.');
+						}
+						break;
 				}
 			}
 			
@@ -103,24 +108,26 @@
 		public function trimSessionsTable($period)
 		{
 			$date = new DateTime();
+			$db = get_db();
+
 			switch($period) {
 				case 'W':
-					$date->modify("-1 week");
+					$query = 'DELETE FROM ' . $db->getTableName('Session') . ' WHERE modified < ' . $date->modify("-1 week")->getTimeStamp();
 					break;
 				case 'M':
-					$date->modify("-1 month");
+					$query = 'DELETE FROM ' . $db->getTableName('Session') . ' WHERE modified < ' . $date->modify("-1 month")->getTimeStamp();
 					break;
 				case 'Y':
-					$date->modify("-1 year");
+					$query = 'DELETE FROM ' . $db->getTableName('Session') . ' WHERE modified < ' . $date->modify("-1 year")->getTimeStamp();
+					break;
+				case 'E':
+					$query = 'DELETE FROM ' . $db->getTableName('Session') . ' WHERE modified+lifetime < ' . $date->getTimeStamp();
 					break;
 				default:
 					return false;
 			}
-			
-			$db = get_db();
-			$query = 'DELETE FROM ' . $db->getTableName('Session') . ' WHERE modified > ' . $date->getTimeStamp();
+
 			$db->query($query);
-			
 			return true;
 		}
 	}
