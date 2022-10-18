@@ -14,6 +14,9 @@
 	 */
 
 	define('ADMIN_TOOLS_BACKUP_FILENAME', '../files/DatabaseBackup.sql');
+	
+	// Helper functions for database backup
+	require_once 'views/helpers/Mysqldump.php';
 
 	class AdminToolsPlugin extends Omeka_Plugin_AbstractPlugin
 	{
@@ -146,8 +149,8 @@
 		{
 			$user = current_user();
 			if (!isset($user) && (bool)get_option('admin_tools_cookiebar_active')) {
-				queue_js_file('vendor/jquery.cookiebar');    
-				queue_css_file('vendor/jquery.cookiebar');
+				queue_js_file('jquery.cookiebar');    
+				queue_css_file('jquery.cookiebar');
 			}
 		}
 
@@ -168,8 +171,8 @@
 		{
 			$user = current_user();
 			if (!isset($user) && (bool)get_option('admin_tools_cookiebar_active')) {
-				queue_js_file('vendor/jquery.cookiebar');
-				queue_css_file('vendor/jquery.cookiebar');
+				queue_js_file('jquery.cookiebar');
+				queue_css_file('jquery.cookiebar');
 				echo get_view()->partial('cookie_bar.php', array(
 					'message' => get_option('admin_tools_cookiebar_text'),
 					'policyButton' => (get_option('admin_tools_cookiebar_policy_url') != '' ? 1 : 0),
