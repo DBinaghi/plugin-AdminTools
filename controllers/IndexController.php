@@ -21,6 +21,7 @@
 						$message = __('The translations cache has been reset.');
 						break;
 					case "BD":
+						$db = get_db();
 						$dbFile = '../db.ini';
 						if (!file_exists($dbFile)) {
 							throw new Zend_Config_Exception('Your Omeka database configuration file is missing.');
@@ -33,14 +34,12 @@
 						$isCompressed = get_option('admin_tools_backup_compress');
 						$outputFile = ($isCompressed ? str_replace('.sql', '.gz', ADMIN_TOOLS_BACKUP_FILENAME) : ADMIN_TOOLS_BACKUP_FILENAME);
 						
-						include_once('src/Ifsnop/Mysqldump/Mysqldump.php');
-						
-						$dumper = new Ifsnop\Mysqldump\Mysqldump(
+						$dumper = new Mysqldump\Mysqldump(
 							'mysql:host=' . $connectionParams['host'] . ';dbname=' . $connectionParams['dbname'], 
 							$connectionParams['username'], 
 							$connectionParams['password'],
 							array(
-								'compress' => ($isCompressed ? Ifsnop\Mysqldump\Mysqldump::GZIP : Ifsnop\Mysqldump\Mysqldump::NONE)
+								'compress' => ($isCompressed ? Mysqldump\Mysqldump::GZIP : Mysqldump\Mysqldump::NONE)
 							)
 						);
 						
@@ -65,7 +64,6 @@
 							
 							exit;
 						}
-						//$this->backupDB();
 						break;
 					case "TSTW":
 						if ($this->trimSessionsTable('W')) {
@@ -95,7 +93,9 @@
 				$flash->addMessage($message, 'success');
 			}
 			
-			$this->view->sessionsCount = $this->_getSessionsCount();
+			if (get_option('admin_tools_sessions_count')) {
+				$this->view->sessionsCount = $this->_getSessionsCount();
+			}
 		}
 
 		
