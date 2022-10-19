@@ -24,10 +24,10 @@
 						$db = get_db();
 						$dbFile = '../db.ini';
 						if (!file_exists($dbFile)) {
-							throw new Zend_Config_Exception('Your Omeka database configuration file is missing.');
+							throw new Zend_Config_Exception(__('Your Omeka database configuration file is missing.'));
 						}
 						if (!is_readable($dbFile)) {
-							throw new Zend_Config_Exception('Your Omeka database configuration file cannot be read by the application.');
+							throw new Zend_Config_Exception(__('Your Omeka database configuration file cannot be read by the application.'));
 						}
 						$dbIni = new Zend_Config_Ini($dbFile, 'database');
 						$connectionParams = $dbIni->toArray();
@@ -96,6 +96,8 @@
 			if (get_option('admin_tools_sessions_count')) {
 				$this->view->sessionsCount = $this->_getSessionsCount();
 			}
+			
+			$this->view->sessionMaxLifeTime = number_format($this->_getSessionMaxLifeTime() / (60 * 60 * 24), 0);
 		}
 
 		
@@ -103,6 +105,20 @@
 		{
 			$db = get_db();
 			return $db->getTable('Session')->count();			
+		}
+		
+		public function _getSessionMaxLifeTime()
+		{
+			$applicationFile = '../application/config/application.ini';
+			if (!file_exists($applicationFile)) {
+				throw new Zend_Config_Exception(__('Your Omeka application configuration file is missing.'));
+			}
+			if (!is_readable($applicationFile)) {
+				throw new Zend_Config_Exception(__('Your Omeka application configuration file cannot be read by the application.'));
+			}
+			$sessionIni = new Zend_Config_Ini($applicationFile, 'production');
+			$sessionParams = $sessionIni->toArray();
+			return $sessionParams['resources']['session']['gc_maxlifetime'];
 		}
 		
 		public function trimSessionsTable($period)
