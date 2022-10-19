@@ -317,7 +317,7 @@
 			<label><?php echo __('Compress Backup')?></label>	
 		</div>
 		<div class="inputs five columns omega">
-			<p class="explanation"><?php echo __('If checked, the backup SQL file will be compressed (format: GZIP).'); ?></p>
+			<p class="explanation"><?php echo __('If checked, the backup SQL file will be compressed (format: GZip).'); ?></p>
 			<?php echo $view->formCheckbox('admin_tools_backup_compress', get_option('admin_tools_backup_compress'), null, array('1', '0')); ?>
 		</div>
 	</div>
@@ -327,7 +327,7 @@
 			<label><?php echo __('Download Backup')?></label>	
 		</div>
 		<div class="inputs five columns omega">
-			<p class="explanation"><?php echo __('If checked, the backup SQL file will be downloadable (by default, it sits the Omeka\'s Files directory).'); ?></p>
+			<p class="explanation"><?php echo __('If checked, the backup SQL file will be downloadable (by default, it sits in the Omeka\'s files directory).'); ?></p>
 			<?php echo $view->formCheckbox('admin_tools_backup_download', get_option('admin_tools_backup_download'), null, array('1', '0')); ?>
 		</div>
 	</div>
