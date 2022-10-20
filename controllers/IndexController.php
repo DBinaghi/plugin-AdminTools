@@ -22,22 +22,14 @@
 						break;
 					case "BD":
 						$db = get_db();
-						$dbFile = '../db.ini';
-						if (!file_exists($dbFile)) {
-							throw new Zend_Config_Exception(__('Your Omeka database configuration file is missing.'));
-						}
-						if (!is_readable($dbFile)) {
-							throw new Zend_Config_Exception(__('Your Omeka database configuration file cannot be read by the application.'));
-						}
-						$dbIni = new Zend_Config_Ini($dbFile, 'database');
-						$connectionParams = $dbIni->toArray();
+						$dbConfig = $db->getAdapter()->getConfig();
 						$isCompressed = get_option('admin_tools_backup_compress');
 						$outputFile = ($isCompressed ? str_replace('.sql', '.gz', ADMIN_TOOLS_BACKUP_FILENAME) : ADMIN_TOOLS_BACKUP_FILENAME);
 						
 						$dumper = new Mysqldump\Mysqldump(
-							'mysql:host=' . $connectionParams['host'] . ';dbname=' . $connectionParams['dbname'], 
-							$connectionParams['username'], 
-							$connectionParams['password'],
+							'mysql:host=' . $dbConfig['host'] . ';dbname=' . $dbConfig['dbname'], 
+							$dbConfig['username'], 
+							$dbConfig['password'],
 							array(
 								'compress' => ($isCompressed ? Mysqldump\Mysqldump::GZIP : Mysqldump\Mysqldump::NONE)
 							)
