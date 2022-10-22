@@ -7,7 +7,7 @@ The plugin is still under development, so please use it at your own risk. Please
 ## Description
 
 Plugin for Omeka Classic. Reunites several minor plugins and code snippets to give site administrators extra tools:
-- **Site Under Maintenance**: blocks out from Public interface not-logged in users (and also from Admin interface some logged-in users), displaying instead an "Under Maintenance" sign.
+- **Site Under Maintenance**: blocks out from Public interface not-logged in users (and also from Admin interface some logged-in users), displaying instead an "Under Maintenance" sign (note: if wanting to customize sign, one can edit the style section in *views/shared/maintenance/maintenance.php* file).
 - **User Manual**: allows for a User Manual (or other document) to be made available for logged-in users.
 - **Cookie Bar**: adds to Public interface a header or footer bar with simple information about cookies and privacy policy via the jQuery cookiebar widget.
 - **Limit Visibility to Own**: limits Item/Collection/Exhibit visibility to only the ones created by the user (Admin interface).
