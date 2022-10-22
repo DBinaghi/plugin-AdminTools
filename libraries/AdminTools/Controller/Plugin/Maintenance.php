@@ -10,10 +10,12 @@
 
 				if ($controller != 'users' || ($action != 'login' && $action != 'logout')) {
 					if (empty($user))  {
+						// case user is not logged in
 						$request->setModuleName('admin-tools');
 						$request->setControllerName('maintenance');
 						$request->setActionName('maintenance');
-					} elseif ((bool)get_option('admin_tools_maintenance_scope_extended') && !in_array($user->role, array('admin','super'))) {
+					} elseif ((bool)get_option('admin_tools_maintenance_scope_extended') && !in_array($user->role, array('admin', 'super'))) {
+						// case user is logged in, but plugin is set to stop access to users without admin or super user permissions
 						$request->setModuleName('admin-tools');
 						$request->setControllerName('maintenance');
 						$request->setActionName('maintenance');
