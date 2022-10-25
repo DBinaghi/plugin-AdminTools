@@ -326,7 +326,7 @@
 			
 			if ((bool)get_option('admin_tools_maintenance_active')) {
 				array_unshift($navLinks, array(
-					'label' => '** Maintenance Mode Active **',
+					'label' => __('** Maintenance Mode Active **'),
 					'uri' => admin_url('/admin-tools')
 				));
 			}
