@@ -144,8 +144,8 @@ msgid "Tags Table"
 msgstr "Tabella etichette"
 
 #: index.php:71
-msgid "Delete all tags that have no correspondence with any Item."
-msgstr "Cancella tutte le etichette che non hanno corrispondenza con un Documento."
+msgid "Delete all tags that have no correspondence with any record."
+msgstr "Cancella tutte le etichette che non hanno corrispondenza con un record."
 
 #: index.php:62
 msgid "Delete unused tags"
