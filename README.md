@@ -1,9 +1,5 @@
 # Admin Tools
 
-## WARNING ##
-
-The plugin is still under development, so please use it at your own risk. Please also report any bug via the Issues page. Thanks.
-
 ## Description
 
 Plugin for Omeka Classic. Reunites several minor plugins and code snippets to give site administrators extra tools:
