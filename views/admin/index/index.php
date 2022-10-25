@@ -26,7 +26,7 @@
 	</div>
 	<div class="inputs five columns omega">
 		<p class="explanation"><?php echo __('Block out from Public interface not-logged in users') . (get_option('admin_tools_maintenance_scope_extended') ? __(' (and also, from Admin interface, some logged-in users)') : '') . __(', displaying instead an "Under Maintenance" sign.'); ?></p>
-		<a id="SUM" class="button <?php echo $sumColor; ?>" href="?op=SUM-<?php echo $sumOperation; ?>"><?php echo $sumLabel; ?></a>
+		<a id="SUM" class="button <?php echo $sumColor; ?>" href="<?php echo url('admin-tools/index/maintenance/op/' . $sumOperation); ?>"><?php echo $sumLabel; ?></a>
 	</div>
 </div>
 
@@ -36,7 +36,7 @@
 	</div>
 	<div class="inputs five columns omega">
 		<p class="explanation"><?php echo __('Update all translations after language files have been changed manually, either in the active theme or in any active plugin.'); ?></p>
-		<a id="RC" class="button green" href="?op=RC"><?php echo __('Reset Cache'); ?></a>
+		<a id="RC" class="button green" href="<?php echo url('admin-tools/index/reset-cache'); ?>"><?php echo __('Reset Cache'); ?></a>
 	</div>
 </div>
 
@@ -46,7 +46,7 @@
 	</div>
 	<div class="inputs five columns omega">
 		<p class="explanation"><?php echo __('Backup the entire Omeka database into an SQL file.') . (get_option('admin_tools_backup_sessions_ignore') ? __(' During the backup, data from Sessions table will be ignored.') : '') . (get_option('admin_tools_backup_download') ? __(' A copy of the file will be available for download') . (get_option('admin_tools_backup_compress') ? __(', compressed in GZip format.') : '.') : '.'); ?></p>
-		<a id="BD" class="button green" href="?op=BD"><?php echo __('Backup Database'); ?></a>
+		<a id="BD" class="button green" href="<?php echo url('admin-tools/index/backup'); ?>"><?php echo __('Backup Database'); ?></a>
 	</div>
 </div>
 
@@ -56,10 +56,20 @@
 	</div>
 	<div class="inputs five columns omega">
 		<p class="explanation"><?php echo __('Trim Omeka\'s Sessions table') . (get_option('admin_tools_sessions_count') ? ' ' . __('(at the moment, the table contains <strong>%s</strong> records)', number_format($this->sessionsCount)) : '') . __(', choosing whether to delete sessions older than 1 year/month/week or all expired ones (at the moment, sessions expire after <strong>%s</strong> days).', $this->sessionMaxLifeTime); ?></p>
-		<a id="TSTY" class="button green" href="?op=TSTY"><?php echo __('Trim (+1 year)'); ?></a>
-		<a id="TSTM" class="button green" href="?op=TSTM"><?php echo __('Trim (+1 month)'); ?></a>
-		<a id="TSTW" class="button green" href="?op=TSTW"><?php echo __('Trim (+1 week)'); ?></a>
-		<a id="TSTE" class="button green" href="?op=TSTE"><?php echo __('Trim (expired)'); ?></a>
+		<a id="TSTY" class="button green" href="<?php echo url('admin-tools/index/trim-sessions/rng/year'); ?>"><?php echo __('Trim (+1 year)'); ?></a>
+		<a id="TSTM" class="button green" href="<?php echo url('admin-tools/index/trim-sessions/rng/month'); ?>"><?php echo __('Trim (+1 month)'); ?></a>
+		<a id="TSTW" class="button green" href="<?php echo url('admin-tools/index/trim-sessions/rng/week'); ?>"><?php echo __('Trim (+1 week)'); ?></a>
+		<a id="TSTE" class="button green" href="<?php echo url('admin-tools/index/trim-sessions/rng/expired'); ?>"><?php echo __('Trim (expired)'); ?></a>
+	</div>
+</div>
+
+<div class="field">
+	<div id="DUT-label" class="two columns alpha">
+		<label for="DUT"><?php echo __('Tags Table'); ?></label>
+	</div>
+	<div class="inputs five columns omega">
+		<p class="explanation"><?php echo __('Delete all tags that have no correspondence with any Item.') ?></p>
+		<a id="DUT" class="button green" href="<?php echo url('admin-tools/index/delete-tags'); ?>"><?php echo __('Delete unused tags'); ?></a>
 	</div>
 </div>
 
