@@ -193,7 +193,7 @@ msgstr "anno"
 
 #: IndexController.php:99
 msgid "All unused tags have been deleted."
-msgstr "Il file di configurazione della tua applicazione Omeka non può essere letto dall'applicazione."
+msgstr "Tutte le etichette non utilizzate sono state cancellate."
 
 #: IndexController.php:114
 msgid "Your Omeka application configuration file is missing."
@@ -201,7 +201,7 @@ msgstr "Il file di configurazione della tua applicazione Omeka non si trova."
 
 #: IndexController.php:117
 msgid "Your Omeka application configuration file cannot be read by the application."
-msgstr ""
+msgstr "Il file di configurazione della tua applicazione Omeka non può essere letto dall'applicazione."
 
 #: cookie_bar.php:5
 msgid "I understand"
