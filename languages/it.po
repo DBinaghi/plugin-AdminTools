@@ -10,6 +10,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-10-04 18:54+0200\n"
 "PO-Revision-Date: 2022-10-19 17:27+0200\n"
+"PO-Revision-Date: 2022-10-25 16:57+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Daniele Binaghi <admin@bitoteko.it>\n"
 "Language-Team: Italian\n"
@@ -120,7 +121,7 @@ msgstr "(al momento, la tabella contiene <strong>%s</strong> record)"
 
 #: index.php:58
 msgid ", choosing whether to delete sessions older than 1 year/month/week or all expired ones (at the moment, sessions expire after <strong>%s</strong> days)."
-msgstr ". Scegli se eliminare le sessioni più vecchie di 1 anno/mese/settimana o tutte quelle scadute (al momento, le sessioni scadono dopo <strong>%s</strong> giorni)."
+msgstr ", scegliendo se eliminare le sessioni più vecchie di 1 anno/mese/settimana o tutte quelle scadute (al momento, le sessioni scadono dopo <strong>%s</strong> giorni)."
 
 #: index.php:61
 msgid "Trim (+1 year)"
@@ -138,49 +139,61 @@ msgstr "Elimina sessioni (+1 settimana)"
 msgid "Trim (expired)"
 msgstr "Elimina sessioni scadute"
 
-#: IndexController.php:12
-msgid "The website is online again."
-msgstr "Il sito web è nuovamente online."
+#: index.php:68
+msgid "Tags Table"
+msgstr "Tabella etichette"
 
-#: IndexController.php:16
-msgid "The \"Under Maintenance\" sign is on, and access to the website has been limited."
-msgstr "Il cartello \"Sito in manutenzione\" è attivo, e l'accesso al sito è stato limitato."
+#: index.php:71
+msgid "Deletes all tags that have no correspondence with any Item."
+msgstr "Cancella tutte le etichette che non hanno corrispondenza con un Documento."
 
-#: IndexController.php:21
-msgid "The translations cache has been reset."
-msgstr "La cache traduzioni è stata ripristinata."
+#: index.php:62
+msgid "Delete unused tags"
+msgstr "Cancella etichette non usate"
 
-#: IndexController.php:27
-msgid "Your Omeka database configuration file is missing."
-msgstr "Il file di configurazione della tua base dati Omeka non si trova."
-
-#: IndexController.php:30
-msgid "Your Omeka database configuration file cannot be read by the application."
-msgstr "Il file di configurazione della tua base dati Omeka non può essere letto dall'applicazione."
-
-#: IndexController.php:53
+#: IndexController.php:49
 msgid "A %s backup copy of the Omeka database has been created."
 msgstr "Una copia di backup %s della base dati Omeka è stata creata."
 
-#: IndexController.php:53
+#: IndexController.php:49
 msgid "compressed"
 msgstr "compressa"
 
+#: IndexController.php:58
+msgid "The translations cache has been reset."
+msgstr "La cache traduzioni è stata ripristinata."
+
+#: IndexController.php:67
+msgid "The \"Under Maintenance\" sign is on, and access to the website has been limited."
+msgstr "Il cartello \"Sito in manutenzione\" è attivo, e l'accesso al sito è stato limitato."
+
 #: IndexController.php:70
-msgid "Omeka's Sessions table has been trimmed up to 1 week ago."
-msgstr "La tabella Sessions di Omeka è stata ridotta all'ultima settimana."
+msgid "The website is online again."
+msgstr "Il sito web è nuovamente online."
 
-#: IndexController.php:75
-msgid "Omeka's Sessions table has been trimmed up to 1 month ago."
-msgstr "La tabella Sessions di Omeka è stata ridotta all'ultimo mese."
-
-#: IndexController.php:80
-msgid "Omeka's Sessions table has been trimmed up to 1 year ago."
-msgstr "La tabella Sessions di Omeka è stata ridotta all'ultimo anno."
-
-#: IndexController.php:85
+#: IndexController.php:82
 msgid "Omeka's Sessions table has been trimmed up to all unexpired sessions."
 msgstr "La tabella Sessions di Omeka è stata ripulita di tutte le sessioni scadute."
+
+#: IndexController.php:86
+msgid "Omeka\'s Sessions table has been trimmed up to 1 %s ago."
+msgstr "La tabella Sessions di Omeka è stata ridotta fino ad 1 %s fa."
+
+#: IndexController.php:86
+msgid "week"
+msgstr "settimana"
+
+#: IndexController.php:86
+msgid "month"
+msgstr "mese"
+
+#: IndexController.php:86
+msgid "year"
+msgstr "anno"
+
+#: IndexController.php:99
+msgid "All unused tags have been deleted."
+msgstr "Il file di configurazione della tua applicazione Omeka non può essere letto dall'applicazione."
 
 #: IndexController.php:114
 msgid "Your Omeka application configuration file is missing."
@@ -188,7 +201,7 @@ msgstr "Il file di configurazione della tua applicazione Omeka non si trova."
 
 #: IndexController.php:117
 msgid "Your Omeka application configuration file cannot be read by the application."
-msgstr "Il file di configurazione della tua applicazione Omeka non può essere letto dall'applicazione."
+msgstr ""
 
 #: cookie_bar.php:5
 msgid "I understand"

@@ -10,6 +10,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-10-04 18:54+0200\n"
 "PO-Revision-Date: 2022-10-19 17:27+0200\n"
+"PO-Revision-Date: 2022-10-25 16:57+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -138,48 +139,60 @@ msgstr ""
 msgid "Trim (expired)"
 msgstr ""
 
-#: IndexController.php:12
-msgid "The website is online again."
+#: index.php:68
+msgid "Tags Table"
 msgstr ""
 
-#: IndexController.php:16
-msgid "The \"Under Maintenance\" sign is on, and access to the website has been limited."
+#: index.php:71
+msgid "Deletes all tags that have no correspondence with any Item."
 msgstr ""
 
-#: IndexController.php:21
-msgid "The translations cache has been reset."
+#: index.php:62
+msgid "Delete unused tags"
 msgstr ""
 
-#: IndexController.php:27
-msgid "Your Omeka database configuration file is missing."
-msgstr ""
-
-#: IndexController.php:30
-msgid "Your Omeka database configuration file cannot be read by the application."
-msgstr ""
-
-#: IndexController.php:53
+#: IndexController.php:49
 msgid "A %s backup copy of the Omeka database has been created."
 msgstr ""
 
-#: IndexController.php:53
+#: IndexController.php:49
 msgid "compressed"
 msgstr ""
 
+#: IndexController.php:58
+msgid "The translations cache has been reset."
+msgstr ""
+
+#: IndexController.php:67
+msgid "The \"Under Maintenance\" sign is on, and access to the website has been limited."
+msgstr ""
+
 #: IndexController.php:70
-msgid "Omeka's Sessions table has been trimmed up to 1 week ago."
+msgid "The website is online again."
 msgstr ""
 
-#: IndexController.php:75
-msgid "Omeka's Sessions table has been trimmed up to 1 month ago."
-msgstr ""
-
-#: IndexController.php:80
-msgid "Omeka's Sessions table has been trimmed up to 1 year ago."
-msgstr ""
-
-#: IndexController.php:85
+#: IndexController.php:82
 msgid "Omeka's Sessions table has been trimmed up to all unexpired sessions."
+msgstr ""
+
+#: IndexController.php:86
+msgid "Omeka\'s Sessions table has been trimmed up to 1 %s ago."
+msgstr ""
+
+#: IndexController.php:86
+msgid "week"
+msgstr ""
+
+#: IndexController.php:86
+msgid "month"
+msgstr ""
+
+#: IndexController.php:86
+msgid "year"
+msgstr ""
+
+#: IndexController.php:99
+msgid "All unused tags have been deleted."
 msgstr ""
 
 #: IndexController.php:114
