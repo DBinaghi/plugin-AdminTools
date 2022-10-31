@@ -3,13 +3,21 @@
 ## Description
 
 Plugin for Omeka Classic. Reunites several minor plugins and code snippets to give site administrators extra tools:
+
 - **Site Under Maintenance**: blocks out from Public interface not-logged in users (and also from Admin interface some logged-in users), displaying instead an "Under Maintenance" sign (note: if wanting to customize sign, one can edit the style section in *views/shared/maintenance/maintenance.php* file).
+
 - **User Manual**: allows for a User Manual (or other document) to be made available for logged-in users.
+
 - **Cookie Bar**: adds to Public interface a header or footer bar with simple information about cookies and privacy policy via the jQuery cookiebar widget.
+
 - **Limit Visibility to Own**: limits Item/Collection/Exhibit visibility to only the ones created by the user (Admin interface).
+
 - **Public Edit Link**: adds a edit link to Items/Collections/Exhibits/Files/Simple Pages to Public interface for logged-in users.
+
 - **Database Backup**: creates a backup copy of the Omeka database, storing it locally (in Omeka's **files** directory) and also making it available for download.
+
 - **Sessions Table**: allows trimming of the Omeka table recording sessions, in case automatic trimming was not effectively working.
+
 - **Tags Table**: allows deleting all unused tags (i.e. tags not associated with any record).
 
 When installed, the plugin creates an **Admin Tools** page accessible to Super User from the admin navigation sidebar; through the page one can put the website in maintenance mode, clear the languages cache and create a backup copy of Omeka's database. The plugin's configuration page lets fine tune this functions, plus many other ones.
@@ -43,8 +51,13 @@ Many thanks to [Charles Butcher](https://reephamarchive.co.uk/) for his extensiv
 Copyright [Daniele Binaghi](https://github.com/DBinaghi), 2022
 
 For their coding inspiration and contributions, many thanks to the following people:
+
 - plugin-DatabaseBackup: copyright [Anne L'Hôte](https://github.com/annelhote), 2015 
+
 - Omeka-plugin-Translations: copyright [Daniel Berthereau](https://github.com/Daniel-KM), 2018-2019
+
 - omeka-plugin-eucookiebar: copyright [Digital Humanities at the University of Warwick](https://github.com/digihum), 2016
+
 - omeka-plugin-Maintenance: copyright [Biblibre](https://github.com/BibLibre), 2016
+
 - ProjectGuide: copyright [Eric C. Weig](https://github.com/libmanuk), 2019
