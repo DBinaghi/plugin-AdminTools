@@ -45,7 +45,7 @@
 		<label for="BD"><?php echo __('Database Backup'); ?></label>
 	</div>
 	<div class="inputs five columns omega">
-		<p class="explanation"><?php echo __('Backup the entire Omeka database into an SQL file.') . (get_option('admin_tools_backup_sessions_ignore') ? __(' During the backup, data from Sessions table will be ignored.') : '') . (get_option('admin_tools_backup_download') ? __(' A copy of the file will be available for download') . (get_option('admin_tools_backup_compress') ? __(', compressed in GZip format.') : '.') : '.'); ?></p>
+		<p class="explanation"><?php echo __('Backup the entire Omeka database into a SQL file') . $this->lastBackupDateTime . '.' .(get_option('admin_tools_backup_sessions_ignore') ? ' ' . __('During the backup, data from "Sessions" table will be <b>ignored</b>.') : '') . (get_option('admin_tools_backup_download') ? ' ' . __('A copy of the file will be available for download') . (get_option('admin_tools_backup_compress') ? __(', <b>compressed</b> in GZip format.') : '.') : '.'); ?></p>
 		<a id="BD" class="button green" href="<?php echo url('admin-tools/index/backup'); ?>"><?php echo __('Backup Database'); ?></a>
 	</div>
 </div>
@@ -55,7 +55,7 @@
 		<label for="TST"><?php echo __('Sessions Table'); ?></label>
 	</div>
 	<div class="inputs five columns omega">
-		<p class="explanation"><?php echo __('Trim Omeka\'s Sessions table') . (get_option('admin_tools_sessions_count') ? ' ' . __('(at the moment, the table contains <strong>%s</strong> records)', number_format($this->sessionsCount)) : '') . __(', choosing whether to delete sessions older than 1 year/month/week or all expired ones (at the moment, sessions expire after <strong>%s</strong> days).', $this->sessionMaxLifeTime); ?></p>
+		<p class="explanation"><?php echo __('Trim Omeka\'s "Sessions" table') . (get_option('admin_tools_sessions_count') ? ' ' . __('(at the moment, the table contains <strong>%s</strong> records)', number_format($this->sessionsCount)) : '') . __(', choosing whether to delete sessions older than 1 year/month/week or all expired ones (at the moment, sessions expire after <strong>%s</strong> days).', $this->sessionMaxLifeTime); ?></p>
 		<a id="TSTY" class="button green" href="<?php echo url('admin-tools/index/trim-sessions/rng/year'); ?>"><?php echo __('Trim (+1 year)'); ?></a>
 		<a id="TSTM" class="button green" href="<?php echo url('admin-tools/index/trim-sessions/rng/month'); ?>"><?php echo __('Trim (+1 month)'); ?></a>
 		<a id="TSTW" class="button green" href="<?php echo url('admin-tools/index/trim-sessions/rng/week'); ?>"><?php echo __('Trim (+1 week)'); ?></a>
