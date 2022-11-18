@@ -11,6 +11,7 @@ msgstr ""
 "POT-Creation-Date: 2022-10-04 18:54+0200\n"
 "PO-Revision-Date: 2022-10-19 17:27+0200\n"
 "PO-Revision-Date: 2022-10-25 16:57+0200\n"
+"PO-Revision-Date: 2022-11-17 16:53+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -88,19 +89,19 @@ msgid "Database Backup"
 msgstr ""
 
 #: index.php:48
-msgid "Backup the entire Omeka database into an SQL file."
+msgid "Backup the entire Omeka database into a SQL file"
 msgstr ""
 
 #: index.php:48
-msgid " During the backup, data from Sessions table will be ignored."
+msgid "During the backup, data from \"Sessions\" table will be <b>ignored</b>."
 msgstr ""
 
 #: index.php:48
-msgid " A copy of the file will be available for download"
+msgid "A copy of the file will be available for download"
 msgstr ""
 
 #: index.php:48
-msgid ", compressed in GZip format."
+msgid ", <b>compressed</b> in GZip format."
 msgstr ""
 
 #: index.php:49
@@ -112,7 +113,7 @@ msgid "Sessions Table"
 msgstr ""
 
 #: index.php:58
-msgid "Trim Omeka's Sessions table"
+msgid "Trim Omeka's \"Sessions\" table"
 msgstr ""
 
 #: index.php:58
@@ -144,62 +145,66 @@ msgid "Tags Table"
 msgstr ""
 
 #: index.php:71
-msgid "Delete all tags that have no correspondence with any Item."
+msgid "Delete all tags that have no correspondence with any record."
 msgstr ""
 
 #: index.php:62
 msgid "Delete unused tags"
 msgstr ""
 
-#: IndexController.php:49
+#: IndexController.php:51
 msgid "A %s backup copy of the Omeka database has been created."
 msgstr ""
 
-#: IndexController.php:49
+#: IndexController.php:51
 msgid "compressed"
 msgstr ""
 
-#: IndexController.php:58
+#: IndexController.php:60
 msgid "The translations cache has been reset."
 msgstr ""
 
-#: IndexController.php:67
+#: IndexController.php:69
 msgid "The \"Under Maintenance\" sign is on, and access to the website has been limited."
 msgstr ""
 
-#: IndexController.php:70
+#: IndexController.php:72
 msgid "The website is online again."
 msgstr ""
 
-#: IndexController.php:82
+#: IndexController.php:84
 msgid "Omeka's Sessions table has been trimmed up to all unexpired sessions."
 msgstr ""
 
-#: IndexController.php:86
+#: IndexController.php:88
 msgid "Omeka\'s Sessions table has been trimmed up to 1 %s ago."
 msgstr ""
 
-#: IndexController.php:86
+#: IndexController.php:88
 msgid "week"
 msgstr ""
 
-#: IndexController.php:86
+#: IndexController.php:88
 msgid "month"
 msgstr ""
 
-#: IndexController.php:86
+#: IndexController.php:88
 msgid "year"
 msgstr ""
 
-#: IndexController.php:99
+#: IndexController.php:101
 msgid "All unused tags have been deleted."
 msgstr ""
 
-#: IndexController.php:114
+#: IndexController.php:132
+msgid "last backup was created on %s at %s"
+msgstr ""
+
+#: IndexController.php:145
 msgid "Your Omeka application configuration file is missing."
 msgstr ""
 
-#: IndexController.php:117
+#: IndexController.php:148
 msgid "Your Omeka application configuration file cannot be read by the application."
 msgstr ""
 

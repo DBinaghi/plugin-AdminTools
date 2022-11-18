@@ -11,6 +11,7 @@ msgstr ""
 "POT-Creation-Date: 2022-10-04 18:54+0200\n"
 "PO-Revision-Date: 2022-10-19 17:27+0200\n"
 "PO-Revision-Date: 2022-10-25 16:57+0200\n"
+"PO-Revision-Date: 2022-11-17 16:53+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Daniele Binaghi <admin@bitoteko.it>\n"
 "Language-Team: Italian\n"
@@ -88,20 +89,20 @@ msgid "Database Backup"
 msgstr "Backup base dati"
 
 #: index.php:48
-msgid "Backup the entire Omeka database into an SQL file."
-msgstr "Effettua un backup dell'intera base dati Omeka in un file SQL."
+msgid "Backup the entire Omeka database into a SQL file"
+msgstr "Effettua un backup dell'intera base dati Omeka in un file SQL"
 
 #: index.php:48
-msgid " During the backup, data from Sessions table will be ignored."
-msgstr " Durante il backup, i dati della tabella Sessions saranno ignorati."
+msgid "During the backup, data from \"Sessions\" table will be <b>ignored</b>."
+msgstr "Durante il backup, i dati della tabella \"Sessions\" saranno <b>ignorati</b>."
 
 #: index.php:48
 msgid " A copy of the file will be available for download"
 msgstr " Una copia del file sarà disponibile per lo scaricamento"
 
 #: index.php:48
-msgid ", compressed in GZip format."
-msgstr ", compressa in formato GZip."
+msgid ", <b>compressed</b> in GZip format."
+msgstr ", <b>compressa</b> in formato GZip."
 
 #: index.php:49
 msgid "Backup Database"
@@ -112,8 +113,8 @@ msgid "Sessions Table"
 msgstr "Tabella Sessions"
 
 #: index.php:58
-msgid "Trim Omeka's Sessions table"
-msgstr "Riduce la tabella Sessions di Omeka"
+msgid "Trim Omeka's \"Sessions\" table"
+msgstr "Riduce la tabella \"Sessions\" di Omeka"
 
 #: index.php:58
 msgid "(at the moment, the table contains <strong>%s</strong> records)"
@@ -151,55 +152,59 @@ msgstr "Cancella tutte le etichette che non hanno corrispondenza con un record."
 msgid "Delete unused tags"
 msgstr "Cancella etichette non usate"
 
-#: IndexController.php:49
+#: IndexController.php:51
 msgid "A %s backup copy of the Omeka database has been created."
 msgstr "Una copia di backup %s della base dati Omeka è stata creata."
 
-#: IndexController.php:49
+#: IndexController.php:51
 msgid "compressed"
 msgstr "compressa"
 
-#: IndexController.php:58
+#: IndexController.php:60
 msgid "The translations cache has been reset."
 msgstr "La cache traduzioni è stata ripristinata."
 
-#: IndexController.php:67
+#: IndexController.php:69
 msgid "The \"Under Maintenance\" sign is on, and access to the website has been limited."
 msgstr "Il cartello \"Sito in manutenzione\" è attivo, e l'accesso al sito è stato limitato."
 
-#: IndexController.php:70
+#: IndexController.php:72
 msgid "The website is online again."
 msgstr "Il sito web è nuovamente online."
 
-#: IndexController.php:82
+#: IndexController.php:84
 msgid "Omeka's Sessions table has been trimmed up to all unexpired sessions."
 msgstr "La tabella Sessions di Omeka è stata ripulita di tutte le sessioni scadute."
 
-#: IndexController.php:86
+#: IndexController.php:88
 msgid "Omeka\'s Sessions table has been trimmed up to 1 %s ago."
 msgstr "La tabella Sessions di Omeka è stata ridotta fino ad 1 %s fa."
 
-#: IndexController.php:86
+#: IndexController.php:88
 msgid "week"
 msgstr "settimana"
 
-#: IndexController.php:86
+#: IndexController.php:88
 msgid "month"
 msgstr "mese"
 
-#: IndexController.php:86
+#: IndexController.php:88
 msgid "year"
 msgstr "anno"
 
-#: IndexController.php:99
+#: IndexController.php:101
 msgid "All unused tags have been deleted."
 msgstr "Tutte le etichette non utilizzate sono state cancellate."
 
-#: IndexController.php:114
+#: IndexController.php:132
+msgid "last backup was created on %s at %s"
+msgstr "l'ultimo backup è stato creato il %s alle %s"
+
+#: IndexController.php:145
 msgid "Your Omeka application configuration file is missing."
 msgstr "Il file di configurazione della tua applicazione Omeka non si trova."
 
-#: IndexController.php:117
+#: IndexController.php:148
 msgid "Your Omeka application configuration file cannot be read by the application."
 msgstr "Il file di configurazione della tua applicazione Omeka non può essere letto dall'applicazione."
 
