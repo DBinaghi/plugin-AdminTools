@@ -7,6 +7,8 @@
 				$this->view->sessionsCount = $this->_getSessionsCount();
 			}
 			
+			$this->view->lastBackupDateTime = $this->_getLastBackupDateTime();
+					
 			$this->view->sessionMaxLifeTime = number_format($this->_getSessionMaxLifeTime() / (60 * 60 * 24), 0);
 		}
 		
@@ -47,7 +49,7 @@
 			}
 
 			$this->_helper->flashMessenger(__('A %s backup copy of the Omeka database has been created.', ($isCompressed ? __('compressed') : '')), 'success');
-			$this->_helper->redirector('index','index');
+			$this->_helper->redirector('index', 'index');
 		}
 		
 		public function resetCacheAction()
@@ -56,7 +58,7 @@
 			$cache::clearCache();
 			
 			$this->_helper->flashMessenger(__('The translations cache has been reset.'), 'success');
-			$this->_helper->redirector('index','index');
+			$this->_helper->redirector('index', 'index');
 		}
 
 		public function maintenanceAction()
@@ -70,7 +72,7 @@
 				$this->_helper->flashMessenger(__('The website is online again.'), 'success');
 			}
 			
-			$this->_helper->redirector('index','index');
+			$this->_helper->redirector('index', 'index');
 		}
 
 		public function trimSessionsAction()
@@ -87,7 +89,7 @@
 				}
 			}
 			
-			$this->_helper->redirector('index','index');
+			$this->_helper->redirector('index', 'index');
 		}
 		
 		public function deleteTagsAction()
@@ -98,9 +100,38 @@
 
 			$this->_helper->flashMessenger(__('All unused tags have been deleted.'), 'success');
 			
-			$this->_helper->redirector('index','index');
+			$this->_helper->redirector('index', 'index');
 		}
 			
+		private function _getLastBackupDateTime()
+		{
+			$sqlFilename = ADMIN_TOOLS_BACKUP_FILENAME;
+			$gzipFilename = str_replace('.sql', '.gz', ADMIN_TOOLS_BACKUP_FILENAME);
+			if (file_exists($sqlFilename)) {
+				$sqlFileMTime = filemtime($sqlFilename);
+				if (file_exists($gzipFilename)) {
+					$gzipFileMTime = filemtime($gzipFilename);
+					if ($sqlFileMTime > $gzipFileMTime) {
+						return $this->_getLastBackupDateTimeString($sqlFileMTime);
+					} else {
+						return $this->_getLastBackupDateTimeString($gzipFileMTime);
+					}
+				} else {
+					return $this->_getLastBackupDateTimeString($sqlFileMTime);
+				}
+			} elseif (file_exists($gzipFilename)) {
+				$gzipFileMTime = filemtime($gzipFilename);
+				return $this->_getLastBackupDateTimeString($gzipFileMTime);
+			} else {
+				return null;
+			}
+		}
+		
+		private function _getLastBackupDateTimeString($mtime)
+		{
+			return ' (' . __('last backup was created on %s at %s', date('d/m/Y', $mtime), date('H:i:s', $mtime)) . ')';
+		}
+		
 		private function _getSessionsCount() 
 		{
 			$db = get_db();
