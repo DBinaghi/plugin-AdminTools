@@ -94,13 +94,22 @@
 		
 		public function deleteTagsAction()
 		{
+			$this->_deleteUnusedTags();
+			$this->_helper->redirector('index', 'index');
+		}
+		
+		public function deleteTagsBrowseAction()
+		{
+			$this->_deleteUnusedTags();
+			$this->_helper->redirector('browse','tags','');
+		}
+		
+		private function _deleteUnusedTags()
+		{
 			$db = get_db();
 			$query = 'DELETE FROM ' . $db->getTableName('Tag') . ' WHERE id IN (SELECT t.id FROM ' . $db->getTableName('Tag') . ' t LEFT outer join ' . $db->getTableName('RecordsTag') . ' rt ON t.id = rt.tag_id GROUP BY name HAVING count(rt.id) = 0)';
 			$db->query($query);
-
 			$this->_helper->flashMessenger(__('All unused tags have been deleted.'), 'success');
-			
-			$this->_helper->redirector('index', 'index');
 		}
 			
 		private function _getLastBackupDateTime()

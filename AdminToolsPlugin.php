@@ -30,7 +30,8 @@
 			'public_head',
 			'public_footer',
 			'neatline_public_static',
-			'define_acl'
+			'define_acl',
+			'admin_tags_browse'
 		);
 
 		protected $_filters = array(
@@ -352,6 +353,23 @@
 			);
 			$navLinks[] = $element;
 			return array_merge($navLinks, $lastLink);
+		}
+		
+		/**
+		 * Adds button to delete empty tags from admin/tags
+		 */
+		public function hookAdminTagsBrowse($args, $deleted=0, $html=null)
+		{
+			if(!$args || !isset($args['tags'])) return;
+			include_once(__DIR__.'/views/admin/css/admin-tags-browse.css');
+			include_once(__DIR__.'/views/admin/javascripts/admin-tags-browse.js'); 
+			$html .= '<form class="det hidden" action="'.url('admin-tools/index/delete-tags-browse').'">';
+				$html .= '<h2>'.__('Maintenance').'</h2>';
+				$html .= '<p>'.__('Delete all tags that have no correspondence with any record.').'</p>';
+				$html .= '<input type="hidden" name="delete-empty-tags" value="true"/>';
+				$html .= '<button class="big red button" type="submit">'.__('Delete Unused Tags').'</button>';
+			$html .= '</form>';
+			echo $html;
 		}
 	}
 ?>
