@@ -39,6 +39,7 @@
 	<li><a href="#tab5"><?php echo __('Edit Link'); ?></a></li>
 	<li><a href="#tab6"><?php echo __('Backup'); ?></a></li>
 	<li><a href="#tab7"><?php echo __('Sessions'); ?></a></li>
+	<li><a href="#tab8"><?php echo __('Tags'); ?></a></li>
 </ul>
 
 <div id="tab1" style="height: 1%; border: 1px solid #d8d8d8; padding: 15px 15px;">
@@ -345,6 +346,22 @@
 		<div class="inputs five columns omega">
 			<p class="explanation"><?php echo __('If checked, the amount of actual records in the Session table will be shown (in case of a very large number of records, Admin Tool plugin page could take some extra time to load).'); ?></p>
 			<?php echo $view->formCheckbox('admin_tools_sessions_count', get_option('admin_tools_sessions_count'), null, array('1', '0')); ?>
+		</div>
+	</div>
+	
+	<div>&nbsp;</div>
+</div>
+
+<div id="tab8" style="height: 1%; border: 1px solid #d8d8d8; padding: 15px 15px;">
+	<h2><?php echo __('Tags') ?></h2>
+
+	<div class="field">
+		<div class="two columns alpha">
+			<label><?php echo __('Show Button')?></label>	
+		</div>
+		<div class="inputs five columns omega">
+			<p class="explanation"><?php echo __('If checked, a button to delete all unused tags will be shown in the Tags Browse page.'); ?></p>
+			<?php echo $view->formCheckbox('admin_tools_unused_tags_btn', get_option('admin_tools_unused_tags_btn'), null, array('1', '0')); ?>
 		</div>
 	</div>
 	
