@@ -69,6 +69,7 @@
 			set_option('admin_tools_backup_compress', 0);
 			set_option('admin_tools_backup_download', 1);
 			set_option('admin_tools_sessions_count', 0);
+			set_option('admin_tools_unused_tags_btn', 0);
 		}
 
 		public function hookUninstall()
@@ -93,6 +94,7 @@
 			delete_option('admin_tools_backup_compress');
 			delete_option('admin_tools_backup_download');
 			delete_option('admin_tools_sessions_count');
+			delete_option('admin_tools_unused_tags_btn');
 		}
 		
 		public function hookInitialize()
@@ -125,6 +127,7 @@
 			set_option('admin_tools_backup_compress',							$post['admin_tools_backup_compress']);
 			set_option('admin_tools_backup_download',							$post['admin_tools_backup_download']);
 			set_option('admin_tools_sessions_count',							$post['admin_tools_sessions_count']);
+			set_option('admin_tools_unused_tags_btn',							$post['admin_tools_unused_tags_btn']);
 		}
 		
 		public function hookConfigForm()
@@ -360,16 +363,18 @@
 		 */
 		public function hookAdminTagsBrowse($args, $deleted=0, $html=null)
 		{
-			if(!$args || !isset($args['tags'])) return;
-			include_once(__DIR__.'/views/admin/css/admin-tags-browse.css');
-			include_once(__DIR__.'/views/admin/javascripts/admin-tags-browse.js'); 
-			$html .= '<form class="det hidden" action="'.url('admin-tools/index/delete-tags-browse').'">';
-				$html .= '<h2>'.__('Maintenance').'</h2>';
-				$html .= '<p>'.__('Delete all tags that have no correspondence with any record.').'</p>';
-				$html .= '<input type="hidden" name="delete-empty-tags" value="true"/>';
-				$html .= '<button class="big red button" type="submit">'.__('Delete Unused Tags').'</button>';
-			$html .= '</form>';
-			echo $html;
+			if (get_option('admin_tools_unused_tags_btn') == 1) {
+				if (!$args || !isset($args['tags'])) return;
+				include_once(__DIR__ . '/views/admin/css/admin-tags-browse.css');
+				include_once(__DIR__ . '/views/admin/javascripts/admin-tags-browse.js'); 
+				$html  = '<form class="det hidden" action="' . url('admin-tools/index/delete-tags-browse') . '">';
+				$html .= '<h2>' . __('Maintenance') . '</h2>';
+				$html .= '<p>' . __('Delete all tags that have no correspondence with any record.') . '</p>';
+				$html .= '<input type="hidden" name="delete-empty-tags" value="true" />';
+				$html .= '<button class="big red button" type="submit">' . __('Delete Unused Tags') . '</button>';
+				$html .= '</form>';
+				echo $html;
+			}
 		}
 	}
 ?>
