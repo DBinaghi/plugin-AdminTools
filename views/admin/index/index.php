@@ -69,7 +69,7 @@
 	</div>
 	<div class="inputs five columns omega">
 		<p class="explanation"><?php echo __('Delete all tags that have no correspondence with any record.') ?></p>
-		<a id="DUT" class="button green" href="<?php echo url('admin-tools/index/delete-tags'); ?>"><?php echo __('Delete unused tags'); ?></a>
+		<a id="DUT" class="button green" href="<?php echo url('admin-tools/index/delete-tags'); ?>"><?php echo __('Delete Unused Tags'); ?></a>
 	</div>
 </div>
 
