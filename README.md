@@ -50,3 +50,4 @@ For their coding inspiration and contributions, many thanks to the following peo
 - omeka-plugin-eucookiebar: copyright [Digital Humanities at the University of Warwick](https://github.com/digihum), 2016
 - omeka-plugin-Maintenance: copyright [Biblibre](https://github.com/BibLibre), 2016
 - ProjectGuide: copyright [Eric C. Weig](https://github.com/libmanuk), 2019
+- : copyright [Erin Bell](https://github.com/ebellempire), 2025
