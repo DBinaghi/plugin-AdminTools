@@ -368,7 +368,7 @@
 				include_once(__DIR__ . '/views/admin/css/admin-tags-browse.css');
 				include_once(__DIR__ . '/views/admin/javascripts/admin-tags-browse.js'); 
 				$html  = '<form class="det hidden" action="' . url('admin-tools/index/delete-tags-browse') . '">';
-				$html .= '<h2>' . __('Maintenance') . '</h2>';
+				$html .= '<h2>' . __('Delete Tags') . '</h2>';
 				$html .= '<p>' . __('Delete all tags that have no correspondence with any record.') . '</p>';
 				$html .= '<input type="hidden" name="delete-empty-tags" value="true" />';
 				$html .= '<button class="big red button" type="submit">' . __('Delete Unused Tags') . '</button>';
