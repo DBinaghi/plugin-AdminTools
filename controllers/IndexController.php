@@ -117,8 +117,6 @@
 			} else {
 				$this->_helper->flashMessenger(__('No unused tag was found.'), 'alert');
 			}
-			
-			$this->_helper->redirector('index', 'index');
 		}
 			
 		private function _getLastBackupDateTime()
