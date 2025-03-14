@@ -97,19 +97,28 @@
 			$this->_deleteUnusedTags();
 			$this->_helper->redirector('index', 'index');
 		}
-		
+
 		public function deleteTagsBrowseAction()
 		{
 			$this->_deleteUnusedTags();
 			$this->_helper->redirector('browse','tags','');
 		}
-		
+
 		private function _deleteUnusedTags()
 		{
 			$db = get_db();
-			$query = 'DELETE FROM ' . $db->getTableName('Tag') . ' WHERE id IN (SELECT t.id FROM ' . $db->getTableName('Tag') . ' t LEFT outer join ' . $db->getTableName('RecordsTag') . ' rt ON t.id = rt.tag_id GROUP BY name HAVING count(rt.id) = 0)';
-			$db->query($query);
-			$this->_helper->flashMessenger(__('All unused tags have been deleted.'), 'success');
+			$query = 'DELETE FROM ' . $db->getTableName('Tag') . ' WHERE id IN (SELECT id FROM (SELECT t1.id FROM ' . $db->getTableName('Tag') . ' t1 LEFT OUTER JOIN ' . $db->getTableName('RecordsTag') . ' rt ON t1.id = rt.tag_id GROUP BY name HAVING COUNT(rt.id) = 0) tmp)';
+			$affected = $db->query($query)->rowCount();
+
+			if ($affected == 1) {
+				$this->_helper->flashMessenger(__('1 unused tag has been deleted.', $affected), 'success');
+			} elseif ($affected > 1 ) {
+				$this->_helper->flashMessenger(__('All %s unused tags have been deleted.', $affected), 'success');
+			} else {
+				$this->_helper->flashMessenger(__('No unused tag was found.'), 'alert');
+			}
+			
+			$this->_helper->redirector('index', 'index');
 		}
 			
 		private function _getLastBackupDateTime()
