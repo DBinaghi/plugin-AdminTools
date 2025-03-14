@@ -21,7 +21,9 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 3.5\n"
 
-#: AdminToolsPlugin.php:142 AdminToolsPlugin.php:249 AdminToolsPlugin.php:287
+#: AdminToolsPlugin.php:142 
+#: AdminToolsPlugin.php:249 
+#: AdminToolsPlugin.php:287
 #: config_form.php:36 config_form.php:95
 msgid "User Manual"
 msgstr ""
@@ -30,11 +32,13 @@ msgstr ""
 msgid "We use cookies to track usage of this project."
 msgstr ""
 
-#: AdminToolsPlugin.php:259 AdminToolsPlugin.php:329
+#: AdminToolsPlugin.php:259 
+#: AdminToolsPlugin.php:329
 msgid "** Maintenance Mode Active **"
 msgstr ""
 
-#: AdminToolsPlugin.php:274 index.php:4
+#: AdminToolsPlugin.php:274 
+#: index.php:4
 msgid "Admin Tools"
 msgstr ""
 
@@ -42,9 +46,8 @@ msgstr ""
 msgid "Edit"
 msgstr ""
 
-#: AdminToolsPlugin.php:371
-#: config_form.php:35
-msgid "Maintenance"
+#: AdminToolsPlugin.php:372
+msgid "Delete Tags"
 msgstr ""
 
 #: index.php:10
@@ -55,7 +58,9 @@ msgstr ""
 msgid "Start Maintenance"
 msgstr ""
 
-#: index.php:25 config_form.php:45 AdminToolsPlugin.php:45
+#: index.php:25 
+#: config_form.php:45 
+#: AdminToolsPlugin.php:45
 msgid "Site Under Maintenance"
 msgstr ""
 
@@ -148,12 +153,12 @@ msgid "Tags Table"
 msgstr ""
 
 #: index.php:71
-#: AdminToolsPlugin:372
+#: AdminToolsPlugin:373
 msgid "Delete all tags that have no correspondence with any record."
 msgstr ""
 
 #: index.php:62
-#: AdminToolsPlugin:374
+#: AdminToolsPlugin:375
 msgid "Delete Unused Tags"
 msgstr ""
 
@@ -232,7 +237,13 @@ msgstr ""
 msgid "Privacy Policy"
 msgstr ""
 
-#: config_form.php:37 config_form.php:149 config_form.php:153
+#: config_form.php:35
+msgid "Maintenance"
+msgstr "Manutenzione"
+
+#: config_form.php:37 
+#: config_form.php:149 
+#: config_form.php:153
 msgid "Cookie Bar"
 msgstr ""
 
@@ -497,16 +508,23 @@ msgstr ""
 msgid "Compression method (%s) is not defined yet"
 msgstr ""
 
-#: Mysqldump.php:1352 Mysqldump.php:1391
+#: Mysqldump.php:1352 
+#: Mysqldump.php:1391
 msgid ""
 "Compression is enabled, but bzip2 lib is not installed or configured properly"
 msgstr ""
 
-#: Mysqldump.php:1363 Mysqldump.php:1402 Mysqldump.php:1434 Mysqldump.php:1468
+#: Mysqldump.php:1363 
+#: Mysqldump.php:1402 
+#: Mysqldump.php:1434 
+#: Mysqldump.php:1468
 msgid "Output file is not writable"
 msgstr ""
 
-#: Mysqldump.php:1373 Mysqldump.php:1412 Mysqldump.php:1444 Mysqldump.php:1480
+#: Mysqldump.php:1373 
+#: Mysqldump.php:1412 
+#: Mysqldump.php:1444 
+#: Mysqldump.php:1480
 msgid "Writing to file failed! Probably, there is no more free space left?"
 msgstr ""
 

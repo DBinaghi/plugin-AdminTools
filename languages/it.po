@@ -43,10 +43,9 @@ msgstr "Strumenti amministrativi"
 msgid "Edit"
 msgstr "Modifica"
 
-#: AdminToolsPlugin.php:371
-#: config_form.php:35
-msgid "Maintenance"
-msgstr "Manutenzione"
+#: AdminToolsPlugin.php:372
+msgid "Delete Tags"
+msgstr "Cancella etichette"
 
 #: index.php:10
 msgid "Stop Maintenance"
@@ -155,7 +154,6 @@ msgid "Tags Table"
 msgstr "Tabella etichette"
 
 #: index.php:71
-#: AdminToolsPlugin:372
 msgid "Delete all tags that have no correspondence with any record."
 msgstr ""
 "Cancella tutte le etichette che non hanno corrispondenza con un record."
@@ -245,7 +243,13 @@ msgstr "Capisco"
 msgid "Privacy Policy"
 msgstr "Politica privacy"
 
-#: config_form.php:37 config_form.php:149 config_form.php:153
+#: config_form.php:35
+msgid "Maintenance"
+msgstr "Manutenzione"
+
+#: config_form.php:37 
+#: config_form.php:149 
+#: config_form.php:153
 msgid "Cookie Bar"
 msgstr "Barra cookie"
 
