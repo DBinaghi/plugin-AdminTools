@@ -8,23 +8,21 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Admin Tools\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-10-04 18:54+0200\n"
+"POT-Creation-Date: 2025-03-14 01:34+0100\n"
 "PO-Revision-Date: 2022-10-19 17:27+0200\n"
 "PO-Revision-Date: 2022-10-25 16:57+0200\n"
 "PO-Revision-Date: 2022-11-17 16:53+0200\n"
+"PO-Revision-Date: 2025-03-14 01:40+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.5\n"
 
-#: AdminToolsPlugin.php:142
-#: AdminToolsPlugin.php:249
-#: AdminToolsPlugin.php:287
-#: config_form.php:36
-#: config_form.php:95
+#: AdminToolsPlugin.php:142 AdminToolsPlugin.php:249 AdminToolsPlugin.php:287
+#: config_form.php:36 config_form.php:95
 msgid "User Manual"
 msgstr ""
 
@@ -32,18 +30,21 @@ msgstr ""
 msgid "We use cookies to track usage of this project."
 msgstr ""
 
-#: AdminToolsPlugin.php:259
-#: AdminToolsPlugin.php:329
+#: AdminToolsPlugin.php:259 AdminToolsPlugin.php:329
 msgid "** Maintenance Mode Active **"
 msgstr ""
 
-#: AdminToolsPlugin.php:274
-#: index.php:4
+#: AdminToolsPlugin.php:274 index.php:4
 msgid "Admin Tools"
 msgstr ""
 
 #: AdminToolsPlugin.php:349
 msgid "Edit"
+msgstr ""
+
+#: AdminToolsPlugin.php:371
+#: config_form.php:35
+msgid "Maintenance"
 msgstr ""
 
 #: index.php:10
@@ -54,9 +55,7 @@ msgstr ""
 msgid "Start Maintenance"
 msgstr ""
 
-#: index.php:25
-#: config_form.php:45
-#: AdminToolsPlugin.php:45
+#: index.php:25 config_form.php:45 AdminToolsPlugin.php:45
 msgid "Site Under Maintenance"
 msgstr ""
 
@@ -77,14 +76,16 @@ msgid "Languages Cache"
 msgstr ""
 
 #: index.php:38
-msgid "Update all translations after language files have been changed manually, either in the active theme or in any active plugin."
+msgid ""
+"Update all translations after language files have been changed manually, "
+"either in the active theme or in any active plugin."
 msgstr ""
 
 #: index.php:39
 msgid "Reset Cache"
 msgstr ""
 
-#: index.php:45
+#: index.php:45 config_form.php:303
 msgid "Database Backup"
 msgstr ""
 
@@ -108,7 +109,7 @@ msgstr ""
 msgid "Backup Database"
 msgstr ""
 
-#: index.php:55
+#: index.php:55 config_form.php:339
 msgid "Sessions Table"
 msgstr ""
 
@@ -121,7 +122,9 @@ msgid "(at the moment, the table contains <strong>%s</strong> records)"
 msgstr ""
 
 #: index.php:58
-msgid ", choosing whether to delete sessions older than 1 year/month/week or all expired ones (at the moment, sessions expire after <strong>%s</strong> days)."
+msgid ""
+", choosing whether to delete sessions older than 1 year/month/week or all "
+"expired ones (at the moment, sessions expire after <strong>%s</strong> days)."
 msgstr ""
 
 #: index.php:59
@@ -145,11 +148,13 @@ msgid "Tags Table"
 msgstr ""
 
 #: index.php:71
+#: AdminToolsPlugin:372
 msgid "Delete all tags that have no correspondence with any record."
 msgstr ""
 
 #: index.php:62
-msgid "Delete unused tags"
+#: AdminToolsPlugin:374
+msgid "Delete Unused Tags"
 msgstr ""
 
 #: IndexController.php:51
@@ -165,7 +170,9 @@ msgid "The translations cache has been reset."
 msgstr ""
 
 #: IndexController.php:69
-msgid "The \"Under Maintenance\" sign is on, and access to the website has been limited."
+msgid ""
+"The \"Under Maintenance\" sign is on, and access to the website has been "
+"limited."
 msgstr ""
 
 #: IndexController.php:72
@@ -177,7 +184,7 @@ msgid "Omeka's Sessions table has been trimmed up to all unexpired sessions."
 msgstr ""
 
 #: IndexController.php:88
-msgid "Omeka\'s Sessions table has been trimmed up to 1 %s ago."
+msgid "Omeka's Sessions table has been trimmed up to 1 %s ago."
 msgstr ""
 
 #: IndexController.php:88
@@ -192,20 +199,29 @@ msgstr ""
 msgid "year"
 msgstr ""
 
-#: IndexController.php:101
-msgid "All unused tags have been deleted."
+#: IndexController.php:114
+msgid "1 unused tag has been deleted."
 msgstr ""
 
-#: IndexController.php:132
+#: IndexController.php:116
+msgid "All % unused tags have been deleted."
+msgstr ""
+
+#: IndexController.php:118
+msgid "No unused tag was found."
+msgstr ""
+
+#: IndexController.php:150
 msgid "last backup was created on %s at %s"
 msgstr ""
 
-#: IndexController.php:145
+#: IndexController.php:153
 msgid "Your Omeka application configuration file is missing."
 msgstr ""
 
-#: IndexController.php:148
-msgid "Your Omeka application configuration file cannot be read by the application."
+#: IndexController.php:166
+msgid ""
+"Your Omeka application configuration file cannot be read by the application."
 msgstr ""
 
 #: cookie_bar.php:5
@@ -216,13 +232,7 @@ msgstr ""
 msgid "Privacy Policy"
 msgstr ""
 
-#: config_form.php:35
-msgid "Maintenance"
-msgstr ""
-
-#: config_form.php:37
-#: config_form.php:149
-#: config_form.php:153
+#: config_form.php:37 config_form.php:149 config_form.php:153
 msgid "Cookie Bar"
 msgstr ""
 
@@ -247,7 +257,9 @@ msgid "Title"
 msgstr ""
 
 #: config_form.php:53
-msgid "The title of the message to display to visitors when the site is in maintenance mode."
+msgid ""
+"The title of the message to display to visitors when the site is in "
+"maintenance mode."
 msgstr ""
 
 #: config_form.php:61
@@ -255,7 +267,8 @@ msgid "Message"
 msgstr ""
 
 #: config_form.php:65
-msgid "The message to display to visitors when the site is in maintenance mode."
+msgid ""
+"The message to display to visitors when the site is in maintenance mode."
 msgstr ""
 
 #: config_form.php:81
@@ -263,7 +276,9 @@ msgid "Extend Scope"
 msgstr ""
 
 #: config_form.php:85
-msgid "If checked, site will not be accessible even to logged-in users (excluding Super User and Admin roles)."
+msgid ""
+"If checked, site will not be accessible even to logged-in users (excluding "
+"Super User and Admin roles)."
 msgstr ""
 
 #: config_form.php:99
@@ -303,7 +318,9 @@ msgid "Footer"
 msgstr ""
 
 #: config_form.php:157
-msgid "If checked, a cookie bar with a warning will be shown to visitors (public UI)."
+msgid ""
+"If checked, a cookie bar with a warning will be shown to visitors (public "
+"UI)."
 msgstr ""
 
 #: config_form.php:165
@@ -335,7 +352,9 @@ msgid "Privacy Policy URL"
 msgstr ""
 
 #: config_form.php:193
-msgid "The URL of the Privacy Policy document for the website; if empty, no link will be shown."
+msgid ""
+"The URL of the Privacy Policy document for the website; if empty, no link "
+"will be shown."
 msgstr ""
 
 #: config_form.php:203
@@ -347,7 +366,9 @@ msgid "Limited Roles"
 msgstr ""
 
 #: config_form.php:210
-msgid "Roles allowed to see only their own records (in Admin mode). Please note that Super User's role cannot be limited."
+msgid ""
+"Roles allowed to see only their own records (in Admin mode). Please note "
+"that Super User's role cannot be limited."
 msgstr ""
 
 #: config_form.php:215
@@ -363,7 +384,7 @@ msgid "Collection"
 msgstr ""
 
 #: config_form.php:218
-msgid "Exhibit
+msgid "Exhibi"
 msgstr ""
 
 #: config_form.php:262
@@ -375,7 +396,9 @@ msgid "Content Types"
 msgstr ""
 
 #: config_form.php:269
-msgid "Content types for which a link will be added to the public UI for quick editing (only when user is logged in)."
+msgid ""
+"Content types for which a link will be added to the public UI for quick "
+"editing (only when user is logged in)."
 msgstr ""
 
 #: config_form.php:291
@@ -386,16 +409,13 @@ msgstr ""
 msgid "If checked, opens editing page in new tab (recommended)."
 msgstr ""
 
-#: config_form.php:303
-msgid "Database Backup"
-msgstr ""
-
 #: config_form.php:307
 msgid "Ignore Sessions"
 msgstr ""
 
 #: config_form.php:310
-msgid "If checked, the backup will ignore the data contained in Sessions table."
+msgid ""
+"If checked, the backup will ignore the data contained in Sessions table."
 msgstr ""
 
 #: config_form.php:327
@@ -411,21 +431,22 @@ msgid "Download Backup"
 msgstr ""
 
 #: config_form.php:330
-msgid "If checked, the backup SQL file will be downloadable (by default, it sits in the Omeka's Files directory)."
-msgstr ""
-
-#: config_form.php:339
-msgid "Sessions Table"
+msgid ""
+"If checked, the backup SQL file will be downloadable (by default, it sits in "
+"the Omeka's Files directory)."
 msgstr ""
 
 #: config_form.php:343
 msgid "Sessions Count"
 msgstr ""
 
-#: config_form.php:330
-msgid 
-"If checked, the amount of actual records in the Session table will be shown (in case of a very large number of records, "
-"Admin Tool plugin page could take some extra time to load)."
+#: config_form.php:360
+msgid "Show Button"
+msgstr ""
+
+#: config_form.php:343
+msgid "If checked, a button to delete all unused tags will be shown in "
+"the Tags Browse page."
 msgstr ""
 
 #: maintenance.php:1
@@ -476,22 +497,16 @@ msgstr ""
 msgid "Compression method (%s) is not defined yet"
 msgstr ""
 
-#: Mysqldump.php:1352
-#: Mysqldump.php:1391
-msgid "Compression is enabled, but bzip2 lib is not installed or configured properly"
+#: Mysqldump.php:1352 Mysqldump.php:1391
+msgid ""
+"Compression is enabled, but bzip2 lib is not installed or configured properly"
 msgstr ""
 
-#: Mysqldump.php:1363
-#: Mysqldump.php:1402
-#: Mysqldump.php:1434
-#: Mysqldump.php:1468
+#: Mysqldump.php:1363 Mysqldump.php:1402 Mysqldump.php:1434 Mysqldump.php:1468
 msgid "Output file is not writable"
 msgstr ""
 
-#: Mysqldump.php:1373
-#: Mysqldump.php:1412
-#: Mysqldump.php:1444
-#: Mysqldump.php:1480
+#: Mysqldump.php:1373 Mysqldump.php:1412 Mysqldump.php:1444 Mysqldump.php:1480
 msgid "Writing to file failed! Probably, there is no more free space left?"
 msgstr ""
 
@@ -508,15 +523,21 @@ msgid "Error getting trigger code, unknown output"
 msgstr ""
 
 #: Mysqldump.php:1941
-msgid "Error getting procedure code, unknown output. Please check 'https://bugs.mysql.com/bug.php?id=14564\'"
+msgid ""
+"Error getting procedure code, unknown output. Please check 'https://bugs."
+"mysql.com/bug.php?id=14564'"
 msgstr ""
 
 #: Mysqldump.php:1971
-msgid "Error getting function code, unknown output. Please check \'https://bugs.mysql.com/bug.php?id=14564\'"
+msgid ""
+"Error getting function code, unknown output. Please check 'https://bugs."
+"mysql.com/bug.php?id=14564'"
 msgstr ""
 
 #: Mysqldump.php:2017
-msgid "Error getting event code, unknown output. Please check 'http://stackoverflow.com/questions/10853826/mysql-5-5-create-event-gives-syntax-error\'"
+msgid ""
+"Error getting event code, unknown output. Please check 'http://stackoverflow."
+"com/questions/10853826/mysql-5-5-create-event-gives-syntax-error'"
 msgstr ""
 
 #: Mysqldump.php:2318
