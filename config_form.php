@@ -4,8 +4,7 @@
 ?>
 
 <?php echo js_tag('vendor/tinymce/tinymce.min'); ?>
-
-<script type="text/javascript" src="/omeka/admin/themes/default/javascripts/tabs.js?v=3.0.3" charset="utf-8"></script>
+<?php echo js_tag('tabs'); ?>
 
 <script type="text/javascript">
 	jQuery(document).ready(function () {
