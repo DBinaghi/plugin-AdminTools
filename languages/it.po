@@ -13,6 +13,7 @@ msgstr ""
 "PO-Revision-Date: 2022-10-25 16:57+0200\n"
 "PO-Revision-Date: 2022-11-17 16:53+0200\n"
 "PO-Revision-Date: 2025-03-14 01:40+0100\n"
+"PO-Revision-Date: 2025-08-28 13:36+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Daniele Binaghi\n"
 "Language-Team: Italian\n"
@@ -243,31 +244,36 @@ msgstr "Capisco"
 msgid "Privacy Policy"
 msgstr "Politica privacy"
 
-#: config_form.php:35
+#: config_form.php:34
 msgid "Maintenance"
 msgstr "Manutenzione"
 
-#: config_form.php:37 
+#: config_form.php:36
 #: config_form.php:149 
 #: config_form.php:153
 msgid "Cookie Bar"
 msgstr "Barra cookie"
 
-#: config_form.php:38
+#: config_form.php:37
 msgid "Limit Visibility"
 msgstr "Limita visibilità"
 
-#: config_form.php:39
+#: config_form.php:38
 msgid "Edit Link"
 msgstr "Collegamento modifiche"
 
-#: config_form.php:40
+#: config_form.php:39
 msgid "Backup"
 msgstr "Backup"
 
-#: config_form.php:41
+#: config_form.php:40
 msgid "Sessions"
 msgstr "Sessioni"
+
+#: config_form.php:41
+#: config_form.php:355
+msgid "Tags"
+msgstr "Etichette"
 
 #: config_form.php:49
 msgid "Title"
@@ -476,18 +482,30 @@ msgstr ""
 msgid "Sessions Count"
 msgstr "Conteggio sessioni"
 
-#: config_form.php:330 maintenance.php:1
-msgid "Maintenance Mode"
-msgstr "Modalità manutenzione"
+#: config_form.php:346
+msgid ""
+"If checked, the amount of actual records in the Session table will be shown (in case of "
+"a very large number of records, Admin Tool plugin page could take some extra time to load)."
+msgstr ""
+"Se selezionata, l'ammontare dei record presenti nella tabella Session verrà mostrato (nel caso "
+"di un numero davvero grande di record, la pagina del plugin Strumenti Amministrativi potrebbe "
+"impiegare del tempo a caricarsi)."
 
 #: config_form.php:360
 msgid "Show Button"
-msgstr ""
+msgstr "Mostra pulsante"
 
 #: config_form.php:343
-msgid "If checked, a button to delete all unused tags will be shown in "
+msgid ""
+"If checked, a button to delete all unused tags will be shown in "
 "the Tags Browse page."
 msgstr ""
+"Se selezionata, un pulsante per cancellare tutte le etichette non "
+"utilizzate verrà mostrato nella pagina Sfoglia Etichette."
+
+#: maintenance.php:1
+msgid "Maintenance Mode"
+msgstr "Modalità manutenzione"
 
 #: Mysqldump.php:197
 msgid "Unexpected value in dumpSettings: (%s)"
