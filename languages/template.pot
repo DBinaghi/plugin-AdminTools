@@ -13,6 +13,7 @@ msgstr ""
 "PO-Revision-Date: 2022-10-25 16:57+0200\n"
 "PO-Revision-Date: 2022-11-17 16:53+0200\n"
 "PO-Revision-Date: 2025-03-14 01:40+0100\n"
+"PO-Revision-Date: 2025-08-28 13:36+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -237,30 +238,39 @@ msgstr ""
 msgid "Privacy Policy"
 msgstr ""
 
-#: config_form.php:35
+#: config_form.php:34
 msgid "Maintenance"
-msgstr "Manutenzione"
+msgstr ""
 
-#: config_form.php:37 
+#: config_form.php:35
+msgid "User Manual"
+msgstr ""
+
+#: config_form.php:36
 #: config_form.php:149 
 #: config_form.php:153
 msgid "Cookie Bar"
 msgstr ""
 
-#: config_form.php:38
+#: config_form.php:37
 msgid "Limit Visibility"
 msgstr ""
 
-#: config_form.php:39
+#: config_form.php:38
 msgid "Edit Link"
 msgstr ""
 
-#: config_form.php:40
+#: config_form.php:39
 msgid "Backup"
 msgstr ""
 
-#: config_form.php:41
+#: config_form.php:40
 msgid "Sessions"
+msgstr ""
+
+#: config_form.php:41
+#: config_form.php:355
+msgid "Tags"
 msgstr ""
 
 #: config_form.php:49
@@ -449,6 +459,11 @@ msgstr ""
 
 #: config_form.php:343
 msgid "Sessions Count"
+msgstr ""
+
+#: config_form.php:346
+msgid "If checked, the amount of actual records in the Session table will be shown (in case of "
+"a very large number of records, Admin Tool plugin page could take some extra time to load)."
 msgstr ""
 
 #: config_form.php:360
