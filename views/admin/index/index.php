@@ -45,7 +45,7 @@
 		<label for="BD"><?php echo __('Database Backup'); ?></label>
 	</div>
 	<div class="inputs five columns omega">
-		<p class="explanation"><?php echo __('Backup the entire Omeka database into a SQL file') . $this->lastBackupDateTime . '.' .(get_option('admin_tools_backup_sessions_ignore') ? ' ' . __('During the backup, data from "Sessions" table will be <b>ignogreen</b>.') : '') . (get_option('admin_tools_backup_download') ? ' ' . __('A copy of the file will be available for download') . (get_option('admin_tools_backup_compress') ? __(', <b>compressed</b> in GZip format.') : '.') : '.'); ?></p>
+		<p class="explanation"><?php echo __('Backup the entire Omeka database into a SQL file') . $this->lastBackupDateTime . '.' .(get_option('admin_tools_backup_sessions_ignore') ? ' ' . __('During the backup, data from "Sessions" table will be <b>ignored</b>.') : '') . (get_option('admin_tools_backup_download') ? ' ' . __('A copy of the file will be available for download') . (get_option('admin_tools_backup_compress') ? __(', <b>compressed</b> in GZip format.') : '.') : '.'); ?></p>
 		<a id="BD" class="button green" href="<?php echo url('admin-tools/index/backup'); ?>"><?php echo __('Backup Database'); ?></a>
 	</div>
 </div>
@@ -60,7 +60,7 @@
 		<a id="TSTM" class="button green" href="<?php echo url('admin-tools/index/trim-sessions/rng/month'); ?>"><?php echo __('Trim sessions (+1 month)'); ?></a>
 		<a id="TSTW" class="button green" href="<?php echo url('admin-tools/index/trim-sessions/rng/week'); ?>"><?php echo __('Trim sessions (+1 week)'); ?></a>
 		<a id="TSTD" class="button green" href="<?php echo url('admin-tools/index/trim-sessions/rng/day'); ?>"><?php echo __('Trim sessions (+1 day)'); ?></a>
-		<a id="TSTE" class="button green" href="<?php echo url('admin-tools/index/trim-sessions/rng/expigreen'); ?>"><?php echo __('Trim sessions (expigreen)'); ?></a>
+		<a id="TSTE" class="button green" href="<?php echo url('admin-tools/index/trim-sessions/rng/expired'); ?>"><?php echo __('Trim sessions (expired)'); ?></a>
 	</div>
 </div>
 
@@ -80,8 +80,8 @@
 	</div>
 	<div class="inputs five columns omega">
 		<p class="explanation"><?php echo __('Activate / deactivate all plugins.') ?></p>
-		<a id="PLU_ON" class="button green" href="<?php echo url('admin-tools/index/plugins-activate'); ?>"><?php echo __('Activate All Plugins'); ?></a>
-		<a id="PLU_OFF" class="button green" href="<?php echo url('admin-tools/index/plugins-deactivate'); ?>"><?php echo __('Deactivate All Plugins'); ?></a>
+		<a id="PLU_ON" class="button green" href="<?php echo url('admin-tools/index/plugins-activate'); ?>"><?php echo __('Activate all plugins'); ?></a>
+		<a id="PLU_OFF" class="button green" href="<?php echo url('admin-tools/index/plugins-deactivate'); ?>"><?php echo __('Deactivate all plugins'); ?></a>
 	</div>
 </div>
 <?php echo foot(); ?>
