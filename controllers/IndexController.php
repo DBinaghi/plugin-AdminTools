@@ -101,7 +101,57 @@
 		public function deleteTagsBrowseAction()
 		{
 			$this->_deleteUnusedTags();
-			$this->_helper->redirector('browse','tags','');
+			$this->_helper->redirector->gotoUrl(url('../tags/browse'));
+		}
+
+		public function pluginsActivateAction()
+		{
+			$this->_activatePlugins();
+			$this->_helper->redirector('index', 'index');
+		}
+
+		public function pluginsActivateBrowseAction()
+		{
+			$this->_activatePlugins();
+			$this->_helper->redirector->gotoUrl(url('../plugins/browse'));
+		}
+
+		public function pluginsDeactivateAction()
+		{
+			$this->_deactivatePlugins();
+			$this->_helper->redirector('index', 'index');
+		}
+
+		public function pluginsDeactivateBrowseAction()
+		{
+			$this->_deactivatePlugins();
+			$this->_helper->redirector->gotoUrl(url('../plugins/browse'));
+		}
+
+		private function _activatePlugins()
+		{
+            $db = get_db();
+			$query = 'UPDATE ' . $db->getTableName('Plugin') . ' SET active = 1';
+			$affected = $db->query($query)->rowCount();
+
+            if ($affected > 0) {
+				$this->_helper->flashMessenger(__('All plugins are now active.'), 'success');
+            } else {
+				$this->_helper->flashMessenger(__('All installed plugins were already active.'), 'alert');
+            }    
+		}
+
+		private function _deactivatePlugins()
+		{
+			$db = get_db();
+			$query = 'UPDATE ' . $db->getTableName('Plugin') . ' SET active = 0';
+			$affected = $db->query($query)->rowCount();
+
+            if ($affected > 0) {
+				$this->_helper->flashMessenger(__('All plugins are now inactive.'), 'success');
+            } else {
+				$this->_helper->flashMessenger(__('All installed plugins were already inactive.'), 'alert');
+            }    
 		}
 
 		private function _deleteUnusedTags()
@@ -174,6 +224,9 @@
 			$db = get_db();
 			
 			switch($rng) {
+				case 'day':
+					$query = 'DELETE FROM ' . $db->getTableName('Session') . ' WHERE modified < ' . $date->modify("-1 day")->getTimeStamp();
+					break;
 				case 'week':
 					$query = 'DELETE FROM ' . $db->getTableName('Session') . ' WHERE modified < ' . $date->modify("-1 week")->getTimeStamp();
 					break;
