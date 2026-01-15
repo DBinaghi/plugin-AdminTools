@@ -12,6 +12,7 @@ Plugin for Omeka Classic. Reunites several minor plugins and code snippets to gi
 - **Database Backup**: creates a backup copy of the Omeka database, storing it locally (in Omeka's **files** directory) and also making it available for download.
 - **Sessions Table**: allows trimming of the Omeka table recording sessions, in case automatic trimming was not effectively working.
 - **Tags Table**: allows deleting all unused tags (i.e. tags not associated with any record).
+- **Plugins**: allows to activate or deactivate all plugins at once.
 
 When installed, the plugin creates an **Admin Tools** page accessible to Super User from the admin navigation sidebar; through the page one can put the website in maintenance mode, clear the languages cache and create a backup copy of Omeka's database. The plugin's configuration page lets fine tune this functions, plus many other ones.
 
