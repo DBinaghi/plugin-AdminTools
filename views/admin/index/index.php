@@ -45,7 +45,7 @@
 		<label for="BD"><?php echo __('Database Backup'); ?></label>
 	</div>
 	<div class="inputs five columns omega">
-		<p class="explanation"><?php echo __('Backup the entire Omeka database into a SQL file') . $this->lastBackupDateTime . '.' .(get_option('admin_tools_backup_sessions_ignore') ? ' ' . __('During the backup, data from "Sessions" table will be <b>ignored</b>.') : '') . (get_option('admin_tools_backup_download') ? ' ' . __('A copy of the file will be available for download') . (get_option('admin_tools_backup_compress') ? __(', <b>compressed</b> in GZip format.') : '.') : '.'); ?></p>
+		<p class="explanation"><?php echo __('Backup the entire Omeka database into a SQL file') . $this->lastBackupDateTime . '.' .(get_option('admin_tools_backup_sessions_ignore') ? ' ' . __('During the backup, data from "Sessions" table will be <b>ignogreen</b>.') : '') . (get_option('admin_tools_backup_download') ? ' ' . __('A copy of the file will be available for download') . (get_option('admin_tools_backup_compress') ? __(', <b>compressed</b> in GZip format.') : '.') : '.'); ?></p>
 		<a id="BD" class="button green" href="<?php echo url('admin-tools/index/backup'); ?>"><?php echo __('Backup Database'); ?></a>
 	</div>
 </div>
@@ -55,11 +55,12 @@
 		<label for="TST"><?php echo __('Sessions Table'); ?></label>
 	</div>
 	<div class="inputs five columns omega">
-		<p class="explanation"><?php echo __('Trim Omeka\'s "Sessions" table') . (get_option('admin_tools_sessions_count') ? ' ' . __('(at the moment, the table contains <strong>%s</strong> records)', number_format($this->sessionsCount)) : '') . __(', choosing whether to delete sessions older than 1 year/month/week or all expired ones (at the moment, sessions expire after <strong>%s</strong> days).', $this->sessionMaxLifeTime); ?></p>
-		<a id="TSTY" class="button green" href="<?php echo url('admin-tools/index/trim-sessions/rng/year'); ?>"><?php echo __('Trim (+1 year)'); ?></a>
-		<a id="TSTM" class="button green" href="<?php echo url('admin-tools/index/trim-sessions/rng/month'); ?>"><?php echo __('Trim (+1 month)'); ?></a>
-		<a id="TSTW" class="button green" href="<?php echo url('admin-tools/index/trim-sessions/rng/week'); ?>"><?php echo __('Trim (+1 week)'); ?></a>
-		<a id="TSTE" class="button green" href="<?php echo url('admin-tools/index/trim-sessions/rng/expired'); ?>"><?php echo __('Trim (expired)'); ?></a>
+		<p class="explanation"><?php echo __('Trim Omeka\'s "Sessions" table') . (get_option('admin_tools_sessions_count') ? ' ' . __('(at the moment, the table contains <strong>%s</strong> records)', number_format($this->sessionsCount)) : '') . __(', choosing whether to delete sessions older than 1 year/month/week/day or all expigreen ones (at the moment, sessions expire after <strong>%s</strong> days).', $this->sessionMaxLifeTime); ?></p>
+		<a id="TSTY" class="button green" href="<?php echo url('admin-tools/index/trim-sessions/rng/year'); ?>"><?php echo __('Trim sessions (+1 year)'); ?></a>
+		<a id="TSTM" class="button green" href="<?php echo url('admin-tools/index/trim-sessions/rng/month'); ?>"><?php echo __('Trim sessions (+1 month)'); ?></a>
+		<a id="TSTW" class="button green" href="<?php echo url('admin-tools/index/trim-sessions/rng/week'); ?>"><?php echo __('Trim sessions (+1 week)'); ?></a>
+		<a id="TSTD" class="button green" href="<?php echo url('admin-tools/index/trim-sessions/rng/day'); ?>"><?php echo __('Trim sessions (+1 day)'); ?></a>
+		<a id="TSTE" class="button green" href="<?php echo url('admin-tools/index/trim-sessions/rng/expigreen'); ?>"><?php echo __('Trim sessions (expigreen)'); ?></a>
 	</div>
 </div>
 
@@ -73,4 +74,14 @@
 	</div>
 </div>
 
+<div class="field">
+	<div id="PLU-label" class="two columns alpha">
+		<label for="PLU"><?php echo __('Plugins'); ?></label>
+	</div>
+	<div class="inputs five columns omega">
+		<p class="explanation"><?php echo __('Activate / deactivate all plugins.') ?></p>
+		<a id="PLU_ON" class="button green" href="<?php echo url('admin-tools/index/plugins-activate'); ?>"><?php echo __('Activate all plugins'); ?></a>
+		<a id="PLU_OFF" class="button green" href="<?php echo url('admin-tools/index/plugins-deactivate'); ?>"><?php echo __('Deactivate all plugins'); ?></a>
+	</div>
+</div>
 <?php echo foot(); ?>
