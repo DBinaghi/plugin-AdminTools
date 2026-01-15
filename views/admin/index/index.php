@@ -80,8 +80,8 @@
 	</div>
 	<div class="inputs five columns omega">
 		<p class="explanation"><?php echo __('Activate / deactivate all plugins.') ?></p>
-		<a id="PLU_ON" class="button green" href="<?php echo url('admin-tools/index/plugins-activate'); ?>"><?php echo __('Activate all plugins'); ?></a>
-		<a id="PLU_OFF" class="button green" href="<?php echo url('admin-tools/index/plugins-deactivate'); ?>"><?php echo __('Deactivate all plugins'); ?></a>
+		<a id="PLU_ON" class="button green" href="<?php echo url('admin-tools/index/plugins-activate'); ?>"><?php echo __('Activate All Plugins'); ?></a>
+		<a id="PLU_OFF" class="button green" href="<?php echo url('admin-tools/index/plugins-deactivate'); ?>"><?php echo __('Deactivate All Plugins'); ?></a>
 	</div>
 </div>
 <?php echo foot(); ?>
