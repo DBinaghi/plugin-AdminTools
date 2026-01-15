@@ -1,0 +1,10 @@
+<style>
+	div.det.hidden
+	div.det .hidden{
+		visibility: hidden;
+		display: none;
+	}
+	#flash ul li.det{
+		background-color: lightyellow !important;
+	}
+</style>
