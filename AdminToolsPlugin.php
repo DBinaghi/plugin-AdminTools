@@ -31,7 +31,8 @@
 			'public_footer',
 			'neatline_public_static',
 			'define_acl',
-			'admin_tags_browse'
+			'admin_tags_browse',
+			'admin_plugins_browse'
 		);
 
 		protected $_filters = array(
@@ -70,6 +71,7 @@
 			set_option('admin_tools_backup_download', 1);
 			set_option('admin_tools_sessions_count', 0);
 			set_option('admin_tools_unused_tags_btn', 0);
+			set_option('admin_tools_plugins_btns', 0);
 		}
 
 		public function hookUninstall()
@@ -95,6 +97,7 @@
 			delete_option('admin_tools_backup_download');
 			delete_option('admin_tools_sessions_count');
 			delete_option('admin_tools_unused_tags_btn');
+			delete_option('admin_tools_plugins_btns');
 		}
 		
 		public function hookInitialize()
@@ -128,6 +131,7 @@
 			set_option('admin_tools_backup_download',							$post['admin_tools_backup_download']);
 			set_option('admin_tools_sessions_count',							$post['admin_tools_sessions_count']);
 			set_option('admin_tools_unused_tags_btn',							$post['admin_tools_unused_tags_btn']);
+			set_option('admin_tools_plugins_btns',					    		$post['admin_tools_plugins_btns']);
 		}
 		
 		public function hookConfigForm()
@@ -359,7 +363,7 @@
 		}
 		
 		/**
-		 * Adds button to delete empty tags from admin/tags
+		 * Adds delete empty tags button to admin/tags
 		 */
 		public function hookAdminTagsBrowse($args, $deleted=0, $html=null)
 		{
@@ -368,11 +372,34 @@
 				include_once(__DIR__ . '/views/admin/css/admin-tags-browse.css');
 				include_once(__DIR__ . '/views/admin/javascripts/admin-tags-browse.js'); 
 				$html  = '<form class="det hidden" action="' . url('admin-tools/index/delete-tags-browse') . '">';
-				$html .= '<h2>' . __('Delete Tags') . '</h2>';
+				$html .= '<h2 style="margin-top:1em">' . __('Delete Tags') . '</h2>';
 				$html .= '<p>' . __('Delete all tags that have no correspondence with any record.') . '</p>';
-				$html .= '<input type="hidden" name="delete-empty-tags" value="true" />';
-				$html .= '<button class="big red button" type="submit">' . __('Delete Unused Tags') . '</button>';
+				$html .= '<button class="big green button" type="submit">' . __('Delete Unused Tags') . '</button>';
 				$html .= '</form>';
+				echo $html;
+			}
+		}
+
+		/**
+		 * Adds activate and deactivate buttons to admin/plugins
+		 */
+		public function hookAdminPluginsBrowse($args, $deleted=0, $html=null)
+		{
+			if (get_option('admin_tools_plugins_btns') == 1) {
+				if (!$args || !isset($args['plugins'])) return;
+				include_once(__DIR__ . '/views/admin/css/admin-plugins-browse.css');
+				include_once(__DIR__ . '/views/admin/javascripts/admin-plugins-browse.js'); 
+				$html  = '<div id="activate_deactivate_btns" class="plugin det hidden">';
+				//$html .= '<p>' . __('Activate / Deactivate all plugins.') . '</p>';
+				$html .= '<form class="det hidden" action="' . url('admin-tools/index/plugins-activate-browse') . '" style="margin-right: .5em; display: inline">';
+				//$html .= '<input type="hidden" name="plugins-activate" value="true" />';
+				$html .= '<button class="big green button" type="submit">' . __('Activate All Plugins') . '</button>';
+				$html .= '</form>';
+				$html .= '<form class="det hidden" action="' . url('admin-tools/index/plugins-deactivate-browse') . '" style="display: inline">';
+				//$html .= '<input type="hidden" name="plugins-deactivate" value="true" />';
+				$html .= '<button class="big green button" type="submit">' . __('Deactivate All Plugins') . '</button>';
+				$html .= '</form>';
+                $html .= '</div>';
 				echo $html;
 			}
 		}
