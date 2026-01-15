@@ -79,7 +79,7 @@
 		<label for="PLU"><?php echo __('Plugins'); ?></label>
 	</div>
 	<div class="inputs five columns omega">
-		<p class="explanation"><?php echo __('Activate / deactivate all plugins.') ?></p>
+		<p class="explanation"><?php echo __('Activate / deactivate all plugins at once.') ?></p>
 		<a id="PLU_ON" class="button green" href="<?php echo url('admin-tools/index/plugins-activate'); ?>"><?php echo __('Activate All Plugins'); ?></a>
 		<a id="PLU_OFF" class="button green" href="<?php echo url('admin-tools/index/plugins-deactivate'); ?>"><?php echo __('Deactivate All Plugins'); ?></a>
 	</div>
