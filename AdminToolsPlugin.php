@@ -390,13 +390,10 @@
 				include_once(__DIR__ . '/views/admin/css/admin-plugins-browse.css');
 				include_once(__DIR__ . '/views/admin/javascripts/admin-plugins-browse.js'); 
 				$html  = '<div id="activate_deactivate_btns" class="plugin det hidden">';
-				//$html .= '<p>' . __('Activate / Deactivate all plugins.') . '</p>';
 				$html .= '<form class="det hidden" action="' . url('admin-tools/index/plugins-activate-browse') . '" style="margin-right: .5em; display: inline">';
-				//$html .= '<input type="hidden" name="plugins-activate" value="true" />';
 				$html .= '<button class="big green button" type="submit">' . __('Activate All Plugins') . '</button>';
 				$html .= '</form>';
 				$html .= '<form class="det hidden" action="' . url('admin-tools/index/plugins-deactivate-browse') . '" style="display: inline">';
-				//$html .= '<input type="hidden" name="plugins-deactivate" value="true" />';
 				$html .= '<button class="big green button" type="submit">' . __('Deactivate All Plugins') . '</button>';
 				$html .= '</form>';
                 $html .= '</div>';
@@ -405,3 +402,4 @@
 		}
 	}
 ?>
+
