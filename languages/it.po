@@ -101,8 +101,8 @@ msgid "During the backup, data from \"Sessions\" table will be <b>ignored</b>."
 msgstr "Durante il backup, i dati della tabella \"Sessions\" saranno <b>ignorati</b>."
 
 #: index.php:48
-msgid " A copy of the file will be available for download"
-msgstr " Una copia del file sarà disponibile per lo scaricamento"
+msgid "A copy of the file will be available for download"
+msgstr "Una copia del file sarà disponibile per lo scaricamento"
 
 #: index.php:48
 msgid ", <b>compressed</b> in GZip format."
@@ -165,7 +165,7 @@ msgid "Delete Unused Tags"
 msgstr "Cancella etichette non usate"
 
 #: index.php:82
-msgid "Activate / deactivate all plugins at once."
+msgid "Activate / Deactivate all plugins at the same time."
 msgstr "Attiva / Disattiva tutti i plugin allo stesso tempo."
 
 #: index.php:83 AdminToolsPlugin:394
