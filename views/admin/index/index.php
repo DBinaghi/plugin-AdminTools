@@ -55,7 +55,7 @@
 		<label for="TST"><?php echo __('Sessions Table'); ?></label>
 	</div>
 	<div class="inputs five columns omega">
-		<p class="explanation"><?php echo __('Trim Omeka\'s "Sessions" table') . (get_option('admin_tools_sessions_count') ? ' ' . __('(at the moment, the table contains <strong>%s</strong> records)', number_format($this->sessionsCount)) : '') . __(', choosing whether to delete sessions older than 1 year/month/week/day or all expigreen ones (at the moment, sessions expire after <strong>%s</strong> days).', $this->sessionMaxLifeTime); ?></p>
+		<p class="explanation"><?php echo __('Trim Omeka\'s "Sessions" table') . (get_option('admin_tools_sessions_count') ? ' ' . __('(at the moment, the table contains <strong>%s</strong> records)', number_format($this->sessionsCount)) : '') . __(', choosing whether to delete sessions older than 1 year/month/week/day or all expired ones (at the moment, sessions expire after <strong>%s</strong> days).', $this->sessionMaxLifeTime); ?></p>
 		<a id="TSTY" class="button green" href="<?php echo url('admin-tools/index/trim-sessions/rng/year'); ?>"><?php echo __('Trim sessions (+1 year)'); ?></a>
 		<a id="TSTM" class="button green" href="<?php echo url('admin-tools/index/trim-sessions/rng/month'); ?>"><?php echo __('Trim sessions (+1 month)'); ?></a>
 		<a id="TSTW" class="button green" href="<?php echo url('admin-tools/index/trim-sessions/rng/week'); ?>"><?php echo __('Trim sessions (+1 week)'); ?></a>
@@ -79,7 +79,7 @@
 		<label for="PLU"><?php echo __('Plugins'); ?></label>
 	</div>
 	<div class="inputs five columns omega">
-		<p class="explanation"><?php echo __('Activate / deactivate all plugins at once.') ?></p>
+		<p class="explanation"><?php echo __('Activate / Deactivate all plugins at the same time.') ?></p>
 		<a id="PLU_ON" class="button green" href="<?php echo url('admin-tools/index/plugins-activate'); ?>"><?php echo __('Activate All Plugins'); ?></a>
 		<a id="PLU_OFF" class="button green" href="<?php echo url('admin-tools/index/plugins-deactivate'); ?>"><?php echo __('Deactivate All Plugins'); ?></a>
 	</div>
