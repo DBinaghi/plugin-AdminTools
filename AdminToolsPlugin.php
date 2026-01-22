@@ -389,17 +389,19 @@
 				if (!$args || !isset($args['plugins'])) return;
 				include_once(__DIR__ . '/views/admin/css/admin-plugins-browse.css');
 				include_once(__DIR__ . '/views/admin/javascripts/admin-plugins-browse.js'); 
-				$html  = '<div id="activate_deactivate_btns" class="plugin det hidden">';
-				$html .= '<form class="det hidden" action="' . url('admin-tools/index/plugins-activate-browse') . '" style="margin-right: .5em; display: inline">';
+				$html  = '<div id="activate_deactivate_btns" class="plugin det hidden" style="display: block; padding-top: 0">';
+				$html .= '<p class="explanation">' . __('Activate / Deactivate all plugins at the same time.') . '</p>';
+                $html .= '<div style="display: flex">';
+                $html .= '<form class="det hidden" action="' . url('admin-tools/index/plugins-activate-browse') . '" style="display: inline; margin-right: .5em">';
 				$html .= '<button class="big green button" type="submit">' . __('Activate All Plugins') . '</button>';
 				$html .= '</form>';
 				$html .= '<form class="det hidden" action="' . url('admin-tools/index/plugins-deactivate-browse') . '" style="display: inline">';
 				$html .= '<button class="big green button" type="submit">' . __('Deactivate All Plugins') . '</button>';
 				$html .= '</form>';
                 $html .= '</div>';
+                $html .= '</div>';
 				echo $html;
 			}
 		}
 	}
 ?>
-
