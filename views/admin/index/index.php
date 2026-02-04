@@ -1,5 +1,7 @@
 <?php
-	$head = array(
+    queue_js_file('chart.umd', 'javascripts');
+    
+    $head = array(
 		'bodyclass' => 'admin-tools index',
 		'title' => html_escape(__('Admin Tools')),
 		'content_class' => 'horizontal-nav'
@@ -56,6 +58,46 @@
 	</div>
 	<div class="inputs five columns omega">
 		<p class="explanation"><?php echo __('Trim Omeka\'s "Sessions" table') . (get_option('admin_tools_sessions_count') ? ' ' . __('(at the moment, the table contains <strong>%s</strong> records)', number_format($this->sessionsCount)) : '') . __(', choosing whether to delete sessions older than 1 year/month/week/day or all expired ones (at the moment, sessions expire after <strong>%s</strong> days).', $this->sessionMaxLifeTime); ?></p>
+        <?php if ($this->sessionsCount > 0 && get_option('admin_tools_sessions_graph')): ?>
+            <canvas id="myChart" style="width:100%; height: 200px; margin-bottom: 1em"></canvas>
+            <script>
+                <?php
+                    $sql = "SELECT count(id) AS total, DATE(FROM_UNIXTIME(modified)) AS session_date FROM omeka_sessions GROUP BY session_date";
+                    $sessions = get_db()->query($sql)->fetchall();
+                    // limit number of entried to sessionMaxLifeTime
+                    if (count($sessions) > $this->sessionMaxLifeTime) {
+                        array_splice($sessions, 0, count($sessions) - $this->sessionMaxLifeTime);
+                    }
+                    // create coordinaters for graph
+                    foreach ($sessions as $row) {
+                        $ascisse[] = date_format(date_create($row['session_date']), 'd/m');
+                        $ordinate[] = $row['total'];
+                    }
+                ?>
+                new Chart("myChart", {
+                    type: "line",
+                    data: {
+                        labels: <?= json_encode($ascisse) ?>,
+                        datasets: [{
+                            data: <?= json_encode($ordinate) ?>,
+            				borderWidth: 2,
+            				tension: 0.1
+                        }]
+                    },
+                    options: {
+            			plugins: {
+            				legend: {
+            					display: false
+            				},
+            				title: {
+            					display: true,
+            					text: '<?= __('Sessions in the last %d days', $this->sessionMaxLifeTime) ?>'
+            				}
+            			}
+            		}
+                });
+            </script>
+        <?php endif; ?>
 		<a id="TSTY" class="button green" href="<?php echo url('admin-tools/index/trim-sessions/rng/year'); ?>"><?php echo __('Trim sessions (+1 year)'); ?></a>
 		<a id="TSTM" class="button green" href="<?php echo url('admin-tools/index/trim-sessions/rng/month'); ?>"><?php echo __('Trim sessions (+1 month)'); ?></a>
 		<a id="TSTW" class="button green" href="<?php echo url('admin-tools/index/trim-sessions/rng/week'); ?>"><?php echo __('Trim sessions (+1 week)'); ?></a>
