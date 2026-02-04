@@ -70,6 +70,7 @@
 			set_option('admin_tools_backup_compress', 0);
 			set_option('admin_tools_backup_download', 1);
 			set_option('admin_tools_sessions_count', 0);
+			set_option('admin_tools_sessions_graph', 0);
 			set_option('admin_tools_unused_tags_btn', 0);
 			set_option('admin_tools_plugins_btns', 0);
 		}
@@ -96,6 +97,7 @@
 			delete_option('admin_tools_backup_compress');
 			delete_option('admin_tools_backup_download');
 			delete_option('admin_tools_sessions_count');
+			delete_option('admin_tools_sessions_graph');
 			delete_option('admin_tools_unused_tags_btn');
 			delete_option('admin_tools_plugins_btns');
 		}
@@ -130,6 +132,7 @@
 			set_option('admin_tools_backup_compress',							$post['admin_tools_backup_compress']);
 			set_option('admin_tools_backup_download',							$post['admin_tools_backup_download']);
 			set_option('admin_tools_sessions_count',							$post['admin_tools_sessions_count']);
+			set_option('admin_tools_sessions_graph',							$post['admin_tools_sessions_graph']);
 			set_option('admin_tools_unused_tags_btn',							$post['admin_tools_unused_tags_btn']);
 			set_option('admin_tools_plugins_btns',					    		$post['admin_tools_plugins_btns']);
 		}
@@ -138,7 +141,7 @@
 		{
 			include 'config_form.php';
 		}
-
+		
 		public function hookAdminFooter()
 		{
 			if (null !== current_user() && get_option('admin_tools_usermanual_link_positions') != '') {
