@@ -349,6 +349,16 @@
 		</div>
 	</div>
 	
+	<div class="field">
+		<div class="two columns alpha">
+			<label><?php echo __('Sessions Graph')?></label>	
+		</div>
+		<div class="inputs five columns omega">
+			<p class="explanation"><?php echo __('If checked, a graph showing the sessions total per day will be shown.'); ?></p>
+			<?php echo $view->formCheckbox('admin_tools_sessions_graph', get_option('admin_tools_sessions_graph'), null, array('1', '0')); ?>
+		</div>
+	</div>
+
 	<div>&nbsp;</div>
 </div>
 
