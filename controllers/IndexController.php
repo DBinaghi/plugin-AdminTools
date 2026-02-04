@@ -119,7 +119,7 @@
 		public function pluginsDeactivateAction()
 		{
 			$this->_deactivatePlugins();
-			$this->_helper->redirector('index', 'index');
+			$this->_helper->redirector->gotoUrl(url('../plugins/browse'));
 		}
 
 		public function pluginsDeactivateBrowseAction()
@@ -157,7 +157,7 @@
 		private function _deleteUnusedTags()
 		{
 			$db = get_db();
-			$query = 'DELETE FROM ' . $db->getTableName('Tag') . ' WHERE id IN (SELECT id FROM (SELECT t1.id FROM ' . $db->getTableName('Tag') . ' t1 LEFT OUTER JOIN ' . $db->getTableName('RecordsTag') . ' rt ON t1.id = rt.tag_id GROUP BY name HAVING COUNT(rt.id) = 0) tmp)';
+			$query = 'DELETE FROM ' . $db->getTableName('Tag') . ' WHERE id IN (SELECT id FROM (SELECT t1.id FROM ' . $db->getTableName('Tag') . ' t1 LEFT OUTER JOIN ' . $db->getTableName('RecordsTag') . ' rt ON t1.id = rt.tag_id GROUP BY t1.id HAVING COUNT(rt.id) = 0) tmp)';
 			$affected = $db->query($query)->rowCount();
 
 			if ($affected == 1) {
