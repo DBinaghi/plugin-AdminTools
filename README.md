@@ -10,7 +10,7 @@ Plugin for Omeka Classic. Reunites several minor plugins and code snippets to gi
 - **Limit Visibility to Own**: limits Item/Collection/Exhibit visibility to only the ones created by the user (Admin interface).
 - **Public Edit Link**: adds a edit link to Items/Collections/Exhibits/Files/Simple Pages to Public interface for logged-in users.
 - **Database Backup**: creates a backup copy of the Omeka database, storing it locally (in Omeka's **files** directory) and also making it available for download.
-- **Sessions Table**: allows trimming of the Omeka table recording sessions, in case automatic trimming was not effectively working.
+- **Sessions Table**: allows trimming of the Omeka table recording sessions, in case automatic trimming was not effectively working; a graph can be shown, to keep track of the new sessions.
 - **Tags Table**: allows deleting all unused tags (i.e. tags not associated with any record).
 - **Plugins**: allows to activate or deactivate all plugins at once.
 
