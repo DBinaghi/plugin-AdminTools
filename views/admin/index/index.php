@@ -1,8 +1,9 @@
 <?php
-    queue_js_file('chart.umd', 'javascripts');
-    $db = get_db();
-    
-    $head = array(
+	queue_js_file('chart.umd', 'javascripts');
+	queue_css_file('admin-tools');
+	$db = get_db();
+	
+	$head = array(
 		'bodyclass' => 'admin-tools index',
 		'title' => html_escape(__('Admin Tools')),
 		'content_class' => 'horizontal-nav'
@@ -55,84 +56,89 @@
 
 <div class="field">
 	<div id="TST-label" class="two columns alpha">
-		<label for="TST"><?php echo __('Sessions Table'); ?></label>
+		<label for="TST"><?php echo __('Sessions'); ?></label>
 	</div>
 	<div class="inputs five columns omega">
 		<p class="explanation"><?php echo __('Trim Omeka\'s "Sessions" table') . (get_option('admin_tools_sessions_count') ? ' ' . __('(at the moment, the table contains <strong>%s</strong> records)', number_format($this->sessionsCount)) : '') . __(', choosing whether to delete sessions older than 1 year/month/week/day or all expired ones (at the moment, sessions expire after <strong>%s</strong> days).', $this->sessionMaxLifeTime); ?></p>
-        <?php if ($this->sessionsCount > 0 && get_option('admin_tools_sessions_graph')): ?>
-            <canvas id="myChart" style="width:100%; height: 200px; margin-bottom: 1em"></canvas>
-            <script>
-                <?php
-                    // get number of sessions grouped by date
-                    $sql = "SELECT count(id) AS total, DATE(FROM_UNIXTIME(modified)) AS session_date FROM " . $db->getTableName('Session') . " GROUP BY session_date";
-                    $sessions = $db->query($sql)->fetchall();
-                    // limit number of entried to sessionMaxLifeTime
-                    if (count($sessions) > $this->sessionMaxLifeTime) {
-                        array_splice($sessions, 0, count($sessions) - $this->sessionMaxLifeTime);
-                    }
-                    // create coordinaters for graph
-                    foreach ($sessions as $row) {
-                        $ascisse[] = date_format(date_create($row['session_date']), 'd/m');
-                        $ordinate[] = $row['total'];
-                    }
-                ?>
-                new Chart("myChart", {
-                    type: "line",
-                    data: {
-                        labels: <?= json_encode($ascisse) ?>,
-                        datasets: [{
-                            data: <?= json_encode($ordinate) ?>,
-            				borderWidth: 2,
-            				tension: 0.1
-                        }]
-                    },
-                    options: {
-            			plugins: {
-            				legend: {
-            					display: false
-            				},
-            				title: {
-            					display: true,
-            					text: '<?= __('Sessions in the last %d days', $this->sessionMaxLifeTime) ?>'
-            				}
-            			}
-            		}
-                });
-            </script>
-        <?php endif; ?>
+		<?php if ($this->sessionsCount > 0 && get_option('admin_tools_sessions_graph')): ?>
+			<canvas id="sessionsChart" style="width:100%; height: 200px; margin-bottom: 1em"></canvas>
+			<script>
+				<?php
+					// get number of sessions grouped by date
+					$sql = "SELECT count(id) AS total, DATE(FROM_UNIXTIME(modified)) AS session_date FROM omeka_sessions GROUP BY session_date";
+					$sessions = $db->query($sql)->fetchall();
+					// limit number of entried to sessionMaxLifeTime
+					if (count($sessions) > $this->sessionMaxLifeTime) {
+						array_splice($sessions, 0, count($sessions) - $this->sessionMaxLifeTime);
+					}
+					// create coordinaters for graph
+					foreach ($sessions as $row) {
+						$ascisse[] = date_format(date_create($row['session_date']), 'd/m');
+						$ordinate[] = $row['total'];
+					}
+				?>
+				new Chart("sessionsChart", {
+					type: "line",
+					data: {
+						labels: <?= json_encode($ascisse) ?>,
+						datasets: [{
+							data: <?= json_encode($ordinate) ?>,
+							borderWidth: 2,
+							tension: 0.1
+						}]
+					},
+					options: {
+						plugins: {
+							legend: {
+								display: false
+							},
+							title: {
+								display: true,
+								text: '<?= __('Sessions in the last %d days', $this->sessionMaxLifeTime) ?>'
+							}
+						},
+						scales: {
+							y: {
+								beginAtZero: true
+							}
+						}
+					}
+				});
+			</script>
+		<?php endif; ?>
 
 		<?php 
-            // adds button to prune sessions over 1 year old - disabled if there are none
-		    $sql = "SELECT COUNT(*) FROM " . $db->getTableName('Session') . " WHERE modified < UNIX_TIMESTAMP(NOW() - INTERVAL 1 YEAR)";
-		    if ($db->fetchOne($sql) > 0) {
-		        echo '<a id="TSTY" class="button green" href="' . url('admin-tools/index/trim-sessions/rng/year') . '">' . __('Trim sessions (+1 year)') . '</a>';
-		    } else {
-		        echo '<a id="TSTY" class="button" disabled>' . __('Trim sessions (+1 year)') . "</a>";
-		    }
+			// adds button to prune sessions over 1 year old - disabled if there are none
+			$sql = "SELECT COUNT(*) FROM " . $db->getTableName('Session') . " WHERE modified < UNIX_TIMESTAMP(NOW() - INTERVAL 1 YEAR)";
+			if ($db->fetchOne($sql) > 0) {
+				echo '<a id="TSTY" class="button green" href="' . url('admin-tools/index/trim-sessions/rng/year') . '">' . __('Trim sessions (+1 year)') . '</a>';
+			} else {
+				echo '<a id="TSTY" class="button disabled" disabled>' . __('Trim sessions (+1 year)') . "</a>";
+			}
 
-            // adds button to prune sessions over 1 month old - disabled if there are none
-		    $sql = "SELECT COUNT(*) FROM " . $db->getTableName('Session') . " WHERE modified < UNIX_TIMESTAMP(NOW() - INTERVAL 1 MONTH)";
-		    if ($db->fetchOne($sql) > 0) {
-		        echo '<a id="TSTM" class="button green" href="' . url('admin-tools/index/trim-sessions/rng/month') . '">' . __('Trim sessions (+1 month)') . '</a>';
-		    } else {
-		        echo '<a id="TSTM" class="button" disabled>' . __('Trim sessions (+1 month)') . "</a>";
-		    }
+			// adds button to prune sessions over 1 month old - disabled if there are none
+			$sql = "SELECT COUNT(*) FROM " . $db->getTableName('Session') . " WHERE modified < UNIX_TIMESTAMP(NOW() - INTERVAL 1 MONTH)";
+			if ($db->fetchOne($sql) > 0) {
+				echo '<a id="TSTM" class="button green" href="' . url('admin-tools/index/trim-sessions/rng/month') . '">' . __('Trim sessions (+1 month)') . '</a>';
+			} else {
+				echo '<a id="TSTM" class="button disabled" disabled>' . __('Trim sessions (+1 month)') . "</a>";
+			}
 
-            // adds button to prune sessions over 1 week old - disabled if there are none
-		    $sql = "SELECT COUNT(*) FROM " . $db->getTableName('Session') . " WHERE modified < UNIX_TIMESTAMP(NOW() - INTERVAL 1 WEEK)";
-		    if ($db->fetchOne($sql) > 0) {
-		        echo '<a id="TSTW" class="button green" href="' . url('admin-tools/index/trim-sessions/rng/week') . '">' . __('Trim sessions (+1 week)') . '</a>';
-		    } else {
-		        echo '<a id="TSTM" class="button" disabled>' . __('Trim sessions (+1 week)') . "</a>";
-		    }
+			// adds button to prune sessions over 1 week old - disabled if there are none
+			$sql = "SELECT COUNT(*) FROM " . $db->getTableName('Session') . " WHERE modified < UNIX_TIMESTAMP(NOW() - INTERVAL 1 WEEK)";
+			if ($db->fetchOne($sql) > 0) {
+				echo '<a id="TSTW" class="button green" href="' . url('admin-tools/index/trim-sessions/rng/week') . '">' . __('Trim sessions (+1 week)') . '</a>';
+			} else {
+				echo '<a id="TSTM" class="button disabled" disabled>' . __('Trim sessions (+1 week)') . "</a>";
+			}
 
-            // adds button to prune sessions over 1 day old - disabled if there are none
-		    $sql = "SELECT COUNT(*) FROM " . $db->getTableName('Session') . " WHERE modified < UNIX_TIMESTAMP(NOW() - INTERVAL 1 DAY)";
-		    if ($db->fetchOne($sql) > 0) {
-		        echo '<a id="TSTD" class="button green" href="' . url('admin-tools/index/trim-sessions/rng/day') . '">' . __('Trim sessions (+1 day)') . '</a>';
-		    } else {
-		        echo '<a id="TSTD" class="button" disabled>' . __('Trim sessions (+1 day)') . "</a>";
-		    }
+			// adds button to prune sessions over 1 day old - disabled if there are none
+			$sql = "SELECT COUNT(*) FROM " . $db->getTableName('Session') . " WHERE modified < UNIX_TIMESTAMP(NOW() - INTERVAL 1 DAY)";
+			if ($db->fetchOne($sql) > 0) {
+				echo '<a id="TSTD" class="button green" href="' . url('admin-tools/index/trim-sessions/rng/day') . '">' . __('Trim sessions (+1 day)') . '</a>';
+			} else {
+				echo '<a id="TSTD" class="button disabled" disabled>' . __('Trim sessions (+1 day)') . "</a>";
+			}
 		?>   
 		<a id="TSTE" class="button green" href="<?php echo url('admin-tools/index/trim-sessions/rng/expired'); ?>"><?php echo __('Trim sessions (expired)'); ?></a>
 	</div>
@@ -140,19 +146,19 @@
 
 <div class="field">
 	<div id="DUT-label" class="two columns alpha">
-		<label for="DUT"><?php echo __('Tags Table'); ?></label>
+		<label for="DUT"><?php echo __('Tags'); ?></label>
 	</div>
 	<div class="inputs five columns omega">
 		<p class="explanation"><?php echo __('Delete all tags that have no correspondence with any record.') ?></p>
 		<?php
-		    $sql = 'SELECT COUNT(*) FROM ' . $db->getTableName('Tag') . ' WHERE id IN (SELECT id FROM (SELECT t1.id FROM ' . $db->getTableName('Tag') . ' t1 LEFT OUTER JOIN ' . $db->getTableName('RecordsTag') . ' rt ON t1.id = rt.tag_id GROUP BY t1.id HAVING COUNT(rt.id) = 0) tmp)';
-		    $total = $db->fetchOne($sql);
-		    if ($total > 0) {
-		        echo '<a id="DUT" class="button green" href="' . url('admin-tools/index/delete-tags') . '">' . __('Delete %d Unused Tags', $total) . '</a>';
-		    } else {
-		        echo '<a id="TSTD" class="button" disabled>' . __('Delete Unused Tags') . "</a>";
-		    }
-        ?>
+			$sql = 'SELECT COUNT(*) FROM ' . $db->getTableName('Tag') . ' WHERE id IN (SELECT id FROM (SELECT t1.id FROM ' . $db->getTableName('Tag') . ' t1 LEFT OUTER JOIN ' . $db->getTableName('RecordsTag') . ' rt ON t1.id = rt.tag_id GROUP BY t1.id HAVING COUNT(rt.id) = 0) tmp)';
+			$total = $db->fetchOne($sql);
+			if ($total > 0) {
+				echo '<a id="DUT" class="button green" href="' . url('admin-tools/index/delete-tags') . '">' . __('Delete %d Unused Tags', $total) . '</a>';
+			} else {
+				echo '<a id="TSTD" class="button disabled" disabled>' . __('Delete Unused Tags') . "</a>";
+			}
+		?>
 	</div>
 </div>
 
@@ -163,25 +169,25 @@
 	<div class="inputs five columns omega">
 		<p class="explanation"><?php echo __('Activate / Deactivate all plugins at the same time.') ?></p>
 		<?php
-		    $sql = 'SELECT COUNT(*) AS total, SUM(CASE WHEN active = 1 THEN 1 ELSE 0 END) AS active FROM ' . $db->getTableName('Plugin');
-		    $row = $db->fetchRow($sql);
-		    if ($row['total'] == 0) {
-		        // case no installed plugin
-		        echo '<a id="PLU_ON" class="button" disabled>' . __('Activate All Plugins') . '</a>';
-		        echo '<a id="PLU_OFF" class="button" disabled>' . __('Deactivate All Plugins') . '</a>';
-		    } elseif ($row['total'] == $row['active']) {
-		        // case all installed plugins are active
-		        echo '<a id="PLU_ON" class="button" disabled>' . __('Activate All Plugins') . '</a>';
-		        echo '<a id="PLU_OFF" class="button green" href="' . url('admin-tools/index/plugins-deactivate') . '">' . __('Deactivate All Plugins') . '</a>';
-		    } elseif ($row['active'] == 0) {
-		        // case all installed plugins are inactive
-		        echo '<a id="PLU_ON" class="button green" href="' . url('admin-tools/index/plugins-activate') . '">' . __('Activate All Plugins') . '</a>';
-		        echo '<a id="PLU_OFF" class="button" disabled>' . __('Deactivate All Plugins') . '</a>';
-		    } else {
-		        echo '<a id="PLU_ON" class="button green" href="' . url('admin-tools/index/plugins-activate') . '">' . __('Activate All Plugins') . '</a>';
-		        echo '<a id="PLU_OFF" class="button green" href="' . url('admin-tools/index/plugins-deactivate') . '">' . __('Deactivate All Plugins') . '</a>';
-		    }
-        ?>
+			$sql = 'SELECT COUNT(*) AS total, SUM(CASE WHEN active = 1 THEN 1 ELSE 0 END) AS active FROM ' . $db->getTableName('Plugin');
+			$row = $db->fetchRow($sql);
+			if ($row['total'] == 0) {
+				// case no installed plugin
+				echo '<a id="PLU_ON" class="button disabled" disabled>' . __('Activate All Plugins') . '</a>';
+				echo '<a id="PLU_OFF" class="button disabled" disabled>' . __('Deactivate All Plugins') . '</a>';
+			} elseif ($row['total'] == $row['active']) {
+				// case all installed plugins are active
+				echo '<a id="PLU_ON" class="button disabled" disabled>' . __('Activate All Plugins') . '</a>';
+				echo '<a id="PLU_OFF" class="button green" href="' . url('admin-tools/index/plugins-deactivate') . '">' . __('Deactivate All Plugins') . '</a>';
+			} elseif ($row['active'] == 0) {
+				// case all installed plugins are inactive
+				echo '<a id="PLU_ON" class="button green" href="' . url('admin-tools/index/plugins-activate') . '">' . __('Activate All Plugins') . '</a>';
+				echo '<a id="PLU_OFF" class="button disabled" disabled>' . __('Deactivate All Plugins') . '</a>';
+			} else {
+				echo '<a id="PLU_ON" class="button green" href="' . url('admin-tools/index/plugins-activate') . '">' . __('Activate All Plugins') . '</a>';
+				echo '<a id="PLU_OFF" class="button green" href="' . url('admin-tools/index/plugins-deactivate') . '">' . __('Deactivate All Plugins') . '</a>';
+			}
+		?>
 	</div>
 </div>
 <?php echo foot(); ?>
