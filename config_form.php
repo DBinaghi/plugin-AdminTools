@@ -42,7 +42,7 @@
 	<li><a href="#tab9"><?php echo __('Plugins'); ?></a></li>
 </ul>
 
-<div id="tab1" style="height: 1%; border: 1px solid #d8d8d8; padding: 15px 15px;">
+<div id="tab1" style="border: 1px solid #d8d8d8; padding: 15px 15px;">
 	<h2><?php echo __('Site Under Maintenance') ?></h2>
 
 	<div class="field">
@@ -92,7 +92,7 @@
 	<div>&nbsp;</div>
 </div>
 
-<div id="tab2" style="height: 1%; border: 1px solid #d8d8d8; padding: 15px 15px;">
+<div id="tab2" style="border: 1px solid #d8d8d8; padding: 15px 15px;">
 	<h2><?php echo __('User Manual'); ?></h2>
 
 	<div class="field">
@@ -146,18 +146,30 @@
 	<div>&nbsp;</div>
 </div>
 
-<div id="tab3" style="height: 1%; border: 1px solid #d8d8d8; padding: 15px 15px;">
+<div id="tab3" style="border: 1px solid #d8d8d8; padding: 15px 15px;">
 	<h2><?php echo __('Cookie Bar'); ?></h2>
 	
 	<div class="field">
 		<div class="two columns alpha">
-			<?php echo $view->formLabel('admin_tools_cookiebar_active', __('Cookie Bar')); ?>
+			<?php echo $view->formLabel('admin_tools_cookiebar_active', __('Active')); ?>
 		</div>
 		<div class="inputs five columns omega">
 			<p class="explanation">
-				<?php echo __('If checked, a cookie bar with a warning will be shown to visitors (public UI).'); ?>
+				<?php echo __('If checked, a cookie bar with a warning will be shown to all visitors not logged in.'); ?>
 			</p>
 			<?php echo $view->formCheckbox('admin_tools_cookiebar_active', get_option('admin_tools_cookiebar_active'), null, array('1', '0')); ?>
+		</div>
+	</div>
+
+	<div class="field">
+		<div class="two columns alpha">
+			<?php echo $view->formLabel('admin_tools_cookiebar_all_users', __('Extend To All Users')); ?>
+		</div>
+		<div class="inputs five columns omega">
+			<p class="explanation">
+				<?php echo __('If checked, the cookie bar will be shown to all Public interface users.'); ?>
+			</p>
+			<?php echo $view->formCheckbox('admin_tools_cookiebar_all_users', get_option('admin_tools_cookiebar_all_users'), null, array('1', '0')); ?>
 		</div>
 	</div>
 
@@ -200,7 +212,7 @@
 	<div>&nbsp;</div>
 </div>
 
-<div id="tab4" style="height: 1%; border: 1px solid #d8d8d8; padding: 15px 15px;">
+<div id="tab4" style="border: 1px solid #d8d8d8; padding: 15px 15px;">
 	<h2><?php echo __('Limit Visibility to Own') ?></h2>
 
 	<div class="field">
@@ -259,7 +271,7 @@
 	<div>&nbsp;</div>
 </div>
 
-<div id="tab5" style="height: 1%; border: 1px solid #d8d8d8; padding: 15px 15px;">
+<div id="tab5" style="border: 1px solid #d8d8d8; padding: 15px 15px;">
 	<h2><?php echo __('Public Edit Link') ?></h2>
 
 	<div class="field">
@@ -300,7 +312,7 @@
 	<div>&nbsp;</div>
 </div>
 
-<div id="tab6" style="height: 1%; border: 1px solid #d8d8d8; padding: 15px 15px;">
+<div id="tab6" style="border: 1px solid #d8d8d8; padding: 15px 15px;">
 	<h2><?php echo __('Database Backup') ?></h2>
 
 	<div class="field">
@@ -336,7 +348,7 @@
 	<div>&nbsp;</div>
 </div>
 
-<div id="tab7" style="height: 1%; border: 1px solid #d8d8d8; padding: 15px 15px;">
+<div id="tab7" style="border: 1px solid #d8d8d8; padding: 15px 15px;">
 	<h2><?php echo __('Sessions Table') ?></h2>
 
 	<div class="field">
@@ -362,7 +374,7 @@
 	<div>&nbsp;</div>
 </div>
 
-<div id="tab8" style="height: 1%; border: 1px solid #d8d8d8; padding: 15px 15px;">
+<div id="tab8" style="border: 1px solid #d8d8d8; padding: 15px 15px;">
 	<h2><?php echo __('Tags') ?></h2>
 
 	<div class="field">
@@ -375,10 +387,19 @@
 		</div>
 	</div>
 	
+	<div class="field">
+		<div class="two columns alpha">
+			<label><?php echo __('Add Search Option')?></label>	
+		</div>
+		<div class="inputs five columns omega">
+			<p class="explanation"><?php echo __('If checked, an extra "With Tags/Without Tags" option will be added to the Items Advanced Search page.'); ?></p>
+			<?php echo $view->formCheckbox('admin_tools_has_tags', get_option('admin_tools_has_tags'), null, array('1', '0')); ?>
+		</div>
+	</div>
 	<div>&nbsp;</div>
 </div>
 
-<div id="tab9" style="height: 1%; border: 1px solid #d8d8d8; padding: 15px 15px;">
+<div id="tab9" style="border: 1px solid #d8d8d8; padding: 15px 15px;">
 	<h2><?php echo __('Plugins') ?></h2>
 
 	<div class="field">
