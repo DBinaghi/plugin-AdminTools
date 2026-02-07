@@ -26,7 +26,7 @@
 
 <div class="field">
 	<div id="SUM-label" class="two columns alpha">
-		<label for="SUM"><?php echo __('Site Under Maintenance'); ?></label>
+		<label for="SUM"><?php echo __('Site Maintenance'); ?></label>
 	</div>
 	<div class="inputs five columns omega">
 		<p class="explanation"><?php echo __('Block out from Public interface not-logged in users') . (get_option('admin_tools_maintenance_scope_extended') ? __(' (and also, from Admin interface, some logged-in users)') : '') . __(', displaying instead an "Under Maintenance" sign.'); ?></p>
@@ -36,10 +36,10 @@
 
 <div class="field">
 	<div id="RC-label" class="two columns alpha">
-		<label for="RC"><?php echo __('Languages Cache'); ?></label>
+		<label for="RC"><?php echo __('Translations Cache'); ?></label>
 	</div>
 	<div class="inputs five columns omega">
-		<p class="explanation"><?php echo __('Update all translations after language files have been changed manually, either in the active theme or in any active plugin.'); ?></p>
+		<p class="explanation"><?php echo __('Update all translations after language files have been changed manually, either in the active theme (if the relative plugin setting is on) or in any active plugin.'); ?></p>
 		<a id="RC" class="button green" href="<?php echo url('admin-tools/index/reset-cache'); ?>"><?php echo __('Reset Cache'); ?></a>
 	</div>
 </div>
@@ -151,36 +151,36 @@
 	<div class="inputs five columns omega">
 		<?php
 			$sql = 'SELECT COUNT(*) FROM ' . $db->getTableName('Tag') . ' WHERE id IN (SELECT id FROM (SELECT t1.id FROM ' . $db->getTableName('Tag') . ' t1 LEFT OUTER JOIN ' . $db->getTableName('RecordsTag') . ' rt ON t1.id = rt.tag_id GROUP BY t1.id HAVING COUNT(rt.id) = 0) tmp)';
-			$total_unused_tags = $db->fetchOne($sql);
+			$total_unused_tags = intval($db->fetchOne($sql));
 			$sql = 'SELECT COUNT(*) FROM ' . $db->getTableName('Item') . ' AS `items` LEFT OUTER JOIN ' . $db->getTableName('RecordsTag') . ' AS `records_tags` ON `items`.id = `records_tags`.`record_id` WHERE `records_tags`.`tag_id` IS NULL';
-			$total_untagged_items = $db->fetchOne($sql);
+			$total_untagged_items = intval($db->fetchOne($sql));
 
 			echo '<p class="explanation">';
 			if ($total_unused_tags > 0) {
 				echo __('One or more tags have no correspondence to any Items');
 				if ($total_untagged > 0) {
-					echo ', and ' . __('one or more Items have no tags associated.');
+					echo ', ' . __('and') . ' ' . __('one or more Items have no tags associated.');
 				} else {
-					echo ', but ' . __('all Items have at least one tag associated.');
+					echo ', ' . __('but') . ' ' . __('all Items have at least one tag associated.');
 				}
 			} else {
 				echo __('All tags are associated to at least one Item');
 				if ($total_untagged_items > 0) {
-					echo ', but ' . __('one or more Items have no tags associated.');
+					echo ', ' . __('but') . ' ' . __('one or more Items have no tags associated.');
 				} else {
-					echo ', and ' . __('all Items have at least one tag associated.');
+					echo ', ' . __('and') . ' ' . __('all Items have at least one tag associated.');
 				}
 			}
 			echo '</p>';
 
 			if ($total_unused_tags > 0) {
-				echo '<a id="DUT" class="button green" href="' . url('admin-tools/index/delete-tags') . '">' . __('Delete %d Unused Tags', $total_unused_tags) . '</a>';
+				echo '<a id="DUT" class="button green" href="' . url('admin-tools/index/delete-tags') . '">' . __(plural('Delete Unused Tag', 'Delete %d Unused Tags', $total_unused_tags), $total_unused_tags) . '</a>';
 			} else {
 				echo '<a id="DUT" class="button at_disabled" disabled>' . __('Delete Unused Tags') . "</a>";
 			}
 
 			if ($total_untagged_items > 0) {
-				echo '<a id="SUI" class="button green" href="' . url('items/browse?search=&advanced-joiner=and&advanced-element_id=&advanced-type=&advanced-terms=&has-tags=0') . '">' . __('Show %d Untagged Items', $total_untagged_items) . '</a>';
+				echo '<a id="SUI" class="button green" href="' . url('items/browse?search=&advanced-joiner=and&advanced-element_id=&advanced-type=&advanced-terms=&has-tags=0') . '">' . __(plural('Show Untagged Item', 'Show %d Untagged Items', $total_untagged_items), $total_untagged_items) . '</a>';
 			} else {
 				echo '<a id="SUI" class="button at_disabled" disabled>' . __('Show Untagged Items') . "</a>";
 			}
@@ -193,28 +193,42 @@
 		<label for="PLU"><?php echo __('Plugins'); ?></label>
 	</div>
 	<div class="inputs five columns omega">
-		<p class="explanation"><?php echo __('Activate / Deactivate all plugins at the same time.') ?></p>
-
 		<?php
 			$sql = 'SELECT COUNT(*) AS total, SUM(CASE WHEN active = 1 THEN 1 ELSE 0 END) AS active FROM ' . $db->getTableName('Plugin');
 			$row = $db->fetchRow($sql);
+
+			echo '<p class="explanation">';
 			if ($row['total'] == 0) {
 				// case no installed plugin
+				echo __('No plugin is installed in the system.');
+				echo '</p>';
 				echo '<a id="PLU_ON" class="button at_disabled" disabled>' . __('Activate All Plugins') . '</a>';
-				echo '<a id="PLU_OFF" class="button at_disabled" disabled>' . __('Deactivate All Plugins') . '</a>';
-			} elseif ($row['total'] == $row['active']) {
-				// case all installed plugins are active
-				echo '<a id="PLU_ON" class="button at_disabled" disabled>' . __('Activate All Plugins') . '</a>';
-				echo '<a id="PLU_OFF" class="button green" href="' . url('admin-tools/index/plugins-deactivate') . '">' . __('Deactivate All Plugins') . '</a>';
-			} elseif ($row['active'] == 0) {
-				// case all installed plugins are inactive
-				echo '<a id="PLU_ON" class="button green" href="' . url('admin-tools/index/plugins-activate') . '">' . __('Activate All Plugins') . '</a>';
 				echo '<a id="PLU_OFF" class="button at_disabled" disabled>' . __('Deactivate All Plugins') . '</a>';
 			} else {
-				echo '<a id="PLU_ON" class="button green" href="' . url('admin-tools/index/plugins-activate') . '">' . __('Activate All Plugins') . '</a>';
-				echo '<a id="PLU_OFF" class="button green" href="' . url('admin-tools/index/plugins-deactivate') . '">' . __('Deactivate All Plugins') . '</a>';
+				echo __(plural('The system contains <b>one</b> installed plugin', 'The system contains <b>%s</b> installed plugins', $row['total']), $row['total']);
+				echo ', ';
+				if ($row['total'] == $row['active']) {
+					// case all installed plugins are active
+					echo __(plural('which is already active.', 'which are all already active.', $row['total']));
+					echo '</p>';
+					echo '<a id="PLU_ON" class="button at_disabled" disabled>' . __('Activate All Plugins') . '</a>';
+					echo '<a id="PLU_OFF" class="button green" href="' . url('admin-tools/index/plugins-deactivate') . '">' . __('Deactivate All Plugins') . '</a>';
+				} elseif ($row['active'] == 0) {
+					// case all installed plugins are inactive
+					echo __(plural('which is not active.', 'which are all not active.', $row['total']));
+					echo '</p>';
+					echo '<a id="PLU_ON" class="button green" href="' . url('admin-tools/index/plugins-activate') . '">' . __('Activate All Plugins') . '</a>';
+					echo '<a id="PLU_OFF" class="button at_disabled" disabled>' . __('Deactivate All Plugins') . '</a>';
+				} else {
+					// case else
+					echo __(plural('of which <b>1</b> active.', 'of which <b>%d</b> active.', $row['active']), $row['active']);
+					echo '</p>';
+					echo '<a id="PLU_ON" class="button green" href="' . url('admin-tools/index/plugins-activate') . '">' . __('Activate All Plugins') . '</a>';
+					echo '<a id="PLU_OFF" class="button green" href="' . url('admin-tools/index/plugins-deactivate') . '">' . __('Deactivate All Plugins') . '</a>';
+				}
 			}
 		?>
 	</div>
 </div>
+
 <?php echo foot(); ?>
