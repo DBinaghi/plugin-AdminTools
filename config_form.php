@@ -31,61 +31,48 @@
 <p><?php echo flash(); ?></p>
 
 <ul id="section-nav" class="navigation tabs">
-	<li><a href="#tab1"><?php echo __('Maintenance'); ?></a></li>
-	<li><a href="#tab2"><?php echo __('User Manual'); ?></a></li>
-	<li><a href="#tab3"><?php echo __('Cookie Bar'); ?></a></li>
+	<li><a href="#tab1"><?php echo __('Database Backup'); ?></a></li>
+	<li><a href="#tab2"><?php echo __('Cookie Bar'); ?></a></li>
+	<li><a href="#tab3"><?php echo __('Edit Link'); ?></a></li>
 	<li><a href="#tab4"><?php echo __('Limit Visibility'); ?></a></li>
-	<li><a href="#tab5"><?php echo __('Edit Link'); ?></a></li>
-	<li><a href="#tab6"><?php echo __('Backup'); ?></a></li>
+	<li><a href="#tab5"><?php echo __('Site Maintenance'); ?></a></li>
+	<li><a href="#tab6"><?php echo __('Plugins'); ?></a></li>
 	<li><a href="#tab7"><?php echo __('Sessions'); ?></a></li>
 	<li><a href="#tab8"><?php echo __('Tags'); ?></a></li>
-	<li><a href="#tab9"><?php echo __('Plugins'); ?></a></li>
+	<li><a href="#tab9"><?php echo __('Translations'); ?></a></li>
+	<li><a href="#tab10"><?php echo __('User Manual'); ?></a></li>
 </ul>
 
 <div id="tab1" style="border: 1px solid #d8d8d8; padding: 15px 15px;">
-	<h2><?php echo __('Site Under Maintenance') ?></h2>
+	<h2><?php echo __('Database Backup') ?></h2>
 
 	<div class="field">
 		<div class="two columns alpha">
-			<?php echo $view->formLabel('admin_tools_maintenance_title', __('Title')); ?>
-		</div>
-		<div class='inputs five columns omega'>
-			<p class="explanation">
-				<?php echo __('The title of the message to display to visitors when the site is in maintenance mode.'); ?>
-			</p>
-			<?php echo $view->formText('admin_tools_maintenance_title', get_option('admin_tools_maintenance_title')); ?>
-		</div>
-	</div>
-
-	<div class="field">
-		<div class="two columns alpha">
-			<?php echo $view->formLabel('admin_tools_maintenance_message', __('Message')); ?>
-		</div>
-		<div class='inputs five columns omega'>
-			<p class="explanation">
-				<?php echo __('The message to display to visitors when the site is in maintenance mode.'); ?>
-			</p>
-			<?php echo $view->formTextarea(
-				'admin_tools_maintenance_message',
-				get_option('admin_tools_maintenance_message'),
-				array(
-					'rows' => 5,
-					'cols' => 60,
-					'class' => array('textinput', 'html-editor'),
-				 )
-			); ?>
-		</div>
-	</div>
-
-	<div class="field">
-		<div class="two columns alpha">
-			<?php echo $view->formLabel('admin_tools_maintenance_scope_extended', __('Extend Scope')); ?>
+			<label><?php echo __('Ignore Sessions')?></label>	
 		</div>
 		<div class="inputs five columns omega">
-			<p class="explanation">
-				<?php echo __('If checked, site will not be accessible even to logged-in users (excluding Super User and Admin roles).'); ?>
-			</p>
-			<?php echo $view->formCheckbox('admin_tools_maintenance_scope_extended', get_option('admin_tools_maintenance_scope_extended'), null, array('1', '0')); ?>
+			<p class="explanation"><?php echo __('If checked, the backup will ignore the data contained in Sessions table.'); ?></p>
+			<?php echo $view->formCheckbox('admin_tools_backup_sessions_ignore', get_option('admin_tools_backup_sessions_ignore'), null, array('1', '0')); ?>
+		</div>
+	</div>
+
+	<div class="field">
+		<div class="two columns alpha">
+			<label><?php echo __('Compress Backup')?></label>	
+		</div>
+		<div class="inputs five columns omega">
+			<p class="explanation"><?php echo __('If checked, the backup SQL file will be compressed (format: GZip).'); ?></p>
+			<?php echo $view->formCheckbox('admin_tools_backup_compress', get_option('admin_tools_backup_compress'), null, array('1', '0')); ?>
+		</div>
+	</div>
+
+	<div class="field">
+		<div class="two columns alpha">
+			<label><?php echo __('Download Backup')?></label>	
+		</div>
+		<div class="inputs five columns omega">
+			<p class="explanation"><?php echo __('If checked, the backup SQL file will be downloadable (by default, it sits in the Omeka\'s files directory).'); ?></p>
+			<?php echo $view->formCheckbox('admin_tools_backup_download', get_option('admin_tools_backup_download'), null, array('1', '0')); ?>
 		</div>
 	</div>
 	
@@ -93,60 +80,6 @@
 </div>
 
 <div id="tab2" style="border: 1px solid #d8d8d8; padding: 15px 15px;">
-	<h2><?php echo __('User Manual'); ?></h2>
-
-	<div class="field">
-		<div class="two columns alpha">
-			<?php echo $view->formLabel('admin_tools_usermanual_url', __('URL')); ?>
-		</div>
-		<div class="inputs five columns omega">
-			<p class="explanation">
-				<?php echo __('The URL of the user manual to be made available to logged-in users.'); ?>
-			</p>
-			<?php echo $view->formText('admin_tools_usermanual_url', get_option('admin_tools_usermanual_url')); ?>
-		</div>
-	</div>
-
-	<div class="field">
-		<div class="two columns alpha">
-			<?php echo $view->formLabel('admin_tools_usermanual_label', __('Label')); ?>
-		</div>
-		<div class="inputs five columns omega">
-			<p class="explanation">
-				<?php echo __('The label to be shown to logged-in users.'); ?>
-			</p>
-			<?php echo $view->formText('admin_tools_usermanual_label', get_option('admin_tools_usermanual_label')); ?>
-		</div>
-	</div>
-
-	<div class="field">
-		<div class="two columns alpha">
-			<?php echo $view->formLabel('admin_tools_usermanual_label', __('Link Position')); ?>
-		</div>
-		<div class="inputs five columns omega">
-			<p class="explanation">
-				<?php echo __('Choose where the user manual link should be displayed.'); ?>
-			</p>
-			<?php
-				$positions = array('Sidebar', 'Topbar', 'Footer');
-				$usermanualLinkPositions = array();
-				
-				// retrieve configuration
-				if (get_option('admin_tools_usermanual_link_positions') <> '') {
-					$usermanualLinkPositions = unserialize(get_option('admin_tools_usermanual_link_positions'));
-				}
-				
-				foreach ($positions as $position) {
-					echo '<label>' . $view->formCheckbox('admin_tools_usermanual_link_positions[]', $position, array('checked'=> (!empty($usermanualLinkPositions) ? in_array($position, $usermanualLinkPositions) : false) ? 'checked' : '')) . __($position) . '</label>';
-				}
-			?>
-		</div>
-	</div>
-	
-	<div>&nbsp;</div>
-</div>
-
-<div id="tab3" style="border: 1px solid #d8d8d8; padding: 15px 15px;">
 	<h2><?php echo __('Cookie Bar'); ?></h2>
 	
 	<div class="field">
@@ -212,8 +145,49 @@
 	<div>&nbsp;</div>
 </div>
 
+<div id="tab3" style="border: 1px solid #d8d8d8; padding: 15px 15px;">
+	<h2><?php echo __('Edit Link') ?></h2>
+
+	<div class="field">
+		<div class="two columns alpha">
+			<label><?php echo __('Content Types')?></label>	
+		</div>
+		<div class="inputs five columns omega">
+			<p class="explanation"><?php echo __('Content types for which a link will be added to the public UI for quick editing (only when user is logged in).'); ?></p>
+
+			<?php
+				$contentTypes = array('Items', 'Collections', 'Exhibits', 'Files', 'Simple Pages');
+				$publicEditLinkTypes = array();
+				
+				// retrieve configuration
+				if (get_option('admin_tools_public_edit_link_types') <> '') {
+					$publicEditLinkTypes = unserialize(get_option('admin_tools_public_edit_link_types'));
+				}
+				
+				foreach ($contentTypes as $contentType) {
+					if ($contentType != 'Exhibits' || $bExhibit) {
+						echo '<label>' . $view->formCheckbox('admin_tools_public_edit_link_types[]', $contentType, array('checked'=> (!empty($contentTypes) ? in_array($contentType, $publicEditLinkTypes) : false) ? 'checked' : '')) . __($contentType) . '</label>';
+					}
+				}
+			?>
+		</div>
+	</div>
+
+	<div class="field">
+		<div class="two columns alpha">
+			<label><?php echo __('Open in New Tab')?></label>	
+		</div>
+		<div class="inputs five columns omega">
+			<p class="explanation"><?php echo __('If checked, opens editing page in new tab (recommended).'); ?></p>
+			<?php echo $view->formCheckbox('admin_tools_public_edit_link_blank', get_option('admin_tools_public_edit_link_blank'), null, array('1', '0')); ?>
+		</div>
+	</div>
+	
+	<div>&nbsp;</div>
+</div>
+
 <div id="tab4" style="border: 1px solid #d8d8d8; padding: 15px 15px;">
-	<h2><?php echo __('Limit Visibility to Own') ?></h2>
+	<h2><?php echo __('Limit Visibility') ?></h2>
 
 	<div class="field">
 		<div class="two columns alpha">
@@ -272,40 +246,49 @@
 </div>
 
 <div id="tab5" style="border: 1px solid #d8d8d8; padding: 15px 15px;">
-	<h2><?php echo __('Public Edit Link') ?></h2>
+	<h2><?php echo __('Site Maintenance') ?></h2>
 
 	<div class="field">
 		<div class="two columns alpha">
-			<label><?php echo __('Content Types')?></label>	
+			<?php echo $view->formLabel('admin_tools_maintenance_title', __('Title')); ?>
 		</div>
-		<div class="inputs five columns omega">
-			<p class="explanation"><?php echo __('Content types for which a link will be added to the public UI for quick editing (only when user is logged in).'); ?></p>
-
-			<?php
-				$contentTypes = array('Items', 'Collections', 'Exhibits', 'Files', 'Simple Pages');
-				$publicEditLinkTypes = array();
-				
-				// retrieve configuration
-				if (get_option('admin_tools_public_edit_link_types') <> '') {
-					$publicEditLinkTypes = unserialize(get_option('admin_tools_public_edit_link_types'));
-				}
-				
-				foreach ($contentTypes as $contentType) {
-					if ($contentType != 'Exhibits' || $bExhibit) {
-						echo '<label>' . $view->formCheckbox('admin_tools_public_edit_link_types[]', $contentType, array('checked'=> (!empty($contentTypes) ? in_array($contentType, $publicEditLinkTypes) : false) ? 'checked' : '')) . __($contentType) . '</label>';
-					}
-				}
-			?>
+		<div class='inputs five columns omega'>
+			<p class="explanation">
+				<?php echo __('The title of the message to display to visitors when the site is in maintenance mode.'); ?>
+			</p>
+			<?php echo $view->formText('admin_tools_maintenance_title', get_option('admin_tools_maintenance_title')); ?>
 		</div>
 	</div>
 
 	<div class="field">
 		<div class="two columns alpha">
-			<label><?php echo __('Open in New Tab')?></label>	
+			<?php echo $view->formLabel('admin_tools_maintenance_message', __('Message')); ?>
+		</div>
+		<div class='inputs five columns omega'>
+			<p class="explanation">
+				<?php echo __('The message to display to visitors when the site is in maintenance mode.'); ?>
+			</p>
+			<?php echo $view->formTextarea(
+				'admin_tools_maintenance_message',
+				get_option('admin_tools_maintenance_message'),
+				array(
+					'rows' => 5,
+					'cols' => 60,
+					'class' => array('textinput', 'html-editor'),
+				 )
+			); ?>
+		</div>
+	</div>
+
+	<div class="field">
+		<div class="two columns alpha">
+			<?php echo $view->formLabel('admin_tools_maintenance_scope_extended', __('Extend Scope')); ?>
 		</div>
 		<div class="inputs five columns omega">
-			<p class="explanation"><?php echo __('If checked, opens editing page in new tab (recommended).'); ?></p>
-			<?php echo $view->formCheckbox('admin_tools_public_edit_link_blank', get_option('admin_tools_public_edit_link_blank'), null, array('1', '0')); ?>
+			<p class="explanation">
+				<?php echo __('If checked, site will not be accessible even to logged-in users (excluding Super User and Admin roles).'); ?>
+			</p>
+			<?php echo $view->formCheckbox('admin_tools_maintenance_scope_extended', get_option('admin_tools_maintenance_scope_extended'), null, array('1', '0')); ?>
 		</div>
 	</div>
 	
@@ -313,35 +296,15 @@
 </div>
 
 <div id="tab6" style="border: 1px solid #d8d8d8; padding: 15px 15px;">
-	<h2><?php echo __('Database Backup') ?></h2>
+	<h2><?php echo __('Plugins') ?></h2>
 
 	<div class="field">
 		<div class="two columns alpha">
-			<label><?php echo __('Ignore Sessions')?></label>	
+			<label><?php echo __('Show Buttons')?></label>	
 		</div>
 		<div class="inputs five columns omega">
-			<p class="explanation"><?php echo __('If checked, the backup will ignore the data contained in Sessions table.'); ?></p>
-			<?php echo $view->formCheckbox('admin_tools_backup_sessions_ignore', get_option('admin_tools_backup_sessions_ignore'), null, array('1', '0')); ?>
-		</div>
-	</div>
-
-	<div class="field">
-		<div class="two columns alpha">
-			<label><?php echo __('Compress Backup')?></label>	
-		</div>
-		<div class="inputs five columns omega">
-			<p class="explanation"><?php echo __('If checked, the backup SQL file will be compressed (format: GZip).'); ?></p>
-			<?php echo $view->formCheckbox('admin_tools_backup_compress', get_option('admin_tools_backup_compress'), null, array('1', '0')); ?>
-		</div>
-	</div>
-
-	<div class="field">
-		<div class="two columns alpha">
-			<label><?php echo __('Download Backup')?></label>	
-		</div>
-		<div class="inputs five columns omega">
-			<p class="explanation"><?php echo __('If checked, the backup SQL file will be downloadable (by default, it sits in the Omeka\'s files directory).'); ?></p>
-			<?php echo $view->formCheckbox('admin_tools_backup_download', get_option('admin_tools_backup_download'), null, array('1', '0')); ?>
+			<p class="explanation"><?php echo __('If checked, buttons to activate or deactivate all plugins will be shown in the Plugins Browse page.'); ?></p>
+			<?php echo $view->formCheckbox('admin_tools_plugins_btns', get_option('admin_tools_plugins_btns'), null, array('1', '0')); ?>
 		</div>
 	</div>
 	
@@ -349,7 +312,7 @@
 </div>
 
 <div id="tab7" style="border: 1px solid #d8d8d8; padding: 15px 15px;">
-	<h2><?php echo __('Sessions Table') ?></h2>
+	<h2><?php echo __('Sessions') ?></h2>
 
 	<div class="field">
 		<div class="two columns alpha">
@@ -400,15 +363,69 @@
 </div>
 
 <div id="tab9" style="border: 1px solid #d8d8d8; padding: 15px 15px;">
-	<h2><?php echo __('Plugins') ?></h2>
+	<h2><?php echo __('Translations') ?></h2>
 
 	<div class="field">
 		<div class="two columns alpha">
-			<label><?php echo __('Show Buttons')?></label>	
+			<label><?php echo __('Add Theme Translations')?></label>	
 		</div>
 		<div class="inputs five columns omega">
-			<p class="explanation"><?php echo __('If checked, buttons to activate or deactivate all plugins will be shown in the Plugins Browse page.'); ?></p>
-			<?php echo $view->formCheckbox('admin_tools_plugins_btns', get_option('admin_tools_plugins_btns'), null, array('1', '0')); ?>
+			<p class="explanation"><?php echo __('If checked, all translation files located in the "Languages" folder of the Public Theme will be used as well.'); ?></p>
+			<?php echo $view->formCheckbox('admin_tools_translations_theme', get_option('admin_tools_translations_theme'), null, array('1', '0')); ?>
+		</div>
+	</div>
+	
+	<div>&nbsp;</div>
+</div>
+
+<div id="tab10" style="border: 1px solid #d8d8d8; padding: 15px 15px;">
+	<h2><?php echo __('User Manual'); ?></h2>
+
+	<div class="field">
+		<div class="two columns alpha">
+			<?php echo $view->formLabel('admin_tools_usermanual_url', __('URL')); ?>
+		</div>
+		<div class="inputs five columns omega">
+			<p class="explanation">
+				<?php echo __('The URL of the user manual to be made available to logged-in users.'); ?>
+			</p>
+			<?php echo $view->formText('admin_tools_usermanual_url', get_option('admin_tools_usermanual_url')); ?>
+		</div>
+	</div>
+
+	<div class="field">
+		<div class="two columns alpha">
+			<?php echo $view->formLabel('admin_tools_usermanual_label', __('Label')); ?>
+		</div>
+		<div class="inputs five columns omega">
+			<p class="explanation">
+				<?php echo __('The label to be shown to logged-in users.'); ?>
+			</p>
+			<?php echo $view->formText('admin_tools_usermanual_label', get_option('admin_tools_usermanual_label')); ?>
+		</div>
+	</div>
+
+	<div class="field">
+		<div class="two columns alpha">
+			<?php echo $view->formLabel('admin_tools_usermanual_label', __('Link Position')); ?>
+		</div>
+		<div class="inputs five columns omega">
+			<p class="explanation">
+				<?php echo __('Choose where the user manual link should be displayed.'); ?>
+			</p>
+			<?php
+				$positions = array('Sidebar', 'Topbar', 'Footer');
+				$usermanualLinkPositions = array();
+				
+				// retrieve configuration
+				if (get_option('admin_tools_usermanual_link_positions') <> '') {
+					$usermanualLinkPositions = unserialize(get_option('admin_tools_usermanual_link_positions'));
+				}
+				
+				foreach ($positions as $position) {
+					echo '<label>' . $view->formCheckbox('admin_tools_usermanual_link_positions[]', $position, array('checked'=> (!empty($usermanualLinkPositions) ? in_array($position, $usermanualLinkPositions) : false) ? 'checked' : '')) . __($position) . '</label>';
+				}
+			?>
 		</div>
 	</div>
 	
