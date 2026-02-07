@@ -77,6 +77,7 @@
 			set_option('admin_tools_unused_tags_btn', 0);
 			set_option('admin_tools_has_tags', 0);
 			set_option('admin_tools_plugins_btns', 0);
+			set_option('admin_tools_translations_theme', 0);
 		}
 
 		public function hookUninstall()
@@ -106,12 +107,14 @@
 			delete_option('admin_tools_unused_tags_btn');
 			delete_option('admin_tools_has_tags');
 			delete_option('admin_tools_plugins_btns');
+			delete_option('admin_tools_translations_theme');
 		}
 
 		public function hookInitialize()
 		{
 			include_once(__DIR__ . '/views/admin/css/admin-tools.css');
 			add_translation_source(dirname(__FILE__) . '/languages');
+			if ((bool)get_option('admin_tools_translations_theme')) add_translation_source(dirname(dirname(dirname(__FILE__))) . '/themes/' . get_option('public_theme') . '/languages');
 
 			$front = Zend_Controller_Front::getInstance();
 			$front->registerPlugin(new AdminTools_Controller_Plugin_Maintenance);
@@ -144,6 +147,7 @@
 			set_option('admin_tools_unused_tags_btn',							$post['admin_tools_unused_tags_btn']);
 			set_option('admin_tools_has_tags',									$post['admin_tools_has_tags']);
 			set_option('admin_tools_plugins_btns',								$post['admin_tools_plugins_btns']);
+			set_option('admin_tools_translations_theme',						$post['admin_tools_translations_theme']);
 		}
 
 		public function hookConfigForm()
