@@ -303,7 +303,7 @@
 			<label><?php echo __('Show Buttons')?></label>	
 		</div>
 		<div class="inputs five columns omega">
-			<p class="explanation"><?php echo __('If checked, buttons to activate or deactivate all plugins will be shown in the Plugins Browse page.'); ?></p>
+			<p class="explanation"><?php echo __('If checked, buttons to activate or deactivate all Plugins will be shown in the Plugins Browse page.'); ?></p>
 			<?php echo $view->formCheckbox('admin_tools_plugins_btns', get_option('admin_tools_plugins_btns'), null, array('1', '0')); ?>
 		</div>
 	</div>
@@ -319,7 +319,7 @@
 			<label><?php echo __('Sessions Count')?></label>	
 		</div>
 		<div class="inputs five columns omega">
-			<p class="explanation"><?php echo __('If checked, the amount of actual records in the Session table will be shown (in case of a very large number of records, Admin Tool plugin page could take some extra time to load).'); ?></p>
+			<p class="explanation"><?php echo __('If checked, the amount of actual records in the Session table will be shown (in case of a very large number of records, Admin Tool Plugin page could take some extra time to load).'); ?></p>
 			<?php echo $view->formCheckbox('admin_tools_sessions_count', get_option('admin_tools_sessions_count'), null, array('1', '0')); ?>
 		</div>
 	</div>
@@ -345,7 +345,7 @@
 			<label><?php echo __('Show Button')?></label>	
 		</div>
 		<div class="inputs five columns omega">
-			<p class="explanation"><?php echo __('If checked, a button to delete all unused tags will be shown in the Tags Browse page.'); ?></p>
+			<p class="explanation"><?php echo __('If checked, a button to delete all unused Tags will be shown in the Tags Browse page.'); ?></p>
 			<?php echo $view->formCheckbox('admin_tools_unused_tags_btn', get_option('admin_tools_unused_tags_btn'), null, array('1', '0')); ?>
 		</div>
 	</div>
