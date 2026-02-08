@@ -128,6 +128,18 @@
 			$this->_helper->redirector->gotoUrl(url('../plugins/browse'));
 		}
 
+		public function pluginsRemoveDamagedAction()
+		{
+			$this->_removeDamagedPlugins();
+			$this->_helper->redirector->gotoUrl(url('../plugins/browse'));
+		}
+
+		public function pluginsRemoveDamagedBrowseAction()
+		{
+			$this->_removeDamagedPlugins();
+			$this->_helper->redirector->gotoUrl(url('../plugins/browse'));
+		}
+
 		private function _activatePlugins()
 		{
             $db = get_db();
@@ -135,9 +147,9 @@
 			$affected = $db->query($query)->rowCount();
 
             if ($affected > 0) {
-				$this->_helper->flashMessenger(__('All plugins are now active.'), 'success');
+				$this->_helper->flashMessenger(__('All Plugins are now active.'), 'success');
             } else {
-				$this->_helper->flashMessenger(__('All installed plugins were already active.'), 'alert');
+				$this->_helper->flashMessenger(__('All installed Plugins were already active.'), 'alert');
             }    
 		}
 
@@ -148,9 +160,25 @@
 			$affected = $db->query($query)->rowCount();
 
             if ($affected > 0) {
-				$this->_helper->flashMessenger(__('All plugins are now inactive.'), 'success');
+				$this->_helper->flashMessenger(__('All Plugins are now inactive.'), 'success');
             } else {
-				$this->_helper->flashMessenger(__('All installed plugins were already inactive.'), 'alert');
+				$this->_helper->flashMessenger(__('All installed Plugins were already inactive.'), 'alert');
+            }    
+		}
+
+		private function _removeDamagedPlugins()
+		{
+			$db = get_db();
+			$path = PLUGIN_DIR;
+			$directories = str_replace($path . '/', '', glob($path . '/*', GLOB_ONLYDIR));
+			$query = "DELETE FROM " . $db->getTableName('Plugin') . " WHERE name NOT IN ('" . implode("','", $directories) . "')";
+			$affected = $db->query($query)->rowCount();
+			
+			
+            if ($affected > 0) {
+				$this->_helper->flashMessenger(__('All invalid/damaged Plugins were removed.'), 'success');
+            } else {
+				$this->_helper->flashMessenger(__('No invalid/damaged Plugin was found to remove.'), 'alert');
             }    
 		}
 
@@ -161,11 +189,11 @@
 			$affected = $db->query($query)->rowCount();
 
 			if ($affected == 1) {
-				$this->_helper->flashMessenger(__('1 unused tag has been deleted.', $affected), 'success');
+				$this->_helper->flashMessenger(__('1 unused Tag has been deleted.', $affected), 'success');
 			} elseif ($affected > 1 ) {
-				$this->_helper->flashMessenger(__('All %s unused tags have been deleted.', $affected), 'success');
+				$this->_helper->flashMessenger(__('All %s unused Tags have been deleted.', $affected), 'success');
 			} else {
-				$this->_helper->flashMessenger(__('No unused tag was found.'), 'alert');
+				$this->_helper->flashMessenger(__('No unused Tag was found.'), 'alert');
 			}
 		}
 			
