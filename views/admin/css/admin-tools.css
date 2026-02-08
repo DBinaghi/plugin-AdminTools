@@ -1,18 +1,20 @@
-form.at_form.hidden,
-form.at_form .hidden{
-	visibility: hidden;
-	display: none;
-}
-
-form.at_form button{
-	width: 100%;
-}
-
-#flash ul li.det{
-	background-color: lightyellow !important;
-}
+<style>
+	form.at_form.hidden,
+	form.at_form .hidden{
+		visibility: hidden;
+		display: none;
+	}
 	
-.at_disabled {
-	cursor: not-allowed !important;
-	opacity: 0.6; /* Faded opacity (60% visible) */
-}
+	form.at_form button{
+		width: 100%;
+	}
+	
+	#flash ul li.det{
+		background-color: lightyellow !important;
+	}
+		
+	.at_disabled {
+		cursor: not-allowed !important;
+		opacity: 0.6; /* Faded opacity (60% visible) */
+	}
+</style>
