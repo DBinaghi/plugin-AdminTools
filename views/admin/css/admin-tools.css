@@ -1,26 +1,18 @@
-<style>
-	form.at_form.hidden
-	form.at_form .hidden{
-		visibility: hidden;
-		display: none;
-	}
+form.at_form.hidden,
+form.at_form .hidden{
+	visibility: hidden;
+	display: none;
+}
 
-	form.at_form button{
-		width: 100%;
-	}
+form.at_form button{
+	width: 100%;
+}
 
-	form.at_form button::before{
-		/* content: "\f2ed"; */
-		/* font-family: "Font Awesome 5 Free"; */
-		/* display: inline; */
-		/* padding-right: .5em; */
-	}
-
-	#flash ul li.det{
-		background-color: lightyellow !important;
-	}
+#flash ul li.det{
+	background-color: lightyellow !important;
+}
 	
-	.at_disabled {
-		cursor: not-allowed !important;
-	}
-</style>
+.at_disabled {
+	cursor: not-allowed !important;
+	opacity: 0.6; /* Faded opacity (60% visible) */
+}
