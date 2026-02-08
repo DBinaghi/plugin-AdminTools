@@ -315,6 +315,7 @@
 					}
 				}
 			}
+
 			return $nav;
 		}
 
@@ -389,7 +390,7 @@
 				include_once(__DIR__ . '/views/admin/javascripts/admin-tags-browse.js'); 
 				$html  = '<form class="at_form hidden" action="' . url('admin-tools/index/delete-tags-browse') . '">';
 				$html .= '<h2 style="margin-top:1em">' . __('Delete Tags') . '</h2>';
-				$html .= '<p>' . __('Delete all tags that have no correspondence with any record.') . '</p>';
+				$html .= '<p>' . __('Delete all Tags that have no correspondence with any record.') . '</p>';
 				$html .= '<button class="big green button" type="submit">' . __('Delete Unused Tags') . '</button>';
 				$html .= '</form>';
 				echo $html;
@@ -406,13 +407,16 @@
 
 				include_once(__DIR__ . '/views/admin/javascripts/admin-plugins-browse.js'); 
 				$html  = '<div id="activate_deactivate_btns" class="plugin hidden" style="display: block; padding-top: 0">';
-				$html .= '<p class="explanation">' . __('Activate / Deactivate all plugins at the same time.') . '</p>';
+				$html .= '<p class="explanation">' . __('Activate/Deactivate all Plugins at the same time.') . ' ' . __('Also, remove invalid or damaged Plugins.') . '</p>';
 				$html .= '<div style="display: flex">';
 				$html .= '<form class="at_form hidden" action="' . url('admin-tools/index/plugins-activate-browse') . '" style="display: inline; margin-right: .5em">';
 				$html .= '<button class="big green button" type="submit">' . __('Activate All Plugins') . '</button>';
 				$html .= '</form>';
-				$html .= '<form class="at_form hidden" action="' . url('admin-tools/index/plugins-deactivate-browse') . '" style="display: inline">';
+				$html .= '<form class="at_form hidden" action="' . url('admin-tools/index/plugins-deactivate-browse') . '" style="display: inline; margin-right: .5em">';
 				$html .= '<button class="big green button" type="submit">' . __('Deactivate All Plugins') . '</button>';
+				$html .= '</form>';
+				$html .= '<form class="at_form hidden" action="' . url('admin-tools/index/plugins-remove-invalid-browse') . '" style="display: inline">';
+				$html .= '<button class="big green button" type="submit">' . __('Remove Invalid Plugins') . '</button>';
 				$html .= '</form>';
 				$html .= '</div>';
 				$html .= '</div>';
