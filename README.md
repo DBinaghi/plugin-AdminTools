@@ -43,7 +43,7 @@ In this respect, the risks associated with loading, using, modifying and/or deve
 Many thanks to [Charles Butcher](https://reephamarchive.co.uk/) for his extensive testing and useful suggestions.
 
 ## Copyright
-Copyright [Daniele Binaghi](https://github.com/DBinaghi), 2022
+Copyright [Daniele Binaghi](https://github.com/DBinaghi), 2022-2026
 
 For their coding inspiration and contributions, many thanks to the following people:
 
