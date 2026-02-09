@@ -3,7 +3,7 @@
 	 * AdminTools plugin
 	 *
 	 * @package AdminTools
-	 * @copyright Copyright 2022 Daniele Binaghi et al.
+	 * @copyright Copyright 2022-2026 Daniele Binaghi et al.
 	 * @license https://www.cecill.info/licences/Licence_CeCILL_V2.1-en.html CeCILL v2.1
 	 */
 
@@ -409,13 +409,13 @@
 				$html  = '<div id="activate_deactivate_btns" class="plugin hidden" style="display: block; padding-top: 0">';
 				$html .= '<p class="explanation">' . __('Activate/Deactivate all Plugins at the same time.') . ' ' . __('Also, remove invalid or damaged Plugins.') . '</p>';
 				$html .= '<div style="display: flex">';
-				$html .= '<form class="at_form hidden" action="' . url('admin-tools/index/plugins-activate-browse') . '" style="display: inline; margin-right: .5em">';
+				$html .= '<form class="at_form" action="' . url('admin-tools/index/plugins-activate-browse') . '" style="display: inline; margin-right: .5em">';
 				$html .= '<button class="big green button" type="submit">' . __('Activate All Plugins') . '</button>';
 				$html .= '</form>';
-				$html .= '<form class="at_form hidden" action="' . url('admin-tools/index/plugins-deactivate-browse') . '" style="display: inline; margin-right: .5em">';
+				$html .= '<form class="at_form" action="' . url('admin-tools/index/plugins-deactivate-browse') . '" style="display: inline; margin-right: .5em">';
 				$html .= '<button class="big green button" type="submit">' . __('Deactivate All Plugins') . '</button>';
 				$html .= '</form>';
-				$html .= '<form class="at_form hidden" action="' . url('admin-tools/index/plugins-remove-invalid-browse') . '" style="display: inline">';
+				$html .= '<form class="at_form" action="' . url('admin-tools/index/plugins-remove-invalid-browse') . '" style="display: inline">';
 				$html .= '<button class="big green button" type="submit">' . __('Remove Invalid Plugins') . '</button>';
 				$html .= '</form>';
 				$html .= '</div>';
