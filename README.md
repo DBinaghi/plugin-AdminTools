@@ -4,10 +4,10 @@
 
 Plugin for Omeka Classic. Reunites several minor plugins and code snippets to give site administrators extra tools:
 
-- **Database Backup**: creates a backup copy of the Omeka database, storing it locally (in Omeka's **files** directory) and also making it available for download.
+- **Database Backup**: creates a backup copy of the Omeka database, storing it locally (in Omeka's *files* directory) and also making it available for download.
 - **Cookie Bar**: adds to Public interface a header or footer bar with simple information about cookies and privacy policy via the jQuery cookiebar widget.
-- **Limit Visibility**: limits Item/Collection/Exhibit visibility to only the ones created by the user (Admin interface).
-- **Public Edit Link**: adds a edit link to Items/Collections/Exhibits/Files/Simple Pages to Public interface for logged-in users.
+- **Limit Visibility**: limits Item / Collection / Exhibit visibility to just the ones created by the user (Admin interface).
+- **Public Edit Link**: adds a edit link to Items / Collections / Exhibits / Files / Simple Pages to Public interface for logged-in users.
 - **Sessions**: allows trimming of the Omeka table recording sessions, in case automatic trimming was not effectively working; a graph can be shown, to keep track of the new sessions.
 - **Site Maintenance**: blocks out from Public interface not-logged in users (and also from Admin interface some logged-in users), displaying instead an "Under Maintenance" sign (note: if wanting to customize sign, one can edit the style section in *views/shared/maintenance/maintenance.php* file).
 - **Tags**: allows deleting all unused tags (i.e. tags not associated with any record).
