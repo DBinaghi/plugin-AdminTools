@@ -6,19 +6,27 @@
 			if (get_option('admin_tools_sessions_count')) {
 				$this->view->sessionsCount = $this->_getSessionsCount();
 			}
-			
+
 			$this->view->lastBackupDateTime = $this->_getLastBackupDateTime();
-					
+
 			$this->view->sessionMaxLifeTime = number_format($this->_getSessionMaxLifeTime() / (60 * 60 * 24), 0);
 		}
-		
+
 		public function backupAction()
 		{
 			$db = get_db();
 			$dbConfig = $db->getAdapter()->getConfig();
 			$isCompressed = (bool)get_option('admin_tools_backup_compress');
 			$outputFile = ($isCompressed ? ADMIN_TOOLS_BACKUP_FILENAME . '.gz' : ADMIN_TOOLS_BACKUP_FILENAME);
+			$memoryAllocated = (int)get_option('admin_tools_backup_memory');
+
+			// preserve original memory value
+			$old_limit = ini_get('memory_limit');
 			
+			// set config memory value
+			if ($memoryAllocated > 0) ini_set('memory_limit', $memoryAllocated . 'M');
+
+			// create db dump
 			$dumper = new Mysqldump\Mysqldump(
 				'mysql:host=' . $dbConfig['host'] . ';dbname=' . $dbConfig['dbname'], 
 				$dbConfig['username'], 
@@ -27,7 +35,7 @@
 					'compress' => ($isCompressed ? Mysqldump\Mysqldump::GZIP : Mysqldump\Mysqldump::NONE)
 				)
 			);
-			
+
 			if ((bool)get_option('admin_tools_backup_sessions_ignore')) {
 				$dumper->setTableLimits(array(
 					get_db()->getTableName('Session') => 0
@@ -35,6 +43,9 @@
 			}
 
 			$dumper->start($outputFile);
+
+			// if changed, restore original memory value
+			if ($memoryAllocated > 0) ini_set('memory_limit', $old_limit);
 
 			if ((bool)get_option('admin_tools_backup_download')) {
 				if (file_exists($outputFile)) {
@@ -47,7 +58,7 @@
 					while (ob_get_level()) {
 						ob_end_clean();
 					}
-	
+
 					// 3. Clear any existing response body/headers to be safe
 					$response = $this->getResponse();
 					// $response->clearAllHeaders();
@@ -74,12 +85,12 @@
 			$this->_helper->flashMessenger(__('A %s backup copy of the Omeka database has been created.', ($isCompressed ? __('compressed') : '')), 'success');
 			$this->_helper->redirector('index', 'index');
 		}
-		
+
 		public function resetCacheAction()
 		{
 			$cache = Zend_Registry::get('Zend_Translate');
 			$cache::clearCache();
-			
+
 			$this->_helper->flashMessenger(__('The translations cache has been reset.'), 'success');
 			$this->_helper->redirector('index', 'index');
 		}
@@ -94,14 +105,14 @@
 				set_option('admin_tools_maintenance_active', 0);
 				$this->_helper->flashMessenger(__('The website is online again.'), 'success');
 			}
-			
+
 			$this->_helper->redirector('index', 'index');
 		}
 
 		public function trimSessionsAction()
 		{
 			$rng = $this->getRequest()->getParam('rng');
-			
+
 			if ($rng == 'expired') {
 				if ($this->_trimSessionsTable($rng)) {
 					$this->_helper->flashMessenger(__('Omeka\'s Sessions table has been trimmed up to all unexpired sessions.'), 'success');
@@ -111,10 +122,10 @@
 					$this->_helper->flashMessenger(__('Omeka\'s Sessions table has been trimmed up to 1 %s ago.', __($rng)), 'success');
 				}
 			}
-			
+
 			$this->_helper->redirector('index', 'index');
 		}
-		
+
 		public function deleteTagsAction()
 		{
 			$this->_deleteUnusedTags();
@@ -196,8 +207,8 @@
 			$directories = str_replace($path . '/', '', glob($path . '/*', GLOB_ONLYDIR));
 			$query = "DELETE FROM " . $db->getTableName('Plugin') . " WHERE name NOT IN ('" . implode("','", $directories) . "')";
 			$affected = $db->query($query)->rowCount();
-			
-			
+
+
             if ($affected > 0) {
 				$this->_helper->flashMessenger(__('All invalid/damaged Plugins were removed.'), 'success');
             } else {
@@ -219,7 +230,7 @@
 				$this->_helper->flashMessenger(__('No unused Tag was found.'), 'alert');
 			}
 		}
-			
+
 		private function _getLastBackupDateTime()
 		{
 			$sqlFilename = ADMIN_TOOLS_BACKUP_FILENAME;
@@ -243,18 +254,18 @@
 				return null;
 			}
 		}
-		
+
 		private function _getLastBackupDateTimeString($mtime)
 		{
 			return ' (' . __('last backup was created on %s at %s', date('d/m/Y', $mtime), date('H:i:s', $mtime)) . ')';
 		}
-		
+
 		private function _getSessionsCount() 
 		{
 			$db = get_db();
-			return $db->getTable('Session')->count();			
+			return $db->getTable('Session')->count();
 		}
-		
+
 		private function _getSessionMaxLifeTime()
 		{
 			$applicationFile = '../application/config/application.ini';
@@ -273,7 +284,7 @@
 		{
 			$date = new DateTime();
 			$db = get_db();
-			
+
 			switch($rng) {
 				case 'day':
 					$query = 'DELETE FROM ' . $db->getTableName('Session') . ' WHERE modified < ' . $date->modify("-1 day")->getTimeStamp();
