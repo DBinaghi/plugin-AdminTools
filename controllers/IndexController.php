@@ -16,8 +16,8 @@
 		{
 			$db = get_db();
 			$dbConfig = $db->getAdapter()->getConfig();
-			$isCompressed = get_option('admin_tools_backup_compress');
-			$outputFile = ($isCompressed ? str_replace('.sql', '.gz', ADMIN_TOOLS_BACKUP_FILENAME) : ADMIN_TOOLS_BACKUP_FILENAME);
+			$isCompressed = (bool)get_option('admin_tools_backup_compress');
+			$outputFile = ($isCompressed ? ADMIN_TOOLS_BACKUP_FILENAME . '.gz' : ADMIN_TOOLS_BACKUP_FILENAME);
 			
 			$dumper = new Mysqldump\Mysqldump(
 				'mysql:host=' . $dbConfig['host'] . ';dbname=' . $dbConfig['dbname'], 
@@ -28,24 +28,47 @@
 				)
 			);
 			
-			if (get_option('admin_tools_backup_sessions_ignore')) {
+			if ((bool)get_option('admin_tools_backup_sessions_ignore')) {
 				$dumper->setTableLimits(array(
 					get_db()->getTableName('Session') => 0
 				));
 			}
-			
+
 			$dumper->start($outputFile);
 
-			if (get_option('admin_tools_backup_download') && file_exists($outputFile)) {
-				header('Content-type: ' . ($isCompressed ? 'application/gzip' : 'text/plain'));
-				header('Content-Disposition: attachment; filename="OmekaDB-backup_' . date('Ymd_His') . ($isCompressed ? '.gz' : '.sql') . '"');
-				header('Content-Length: ' . filesize($outputFile));
-				$inputStream = fopen($outputFile, 'rb');
-				$outputStream = fopen('php://output', 'wb');
-				stream_copy_to_stream($inputStream, $outputStream);
-				fclose($outputStream);
-				fclose($inputStream);
-				exit;
+			if ((bool)get_option('admin_tools_backup_download')) {
+				if (file_exists($outputFile)) {
+					// 1. Disable the theme layout and prevent view script rendering
+					if ($this->_helper->hasHelper('viewRenderer')) {
+						$this->_helper->viewRenderer->setNoRender(true);
+					}
+
+					// 2. Pulizia totale del buffer; elimina qualsiasi CSS o HTML già generato da Omeka
+					while (ob_get_level()) {
+						ob_end_clean();
+					}
+	
+					// 3. Clear any existing response body/headers to be safe
+					$response = $this->getResponse();
+					// $response->clearAllHeaders();
+					// $response->clearBody();
+
+					// 4. Set final headers and file content
+					$response->setHeader('Content-Type', 'text/plain', true)
+							 ->setHeader('Content-Disposition', 'attachment; filename="OmekaDB-backup_' . date('Ymd_His') . ($isCompressed ? '.sql.gz' : '.sql') . '"')
+							 ->setHeader('Content-Length', filesize($outputFile))
+							 ->setHeader('Expires', 0)
+							 ->setHeader('Cache-Control', 'must-revalidate')
+							 ->setHeader('Pragma', 'public')
+							 ->setBody(file_get_contents($outputFile));
+							 
+					// Force sending the response immediately
+					$response->sendResponse();
+
+					exit;
+				} else {
+					throw new Zend_Controller_Action_Exception(__('File not found.'), 404);
+				}
 			}
 
 			$this->_helper->flashMessenger(__('A %s backup copy of the Omeka database has been created.', ($isCompressed ? __('compressed') : '')), 'success');
@@ -200,7 +223,7 @@
 		private function _getLastBackupDateTime()
 		{
 			$sqlFilename = ADMIN_TOOLS_BACKUP_FILENAME;
-			$gzipFilename = str_replace('.sql', '.gz', ADMIN_TOOLS_BACKUP_FILENAME);
+			$gzipFilename = ADMIN_TOOLS_BACKUP_FILENAME . '.gz';
 			if (file_exists($sqlFilename)) {
 				$sqlFileMTime = filemtime($sqlFilename);
 				if (file_exists($gzipFilename)) {
