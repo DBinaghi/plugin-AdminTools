@@ -75,6 +75,18 @@
 			<?php echo $view->formCheckbox('admin_tools_backup_download', get_option('admin_tools_backup_download'), null, array('1', '0')); ?>
 		</div>
 	</div>
+
+	<div class="field">
+		<div class="two columns alpha">
+			<?php echo $view->formLabel('admin_tools_backup_memory', __('Memory')); ?>
+		</div>
+		<div class="inputs five columns omega">
+			<p class="explanation">
+				<?php echo __('The memory allocated for the backup operation (MB).'); ?>
+			</p>
+			<?php echo $view->formText('admin_tools_backup_memory', get_option('admin_tools_backup_memory')); ?>
+		</div>
+	</div>
 	
 	<div>&nbsp;</div>
 </div>
