@@ -1,15 +1,15 @@
 <?php
+	$db = get_db();
 	queue_js_file('chart.umd', 'javascripts');
 	queue_css_file('admin-tools');
-	$db = get_db();
-	
+
 	$head = array(
 		'bodyclass' => 'admin-tools index',
 		'title' => html_escape(__('Admin Tools')),
 		'content_class' => 'horizontal-nav'
 	);
 
-	if (get_option('admin_tools_maintenance_active')) {
+	if ((bool)get_option('admin_tools_maintenance_active')) {
 		$sumOperation = 'disable';
 		$sumLabel = __('Stop Maintenance');
 		$sumColor = 'red';
@@ -49,7 +49,7 @@
 		<label for="BD"><?php echo __('Database Backup'); ?></label>
 	</div>
 	<div class="inputs five columns omega">
-		<p class="explanation"><?php echo __('Backup the entire Omeka database into a SQL file') . $this->lastBackupDateTime . '.' .(get_option('admin_tools_backup_sessions_ignore') ? ' ' . __('During the backup, data from "Sessions" table will be <b>ignored</b>.') : '') . (get_option('admin_tools_backup_download') ? ' ' . __('A copy of the file will be available for download') . (get_option('admin_tools_backup_compress') ? __(', <b>compressed</b> in GZip format.') : '.') : '.'); ?></p>
+		<p class="explanation"><?php echo __('Backup the entire Omeka database into a SQL file, saved in Omeka\'s "Files" folder') . $this->lastBackupDateTime . '.' .(get_option('admin_tools_backup_sessions_ignore') ? ' ' . __('During the backup, data from "Sessions" table will be <b>ignored</b>.') : '') . (get_option('admin_tools_backup_download') ? ' ' . __('A copy of the file will be available for download') . (get_option('admin_tools_backup_compress') ? __(', <b>compressed</b> in GZip format.') : '.') : '.'); ?></p>
 		<a id="BD" class="button green" href="<?php echo url('admin-tools/index/backup'); ?>"><?php echo __('Backup Database'); ?></a>
 	</div>
 </div>
