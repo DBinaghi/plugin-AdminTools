@@ -523,8 +523,8 @@ msgid "Reset Cache"
 msgstr "Svuota cache"
 
 #: views/admin/index/index.php:52
-msgid "Backup the entire Omeka database into a SQL file"
-msgstr "Effettua un backup dell'intera base dati Omeka in un file SQL"
+msgid "Backup the entire Omeka database into a SQL file, saved in Omeka's \"Files\" folder"
+msgstr "Effettua un backup dell'intera base dati Omeka in un file SQL, salvato nella cartella \"Files\" di Omeka"
 
 #: views/admin/index/index.php:52
 msgid "During the backup, data from \"Sessions\" table will be <b>ignored</b>."
