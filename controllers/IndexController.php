@@ -59,22 +59,29 @@
 						ob_end_clean();
 					}
 
-					// 3. Clear any existing response body/headers to be safe
-					$response = $this->getResponse();
-					// $response->clearAllHeaders();
-					// $response->clearBody();
+					$chunksize = 5 * (1024 * 1024); // 5 MB (= 5 242 880 bytes) per one chunk of file
+					set_time_limit(300);
+					$size = intval(sprintf("%u", filesize($outputFile)));
 
-					// 4. Set final headers and file content
-					$response->setHeader('Content-Type', 'text/plain', true)
-							 ->setHeader('Content-Disposition', 'attachment; filename="OmekaDB-backup_' . date('Ymd_His') . ($isCompressed ? '.sql.gz' : '.sql') . '"')
-							 ->setHeader('Content-Length', filesize($outputFile))
-							 ->setHeader('Expires', 0)
-							 ->setHeader('Cache-Control', 'must-revalidate')
-							 ->setHeader('Pragma', 'public')
-							 ->setBody(file_get_contents($outputFile));
-							 
-					// Force sending the response immediately
-					$response->sendResponse();
+					header('Content-Type: text/plain');
+					header('Content-Disposition: attachment; filename="OmekaDB-backup_' . date('Ymd_His') . ($isCompressed ? '.sql.gz' : '.sql') . '"');
+					header('Content-Length: ' . filesize($outputFile));
+
+					if ($size > $chunksize) { 
+						$handle = fopen($outputFile, 'rb'); 
+
+						while (!feof($handle)) { 
+							print(@fread($handle, $chunksize));
+
+							ob_flush();
+							flush();
+						} 
+
+						fclose($handle); 
+					} else {
+						readfile($outputFile);
+					}
+
 
 					exit;
 				} else {
