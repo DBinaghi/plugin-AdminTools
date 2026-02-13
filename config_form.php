@@ -82,7 +82,7 @@
 		</div>
 		<div class="inputs five columns omega">
 			<p class="explanation">
-				<?php echo __('The memory allocated for the backup operation (MB).'); ?>
+				<?php echo __('The memory temporarily allocated for the backup operation (MB).'); ?>
 			</p>
 			<?php echo $view->formText('admin_tools_backup_memory', get_option('admin_tools_backup_memory')); ?>
 		</div>
