@@ -82,7 +82,6 @@
 						readfile($outputFile);
 					}
 
-
 					exit;
 				} else {
 					throw new Zend_Controller_Action_Exception(__('File not found.'), 404);
