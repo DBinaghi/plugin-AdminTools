@@ -9,11 +9,11 @@
 				$this->view->sessionsCount = $this->_getSessionsCount();
 			}
 
-			$this->view->sessionMaxLifeTime = number_format($this->_getSessionMaxLifeTime() / (60 * 60 * 24), 0);
-			$this->view->sessionYearCount = $this->_getSessionsCount('YEAR');
-			$this->view->sessionMonthCount = $this->_getSessionsCount('MONTH');
-			$this->view->sessionWeekCount = $this->_getSessionsCount('WEEK');
-			$this->view->sessionDayCount = $this->_getSessionsCount('DAY');
+			$this->view->sessionsMaxLifeTime = number_format($this->_getSessionMaxLifeTime() / (60 * 60 * 24), 0);
+			$this->view->sessionsYearCount = $this->_getSessionsCount('YEAR');
+			$this->view->sessionsMonthCount = $this->_getSessionsCount('MONTH');
+			$this->view->sessionsWeekCount = $this->_getSessionsCount('WEEK');
+			$this->view->sessionsDayCount = $this->_getSessionsCount('DAY');
 			
 			$this->view->plugins = $this->_getPluginsCount();
 			$this->view->pluginsActive = $this->_getPluginsActiveCount();
