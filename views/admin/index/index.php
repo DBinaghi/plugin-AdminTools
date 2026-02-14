@@ -1,7 +1,6 @@
 <?php
 	queue_js_file('chart.umd', 'javascripts');
 	queue_css_file('admin-tools');
-	$db = get_db();
 	
 	$head = array(
 		'bodyclass' => 'admin-tools index',
@@ -61,35 +60,35 @@
 	<div class="inputs five columns omega">
 		<?php
 			echo '<p class="explanation">';
-			if ($plugins == 0) {
+			if ($this->plugins == 0) {
 				// case no installed plugin
 				echo __('No Plugin is installed in the system.');
 				$plu_btns = '<a id="PLU_ON" class="button at_disabled" disabled>' . __('Activate All Plugins') . '</a>
 							<a id="PLU_OFF" class="button at_disabled" disabled>' . __('Deactivate All Plugins') . '</a>';
 			} else {
-				echo __(plural('The system contains <b>1</b> installed Plugin', 'The system contains <b>%s</b> installed Plugins', $plugins), $plugins);
+				echo __(plural('The system contains <b>1</b> installed Plugin', 'The system contains <b>%s</b> installed Plugins', $this->plugins), $this->plugins);
 				echo ', ';
-				if ($plugins == $pluginsActive) {
+				if ($this->plugins == $this->pluginsActive) {
 					// case all installed plugins are active
-					echo __(plural('which is already active.', 'which are all already active.', $plugins));
+					echo __(plural('which is already active.', 'which are all already active.', $this->plugins));
 					$plu_btns = '<a id="PLU_ON" class="button at_disabled" disabled>' . __('Activate All Plugins') . '</a>
 								<a id="PLU_OFF" class="button green" href="' . url('admin-tools/index/plugins-deactivate') . '">' . __('Deactivate All Plugins') . '</a>';
-				} elseif ($pluginsActive == 0) {
+				} elseif ($this->pluginsActive == 0) {
 					// case all installed plugins are inactive
-					echo __(plural('which is not active.', 'which are all not active.', $plugins));
+					echo __(plural('which is not active.', 'which are all not active.', $this->plugins));
 					$plu_btns = '<a id="PLU_ON" class="button green" href="' . url('admin-tools/index/plugins-activate') . '">' . __('Activate All Plugins') . '</a>
 								<a id="PLU_OFF" class="button at_disabled" disabled>' . __('Deactivate All Plugins') . '</a>';
 				} else {
 					// case else
-					echo __(plural('of which <b>1</b> active.', 'of which <b>%d</b> active.', $pluginsActive), $pluginsActive);
+					echo __(plural('of which <b>1</b> active.', 'of which <b>%d</b> active.', $this->pluginsActive), $this->pluginsActive);
 					$plu_btns = '<a id="PLU_ON" class="button green" href="' . url('admin-tools/index/plugins-activate') . '">' . __('Activate All Plugins') . '</a>
 								<a id="PLU_OFF" class="button green" href="' . url('admin-tools/index/plugins-deactivate') . '">' . __('Deactivate All Plugins') . '</a>';
 				}
 			}
 			
 			echo ' ';
-			if ($pluginsInvalid > 0) {
-				echo __(plural('<b>1</b> Plugin appears to be invalid/damaged, and can be safely removed.', '<b>%d</b> Plugins appear to be invalid/damaged, and can be safely removed.', $pluginsInvalid), $pluginsInvalid);
+			if ($this->pluginsInvalid > 0) {
+				echo __(plural('<b>1</b> Plugin appears to be invalid/damaged, and can be safely removed.', '<b>%d</b> Plugins appear to be invalid/damaged, and can be safely removed.', $this->pluginsInvalid), $this->pluginsInvalid);
 				$plu_btns .= '<a id="PLU_REMOVE" class="button green" href="' . url('admin-tools/index/plugins-remove-invalid') . '">' . __('Remove Invalid Plugins') . '</a>';
 			} else {
 				echo __('No Plugin appears to be invalid/damaged.');
@@ -107,17 +106,21 @@
 	</div>
 	<div class="inputs five columns omega">
 		<p class="explanation"><?php echo __('Trim Omeka\'s "Sessions" table') . (get_option('admin_tools_sessions_count') ? ' ' . __('(at the moment, the table contains <strong>%s</strong> records)', number_format($this->sessionsCount)) : '') . __(', choosing whether to delete sessions older than 1 year/month/week/day or all expired ones (at the moment, sessions expire after <strong>%s</strong> days).', $this->sessionMaxLifeTime); ?></p>
-		<?php if ($sessionsCount > 0 && (bool)get_option('admin_tools_sessions_graph')): ?>
+		<?php if ($this->sessionsCount > 0 && (bool)get_option('admin_tools_sessions_graph')): ?>
 			<canvas id="sessionsChart" style="width:100%; height: 200px; margin-bottom: 1em"></canvas>
 			<script>
 				<?php
+					// define variables
+					$ascisse = [];
+					$ordinate = [];
+					
 					// get number of sessions grouped by date
 					$sql = "SELECT count(id) AS total, DATE(FROM_UNIXTIME(modified)) AS session_date FROM omeka_sessions GROUP BY session_date";
-					$rows = $db->query($sql)->fetchall();
+					$rows = get_db()->query($sql)->fetchall();
 					
 					// limit number of entries to sessionMaxLifeTime
-					if (count($rows) > $sessionsMaxLifeTime) {
-						array_splice($rows, 0, count($rows) - $sessionsMaxLifeTime);
+					if (count($rows) > $this->sessionMaxLifeTime) {
+						array_splice($rows, 0, count($rows) - $this->sessionMaxLifeTime);
 					}
 					
 					// create coordinates for graph
@@ -143,7 +146,7 @@
 							},
 							title: {
 								display: true,
-								text: '<?= __('Sessions in the last %d days', $sessionsMaxLifeTime) ?>'
+								text: '<?= __('Sessions in the last %d days', $this->sessionMaxLifeTime) ?>'
 							}
 						},
 						scales: {
@@ -158,28 +161,28 @@
 
 		<?php 
 			// adds button to prune sessions over 1 year old - disabled if there are none
-			if ($sessionsYearCount > 0) {
+			if ($this->sessionsYearCount > 0) {
 				echo '<a id="TSTY" class="button green" href="' . url('admin-tools/index/trim-sessions/rng/year') . '">' . __('Trim sessions (+1 year)') . '</a>';
 			} else {
 				echo '<a id="TSTY" class="button at_disabled" disabled>' . __('Trim sessions (+1 year)') . '</a>';
 			}
 
 			// adds button to prune sessions over 1 month old - disabled if there are none
-			if ($sessionsMonthCount > 0) {
+			if ($this->sessionsMonthCount > 0) {
 				echo '<a id="TSTM" class="button green" href="' . url('admin-tools/index/trim-sessions/rng/month') . '">' . __('Trim sessions (+1 month)') . '</a>';
 			} else {
 				echo '<a id="TSTM" class="button at_disabled" disabled>' . __('Trim sessions (+1 month)') . '</a>';
 			}
 
 			// adds button to prune sessions over 1 week old - disabled if there are none
-			if ($sessionsWeekCount > 0) {
+			if ($this->sessionsWeekCount > 0) {
 				echo '<a id="TSTW" class="button green" href="' . url('admin-tools/index/trim-sessions/rng/week') . '">' . __('Trim sessions (+1 week)') . '</a>';
 			} else {
 				echo '<a id="TSTM" class="button at_disabled" disabled>' . __('Trim sessions (+1 week)') . '</a>';
 			}
 
 			// adds button to prune sessions over 1 day old - disabled if there are none
-			if ($sessionsDayCount > 0) {
+			if ($this->sessionsDayCount > 0) {
 				echo '<a id="TSTD" class="button green" href="' . url('admin-tools/index/trim-sessions/rng/day') . '">' . __('Trim sessions (+1 day)') . '</a>';
 			} else {
 				echo '<a id="TSTD" class="button at_disabled" disabled>' . __('Trim sessions (+1 day)') . '</a>';
@@ -196,31 +199,31 @@
 	<div class="inputs five columns omega">
 		<?php
 			echo '<p class="explanation">';
-			if ($tagsUnused > 0) {
-				echo __(plural('<b>1</b> Tag has no correspondence to any Items', '<b>%d</b> Tags have no correspondence to any Item', $tagsUnused), $tagsUnused);
-				if ($itemsUntagged > 0) {
-					echo ', ' . __('and') . ' ' . __(plural('<b>1</b> Item has no Tags associated.', '<b>%d</b> Items have no Tags associated.', $itemsUntagged), $itemsUntagged);
+			if ($this->tagsUnused > 0) {
+				echo __(plural('<b>1</b> Tag has no correspondence to any Items', '<b>%d</b> Tags have no correspondence to any Item', $this->tagsUnused), $this->tagsUnused);
+				if ($this->itemsUntagged > 0) {
+					echo ', ' . __('and') . ' ' . __(plural('<b>1</b> Item has no Tags associated.', '<b>%d</b> Items have no Tags associated.', $this->itemsUntagged), $this->itemsUntagged);
 				} else {
 					echo ', ' . __('but') . ' ' . __('all Items have at least one Tag associated.');
 				}
 			} else {
 				echo __('All Tags are associated to at least one Item');
-				if ($itemsUntagged > 0) {
-					echo ', ' . __('but') . ' ' . __(plural('<b>1</b> Item has no Tags associated.', '<b>%d</b> Items have no Tags associated.', $itemsUntagged), $itemsUntagged);
+				if ($this->itemsUntagged > 0) {
+					echo ', ' . __('but') . ' ' . __(plural('<b>1</b> Item has no Tags associated.', '<b>%d</b> Items have no Tags associated.', $this->itemsUntagged), $this->itemsUntagged);
 				} else {
 					echo ', ' . __('and') . ' ' . __('all Items have at least one Tag associated.');
 				}
 			}
 			echo '</p>';
 
-			if ($tagsUnused > 0) {
-				echo '<a id="DUT" class="button green" href="' . url('admin-tools/index/delete-tags') . '">' . __(plural('Delete Unused Tag', 'Delete Unused Tags', $total_unused_tags)) . '</a>';
+			if ($this->tagsUnused > 0) {
+				echo '<a id="DUT" class="button green" href="' . url('admin-tools/index/delete-tags') . '">' . __(plural('Delete Unused Tag', 'Delete Unused Tags', $this->total_unused_tags)) . '</a>';
 			} else {
 				echo '<a id="DUT" class="button at_disabled" disabled>' . __('Delete Unused Tags') . '</a>';
 			}
 
-			if ($itemsUntagged > 0) {
-				echo '<a id="SUI" class="button green" href="' . url('items/browse?search=&advanced-joiner=and&advanced-element_id=&advanced-type=&advanced-terms=&has-tags=0') . '">' . __(plural('Show Untagged Item', 'Show Untagged Items', $itemsUntagged)) . '</a>';
+			if ($this->itemsUntagged > 0) {
+				echo '<a id="SUI" class="button green" href="' . url('items/browse?search=&advanced-joiner=and&advanced-element_id=&advanced-type=&advanced-terms=&has-tags=0') . '">' . __(plural('Show Untagged Item', 'Show Untagged Items', $this->itemsUntagged)) . '</a>';
 			} else {
 				echo '<a id="SUI" class="button at_disabled" disabled>' . __('Show Untagged Items') . '</a>';
 			}
