@@ -475,7 +475,7 @@ msgid "Update all translations after language files have been changed manually"
 msgstr ""
 
 #: views/admin/index/index.php:42
-msgid "including files that are part of the <b>active theme</b>"
+msgid "including files that are part of the <b>active theme</b>."
 msgstr ""
 
 #: views/admin/index/index.php:43

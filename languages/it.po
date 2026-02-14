@@ -477,8 +477,8 @@ msgid "Update all translations after language files have been changed manually"
 msgstr "Aggiorna tutte le traduzioni dopo che uno o più file di lingua sono stati modificati manualmente"
 
 #: views/admin/index/index.php:42
-msgid "including files that are part of the <b>active theme</b>"
-msgstr "inclusi i file che sono parte del <b>tema attivo</b>"
+msgid "including files that are part of the <b>active theme</b>."
+msgstr "inclusi i file che sono parte del <b>tema attivo</b>."
 
 #: views/admin/index/index.php:43
 msgid "Reset Cache"
