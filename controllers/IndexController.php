@@ -3,13 +3,25 @@
 	{
 		public function indexAction()
 		{
+			$this->view->lastBackupDateTime = $this->_getLastBackupDateTime();
+
 			if (get_option('admin_tools_sessions_count')) {
 				$this->view->sessionsCount = $this->_getSessionsCount();
 			}
 
-			$this->view->lastBackupDateTime = $this->_getLastBackupDateTime();
-
 			$this->view->sessionMaxLifeTime = number_format($this->_getSessionMaxLifeTime() / (60 * 60 * 24), 0);
+			$this->view->sessionYearCount = $this->_getSessionsCount('YEAR');
+			$this->view->sessionMonthCount = $this->_getSessionsCount('MONTH');
+			$this->view->sessionWeekCount = $this->_getSessionsCount('WEEK');
+			$this->view->sessionDayCount = $this->_getSessionsCount('DAY');
+			
+			$this->view->plugins = $this->_getPluginsCount();
+			$this->view->pluginsActive = $this->_getPluginsActiveCount();
+			$this->view->pluginsInvalid = $this->_getPluginsInvalidCount();
+			
+			$this->view->tagsUnused = $this->_getTagsUnusedCount();
+			
+			$this->view->itemsUntagged = $this->_getItemsUntaggedCount();
 		}
 
 		public function backupAction()
@@ -23,7 +35,7 @@
 			// preserve original memory value
 			$old_limit = ini_get('memory_limit');
 			
-			// set config memory value
+			// set temporary memory value
 			if ($memoryAllocated > 0) ini_set('memory_limit', $memoryAllocated . 'M');
 
 			// create db dump
@@ -44,9 +56,6 @@
 
 			$dumper->start($outputFile);
 
-			// if changed, restore original memory value
-			if ($memoryAllocated > 0) ini_set('memory_limit', $old_limit);
-
 			if ((bool)get_option('admin_tools_backup_download')) {
 				if (file_exists($outputFile)) {
 					// 1. Disable the theme layout and prevent view script rendering
@@ -59,7 +68,7 @@
 						ob_end_clean();
 					}
 
-					$chunksize = 5 * (1024 * 1024); // 5 MB (= 5 242 880 bytes) per one chunk of file
+					$chunksize = 5 * (1024 * 1024); //5 MB (= 5 242 880 bytes) per one chunk of file
 					set_time_limit(300);
 					$size = intval(sprintf("%u", filesize($outputFile)));
 
@@ -87,6 +96,9 @@
 					throw new Zend_Controller_Action_Exception(__('File not found.'), 404);
 				}
 			}
+
+			// if changed, restore original memory value
+			if ($memoryAllocated > 0) ini_set('memory_limit', $old_limit);
 
 			$this->_helper->flashMessenger(__('A %s backup copy of the Omeka database has been created.', ($isCompressed ? __('compressed') : '')), 'success');
 			$this->_helper->redirector('index', 'index');
@@ -134,13 +146,13 @@
 
 		public function deleteTagsAction()
 		{
-			$this->_deleteUnusedTags();
+			$this->_deleteTagsUnused();
 			$this->_helper->redirector('index', 'index');
 		}
 
 		public function deleteTagsBrowseAction()
 		{
-			$this->_deleteUnusedTags();
+			$this->_deleteTagsUnused();
 			$this->_helper->redirector->gotoUrl(url('../tags/browse'));
 		}
 
@@ -221,8 +233,15 @@
 				$this->_helper->flashMessenger(__('No invalid/damaged Plugin was found to remove.'), 'alert');
             }    
 		}
+		
+		private function _getTagsUnusedCount()
+		{
+			$db = get_db();
+			$sql = 'SELECT COUNT(*) FROM ' . $db->getTableName('Tag') . ' WHERE id IN (SELECT id FROM (SELECT t1.id FROM ' . $db->getTableName('Tag') . ' t1 LEFT OUTER JOIN ' . $db->getTableName('RecordsTag') . ' rt ON t1.id = rt.tag_id GROUP BY t1.id HAVING COUNT(rt.id) = 0) tmp)';
+			return $db->fetchOne($sql);			
+		}
 
-		private function _deleteUnusedTags()
+		private function _deleteTagsUnused()
 		{
 			$db = get_db();
 			$query = 'DELETE FROM ' . $db->getTableName('Tag') . ' WHERE id IN (SELECT id FROM (SELECT t1.id FROM ' . $db->getTableName('Tag') . ' t1 LEFT OUTER JOIN ' . $db->getTableName('RecordsTag') . ' rt ON t1.id = rt.tag_id GROUP BY t1.id HAVING COUNT(rt.id) = 0) tmp)';
@@ -235,6 +254,13 @@
 			} else {
 				$this->_helper->flashMessenger(__('No unused Tag was found.'), 'alert');
 			}
+		}
+		
+		private function _getItemsUntaggedCount()
+		{
+			$db = get_db();
+			$sql = 'SELECT COUNT(*) FROM ' . $db->getTableName('Item') . ' AS `items` LEFT OUTER JOIN ' . $db->getTableName('RecordsTag') . ' AS `records_tags` ON `items`.id = `records_tags`.`record_id` WHERE `records_tags`.`tag_id` IS NULL';
+			return $db->fetchOne($sql);
 		}
 
 		private function _getLastBackupDateTime()
@@ -265,11 +291,45 @@
 		{
 			return ' (' . __('last backup was created on %s at %s', date('d/m/Y', $mtime), date('H:i:s', $mtime)) . ')';
 		}
-
-		private function _getSessionsCount() 
+		
+		private function _getPluginsCount()
 		{
 			$db = get_db();
-			return $db->getTable('Session')->count();
+			return $db->getTable('Plugin')->count();
+		}
+
+		private function _getPluginsActiveCount()
+		{
+			$db = get_db();
+			$sql = "SELECT COUNT(*) FROM " . $db->getTableName('Plugin') . " WHERE active = 1";
+			return $db->fetchOne($sql);
+		}
+
+		private function _getPluginsInvalidCount()
+		{
+			$db = get_db();
+			$path = PLUGIN_DIR;
+			$directories = str_replace($path . '/', '', glob($path . '/*', GLOB_ONLYDIR));
+			$sql = "SELECT COUNT(*) FROM " . $db->getTableName('Plugin') . " WHERE name NOT IN ('" . implode("','", $directories) . "')";
+			return $db->fetchOne($sql);
+		}
+
+		private function _getSessionsCount($range = '') 
+		{
+			$db = get_db();
+			switch ($range) {
+				case '':
+					return $db->getTable('Session')->count();
+					break;
+					
+				case 'YEAR':
+				case 'MONTH':
+				case 'WEEK':
+				case 'DAY':
+					$sql = "SELECT COUNT(*) FROM " . $db->getTableName('Session') . " WHERE modified < UNIX_TIMESTAMP(NOW() - INTERVAL 1 " . $range . ")";
+					return $db->fetchOne($sql);
+					break;
+			}
 		}
 
 		private function _getSessionMaxLifeTime()
