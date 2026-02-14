@@ -9,7 +9,7 @@
 				$this->view->sessionsCount = $this->_getSessionsCount();
 			}
 
-			$this->view->sessionsMaxLifeTime = number_format($this->_getSessionMaxLifeTime() / (60 * 60 * 24), 0);
+			$this->view->sessionMaxLifeTime = number_format($this->_getSessionMaxLifeTime() / (60 * 60 * 24), 0);
 			$this->view->sessionsYearCount = $this->_getSessionsCount('YEAR');
 			$this->view->sessionsMonthCount = $this->_getSessionsCount('MONTH');
 			$this->view->sessionsWeekCount = $this->_getSessionsCount('WEEK');
