@@ -1,6 +1,5 @@
 <?php 
 	$view = get_view();
-	$bExhibit = (bool)(plugin_is_active('ExhibitBuilder'));
 ?>
 
 <?php echo js_tag('vendor/tinymce/tinymce.min'); ?>
@@ -78,11 +77,11 @@
 
 	<div class="field">
 		<div class="two columns alpha">
-			<?php echo $view->formLabel('admin_tools_backup_memory', __('Memory')); ?>
+			<?php echo $view->formLabel('admin_tools_backup_memory', __('Temporarily Allocated Memory')); ?>
 		</div>
 		<div class="inputs five columns omega">
 			<p class="explanation">
-				<?php echo __('The memory temporarily allocated for the backup operation (MB).'); ?>
+				<?php echo __('The plugin will try to stream the backup file in small chunks, in order not to overload the system available memory. In case of persistent error caused by the size of the backup file, the following amount of memory (MB) can be temporarily allocated for the backup operation.'); ?>
 			</p>
 			<?php echo $view->formText('admin_tools_backup_memory', get_option('admin_tools_backup_memory')); ?>
 		</div>
@@ -177,7 +176,7 @@
 				}
 				
 				foreach ($contentTypes as $contentType) {
-					if ($contentType != 'Exhibits' || $bExhibit) {
+					if ($contentType != 'Exhibits' || (bool)(plugin_is_active('ExhibitBuilder'))) {
 						echo '<label>' . $view->formCheckbox('admin_tools_public_edit_link_types[]', $contentType, array('checked'=> (!empty($contentTypes) ? in_array($contentType, $publicEditLinkTypes) : false) ? 'checked' : '')) . __($contentType) . '</label>';
 					}
 				}
@@ -244,7 +243,7 @@
 							echo '<td class="boxes-left">' . __($label) . '</td>';
 							echo '<td class="boxes">' . $view->formCheckbox('admin_tools_limit_visibility_to_own_items_roles[]', $role, array('checked'=> (!empty($limitedRolesItems) ? in_array($role, $limitedRolesItems) : false) ? 'checked' : '')) . '</td>';
 							echo '<td class="boxes">' . $view->formCheckbox('admin_tools_limit_visibility_to_own_collections_roles[]', $role, array('checked'=> (!empty($limitedRolesCollections) ? in_array($role, $limitedRolesCollections) : false) ? 'checked' : '')) . '</td>';
-							echo '<td class="boxes">' . ($bExhibit ? $view->formCheckbox('admin_tools_limit_visibility_to_own_exhibits_roles[]', $role, array('checked'=> (!empty($limitedRolesExhibits) ? in_array($role, $limitedRolesExhibits) : false) ? 'checked' : '')) : 'n/a') . '</td>';
+							echo '<td class="boxes">' . ((bool)(plugin_is_active('ExhibitBuilder')) ? $view->formCheckbox('admin_tools_limit_visibility_to_own_exhibits_roles[]', $role, array('checked'=> (!empty($limitedRolesExhibits) ? in_array($role, $limitedRolesExhibits) : false) ? 'checked' : '')) : 'n/a') . '</td>';
 							echo '</tr>';
 						}
 					
