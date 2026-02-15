@@ -10,6 +10,7 @@
 			}
 
 			$this->view->sessionMaxLifeTime = number_format($this->_getSessionMaxLifeTime() / (60 * 60 * 24), 0);
+			$this->view->sessionsExpiredCount = $this->_getSessionsCount('EXPIRED');
 			$this->view->sessionsYearCount = $this->_getSessionsCount('YEAR');
 			$this->view->sessionsMonthCount = $this->_getSessionsCount('MONTH');
 			$this->view->sessionsWeekCount = $this->_getSessionsCount('WEEK');
@@ -321,12 +322,15 @@
 				case '':
 					return $db->getTable('Session')->count();
 					break;
-					
 				case 'YEAR':
 				case 'MONTH':
 				case 'WEEK':
 				case 'DAY':
 					$sql = "SELECT COUNT(*) FROM " . $db->getTableName('Session') . " WHERE modified < UNIX_TIMESTAMP(NOW() - INTERVAL 1 " . $range . ")";
+					return $db->fetchOne($sql);
+					break;
+				case 'EXPIRED':
+					$sql = "SELECT COUNT(*) FROM " . $db->getTableName('Session') . " WHERE modified < UNIX_TIMESTAMP(NOW() - " . $this->_getSessionMaxLifeTime() . ")";
 					return $db->fetchOne($sql);
 					break;
 			}
