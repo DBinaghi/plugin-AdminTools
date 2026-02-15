@@ -187,8 +187,14 @@
 			} else {
 				echo '<a id="TSTD" class="button at_disabled" disabled>' . __('Trim sessions (+1 day)') . '</a>';
 			}
+
+			// adds button to prune sessions expired - disabled if there are none
+			if ($this->sessionsExpiredCount > 0) {
+				echo '<a id="TSTE" class="button green" href="' . url('admin-tools/index/trim-sessions/rng/expired') . '">' . __('Trim sessions (expired)') . '</a>';
+			} else {
+				echo '<a id="TSTE" class="button at_disabled" disabled>' . __('Trim sessions (expired)') . '</a>';
+			}
 		?>   
-		<a id="TSTE" class="button green" href="<?php echo url('admin-tools/index/trim-sessions/rng/expired'); ?>"><?php echo __('Trim sessions (expired)'); ?></a>
 	</div>
 </div>
 
