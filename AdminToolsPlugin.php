@@ -3,7 +3,7 @@
 	 * AdminTools plugin
 	 *
 	 * @package AdminTools
-	 * @copyright Copyright 2022 Daniele Binaghi et al.
+	 * @copyright Copyright 2022-2026 Daniele Binaghi et al.
 	 * @license https://www.cecill.info/licences/Licence_CeCILL_V2.1-en.html CeCILL v2.1
 	 */
 
@@ -72,7 +72,6 @@
 			set_option('admin_tools_backup_sessions_ignore', 1);
 			set_option('admin_tools_backup_compress', 0);
 			set_option('admin_tools_backup_download', 1);
-			set_option('admin_tools_backup_memory', '');
 			set_option('admin_tools_sessions_count', 0);
 			set_option('admin_tools_sessions_graph', 0);
 			set_option('admin_tools_unused_tags_btn', 0);
@@ -103,7 +102,6 @@
 			delete_option('admin_tools_backup_sessions_ignore');
 			delete_option('admin_tools_backup_compress');
 			delete_option('admin_tools_backup_download');
-			delete_option('admin_tools_backup_memory');
 			delete_option('admin_tools_sessions_count');
 			delete_option('admin_tools_sessions_graph');
 			delete_option('admin_tools_unused_tags_btn');
@@ -114,7 +112,6 @@
 
 		public function hookInitialize()
 		{
-			include_once(__DIR__ . '/views/admin/css/admin-tools.css');
 			add_translation_source(dirname(__FILE__) . '/languages');
 			if ((bool)get_option('admin_tools_translations_theme')) add_translation_source(dirname(dirname(dirname(__FILE__))) . '/themes/' . get_option('public_theme') . '/languages');
 
@@ -144,7 +141,6 @@
 			set_option('admin_tools_backup_sessions_ignore',					$post['admin_tools_backup_sessions_ignore']);
 			set_option('admin_tools_backup_compress',							$post['admin_tools_backup_compress']);
 			set_option('admin_tools_backup_download',							$post['admin_tools_backup_download']);
-			set_option('admin_tools_backup_memory',								$post['admin_tools_backup_memory']);
 			set_option('admin_tools_sessions_count',							$post['admin_tools_sessions_count']);
 			set_option('admin_tools_sessions_graph',							$post['admin_tools_sessions_graph']);
 			set_option('admin_tools_unused_tags_btn',							$post['admin_tools_unused_tags_btn']);
@@ -176,8 +172,8 @@
 		{
 			$user = current_user();
 			if (!isset($user) && (bool)get_option('admin_tools_cookiebar_active')) {
-				queue_js_file('cookie_bar');
-				queue_css_file('cookie_bar');
+				queue_js_file('jquery.cookiebar');
+				queue_css_file('jquery.cookiebar');
 			}
 		}
 
@@ -390,6 +386,8 @@
 			if ((bool)get_option('admin_tools_unused_tags_btn')) {
 				if (!$args || !isset($args['tags'])) return;
 
+				queue_css_file('admin-tools');
+
 				include_once(__DIR__ . '/views/admin/javascripts/admin-tags-browse.js'); 
 				$html  = '<form class="at_form hidden" action="' . url('admin-tools/index/delete-tags-browse') . '">';
 				$html .= '<h2 style="margin-top:1em">' . __('Delete Tags') . '</h2>';
@@ -408,17 +406,19 @@
 			if ((bool)get_option('admin_tools_plugins_btns')) {
 				if (!$args || !isset($args['plugins'])) return;
 
+				queue_css_file('admin-tools');
+
 				include_once(__DIR__ . '/views/admin/javascripts/admin-plugins-browse.js'); 
 				$html  = '<div id="activate_deactivate_btns" class="plugin hidden" style="display: block; padding-top: 0">';
 				$html .= '<p class="explanation">' . __('Activate/Deactivate all Plugins at the same time.') . ' ' . __('Also, remove invalid or damaged Plugins.') . '</p>';
 				$html .= '<div style="display: flex">';
-				$html .= '<form class="at_form hidden" action="' . url('admin-tools/index/plugins-activate-browse') . '" style="display: inline; margin-right: .5em">';
+				$html .= '<form class="at_form" action="' . url('admin-tools/index/plugins-activate-browse') . '" style="display: inline; margin-right: .5em">';
 				$html .= '<button class="big green button" type="submit">' . __('Activate All Plugins') . '</button>';
 				$html .= '</form>';
-				$html .= '<form class="at_form hidden" action="' . url('admin-tools/index/plugins-deactivate-browse') . '" style="display: inline; margin-right: .5em">';
+				$html .= '<form class="at_form" action="' . url('admin-tools/index/plugins-deactivate-browse') . '" style="display: inline; margin-right: .5em">';
 				$html .= '<button class="big green button" type="submit">' . __('Deactivate All Plugins') . '</button>';
 				$html .= '</form>';
-				$html .= '<form class="at_form hidden" action="' . url('admin-tools/index/plugins-remove-invalid-browse') . '" style="display: inline">';
+				$html .= '<form class="at_form" action="' . url('admin-tools/index/plugins-remove-invalid-browse') . '" style="display: inline">';
 				$html .= '<button class="big green button" type="submit">' . __('Remove Invalid Plugins') . '</button>';
 				$html .= '</form>';
 				$html .= '</div>';
