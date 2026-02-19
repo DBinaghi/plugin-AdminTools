@@ -172,8 +172,8 @@
 		{
 			$user = current_user();
 			if (!isset($user) && (bool)get_option('admin_tools_cookiebar_active')) {
-				queue_js_file('jquery.cookiebar');
-				queue_css_file('jquery.cookiebar');
+				queue_js_file('cookie_bar');
+				queue_css_file('cookie_bar');
 			}
 		}
 
