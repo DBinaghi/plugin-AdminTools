@@ -90,14 +90,17 @@
 					header('Content-Length: ' . $filesize);
 
 					if (intval(sprintf("%u", $filesize)) > $chunksize) { 
-						$handle = fopen($outputFile, 'rb'); 
+						$handle = fopen($outputFile, 'rb');
+						if ($handle === false) {
+						    throw new Zend_Controller_Action_Exception(__('Unable to open file.'), 500);
+						}
 
 						while ($buffer = fread($handle, $chunksize)) {
 						    echo $buffer;
 
-							if (ob_get_level() > 0) {
-    							ob_flush();
-							};
+//							if (ob_get_level() > 0) {
+//    							ob_flush();
+//							};
 							flush();
 						}
 
