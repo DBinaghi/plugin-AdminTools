@@ -79,17 +79,17 @@
 
 					$chunksize = 5 * (1024 * 1024); //5 MB (= 5 242 880 bytes) per one chunk of file
 					set_time_limit(300);
-					$size = intval(sprintf("%u", filesize($outputFile)));
-
+					$filesize = filesize($outputFile);
+					
 					if ($isCompressed) {
 						header('Content-Type: application/gzip');
 					} else {
 						header('Content-Type: text/plain');
 					}
 					header('Content-Disposition: attachment; filename="OmekaDB-backup_' . date('Ymd_His') . ($isCompressed ? '.sql.gz' : '.sql') . '"');
-					header('Content-Length: ' . filesize($outputFile));
+					header('Content-Length: ' . $filesize);
 
-					if ($size > $chunksize) { 
+					if (intval(sprintf("%u", $filesize)) > $chunksize) { 
 						$handle = fopen($outputFile, 'rb'); 
 
 						while ($buffer = fread($handle, $chunksize)) {
