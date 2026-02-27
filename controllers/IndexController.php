@@ -77,7 +77,7 @@
 						ob_end_clean();
 					}
 
-					$chunksize = 5 * (1024 * 1024); //5 MB (= 5 242 880 bytes) per one chunk of file
+					$chunksize = 5 * (1024 * 1024); // 5 MB (= 5 242 880 bytes) per one chunk of file
 					set_time_limit(300);
 					$filesize = filesize($outputFile);
 					
