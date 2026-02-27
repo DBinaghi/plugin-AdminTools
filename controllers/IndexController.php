@@ -64,6 +64,14 @@
 						$this->_helper->viewRenderer->setNoRender(true);
 					}
 
+					// 1.5 Avoid double compression
+					if ($isCompressed) {
+						if (function_exists('apache_setenv')) {
+						    @apache_setenv('no-gzip', 1);
+						}
+						ini_set('zlib.output_compression', 'Off');
+					}
+
 					// 2. Pulizia totale del buffer; elimina qualsiasi CSS o HTML già generato da Omeka
 					while (ob_get_level()) {
 						ob_end_clean();
@@ -73,21 +81,25 @@
 					set_time_limit(300);
 					$size = intval(sprintf("%u", filesize($outputFile)));
 
-					header('Content-Type: text/plain');
+					if ($isCompressed) {
+						header('Content-Type: application/gzip');
+					} else {
+						header('Content-Type: text/plain');
+					}
 					header('Content-Disposition: attachment; filename="OmekaDB-backup_' . date('Ymd_His') . ($isCompressed ? '.sql.gz' : '.sql') . '"');
 					header('Content-Length: ' . filesize($outputFile));
 
 					if ($size > $chunksize) { 
 						$handle = fopen($outputFile, 'rb'); 
 
-						while (!feof($handle)) { 
-							print(@fread($handle, $chunksize));
+						while ($buffer = fread($handle, $chunksize)) {
+						    echo $buffer;
 
 							if (ob_get_level() > 0) {
     							ob_flush();
 							};
 							flush();
-						} 
+						}
 
 						fclose($handle); 
 					} else {
