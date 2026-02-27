@@ -59,12 +59,12 @@
 
 			if ((bool)get_option('admin_tools_backup_download')) {
 				if (file_exists($outputFile)) {
-					// 1. Disable the theme layout and prevent view script rendering
+					// Disable the theme layout and prevent view script rendering
 					if ($this->_helper->hasHelper('viewRenderer')) {
 						$this->_helper->viewRenderer->setNoRender(true);
 					}
 
-					// 1.5 Avoid double compression
+					// Avoid double compression
 					if ($isCompressed) {
 						if (function_exists('apache_setenv')) {
 						    @apache_setenv('no-gzip', 1);
@@ -72,7 +72,7 @@
 						ini_set('zlib.output_compression', 'Off');
 					}
 
-					// 2. Pulizia totale del buffer; elimina qualsiasi CSS o HTML già generato da Omeka
+					// Total buffer cleanup; removes any CSS or HTML code already generated
 					while (ob_get_level()) {
 						ob_end_clean();
 					}
