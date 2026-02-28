@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Admin Tools\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-02-08 16:34+0100\n"
-"PO-Revision-Date: 2026-02-14 03:57+0100\n"
+"PO-Revision-Date: 2026-02-28 20:11+0100\n"
 "PO-Revision-Date: 2026-02-14 03:41+0100\n"
 "Last-Translator: Daniele Binaghi\n"
 "Language-Team: Italian\n"
@@ -437,8 +437,13 @@ msgstr "Non è stata trovata nessuna etichetta non utilizzata."
 
 #: controllers/IndexController.php:226
 #, php-format
-msgid "last backup was created on %s at %s"
-msgstr "l'ultimo backup è stato creato il %s alle %s"
+msgid "<a href=\"%s\" title=\"%s\">last backup</a> was created on %s at %s"
+msgstr "<a href=\"%s\" title=\"%s\">l'ultimo backup</a> è stato creato il %s alle %s"
+
+#: controllers/IndexController.php:226
+#, php-format
+msgid "download file"
+msgstr "scarica file"
 
 #: controllers/IndexController.php:239
 msgid "Your Omeka application configuration file is missing."

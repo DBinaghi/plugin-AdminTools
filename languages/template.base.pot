@@ -434,7 +434,12 @@ msgstr ""
 
 #: controllers/IndexController.php:226
 #, php-format
-msgid "last backup was created on %s at %s"
+msgid "<a href="%s" title="%s">last backup</a> was created on %s at %s"
+msgstr ""
+
+#: controllers/IndexController.php:226
+#, php-format
+msgid "download file"
 msgstr ""
 
 #: controllers/IndexController.php:239
