@@ -26,6 +26,7 @@
 			'initialize',
 			'config',
 			'config_form',
+			'admin_head',
 			'admin_footer',
 			'public_head',
 			'public_footer',
@@ -152,6 +153,23 @@
 		public function hookConfigForm()
 		{
 			include 'config_form.php';
+		}
+		
+		public function hookAdminHead()
+		{
+			$request = Zend_Controller_Front::getInstance()->getRequest();
+			$controller = $request->getControllerName();
+			$action = $request->getActionName();
+
+			if ($controller === 'tags' && $action === 'browse') {
+				queue_css_file('admin-tools');
+				queue_js_file('admin-tags-browse');
+			} elseif ($controller === 'plugins' && $action === 'browse') {
+				queue_css_file('admin-tools');
+				queue_js_file('admin-plugins-browse');
+			} elseif ((bool)get_option('admin_tools_has_tags') && $controller === 'items' && $action === 'search') {
+				queue_js_file('admin-items-search');
+			}
 		}
 
 		public function hookAdminFooter()
@@ -386,13 +404,14 @@
 			if ((bool)get_option('admin_tools_unused_tags_btn')) {
 				if (!$args || !isset($args['tags'])) return;
 
-				queue_css_file('admin-tools');
-
-				include_once(__DIR__ . '/views/admin/javascripts/admin-tags-browse.js'); 
 				$html  = '<form class="at_form hidden" action="' . url('admin-tools/index/delete-tags-browse') . '">';
 				$html .= '<h2 style="margin-top:1em">' . __('Delete Tags') . '</h2>';
 				$html .= '<p>' . __('Delete all Tags that have no correspondence with any record.') . '</p>';
-				$html .= '<button class="big green button" type="submit">' . __('Delete Unused Tags') . '</button>';
+				if (AdminTools_Service::getTagsUnusedCount() == 0) {
+					$html .= '<a class="button at_disabled" disabled>' . __('Delete Unused Tags') . '</a>';
+				} else {
+					$html .= '<a class="big green button" href="' . url('admin-tools/index/plugins-delete_tags-browse') . '">' . __('Delete Unused Tags') . '</a>';
+				}
 				$html .= '</form>';
 				echo $html;
 			}
@@ -406,21 +425,34 @@
 			if ((bool)get_option('admin_tools_plugins_btns')) {
 				if (!$args || !isset($args['plugins'])) return;
 
-				queue_css_file('admin-tools');
-
-				include_once(__DIR__ . '/views/admin/javascripts/admin-plugins-browse.js'); 
 				$html  = '<div id="activate_deactivate_btns" class="plugin hidden" style="display: block; padding-top: 0">';
-				$html .= '<p class="explanation">' . __('Activate/Deactivate all Plugins at the same time.') . ' ' . __('Also, remove invalid or damaged Plugins.') . '</p>';
+				$html .= '<p class="explanation">' . AdminTools_Service::getPluginsDescription() . '</p>';
 				$html .= '<div style="display: flex">';
-				$html .= '<form class="at_form" action="' . url('admin-tools/index/plugins-activate-browse') . '" style="display: inline; margin-right: .5em">';
-				$html .= '<button class="big green button" type="submit">' . __('Activate All Plugins') . '</button>';
+
+				$html .= '<form class="at_form" style="display: inline; margin-right: .5em">';
+				if (AdminTools_Service::getPluginsInstalledCount() == 0 || AdminTools_Service::getPluginsActiveCount() == AdminTools_Service::getPluginsInstalledCount()) {
+					$html .= '<a class="button at_disabled" disabled>' . __('Activate All Plugins') . '</a>';
+				} else {
+					$html .= '<a class="button green" href="' . url('admin-tools/index/plugins-remove-activate-browse') . '">' . __('Activate All Plugins') . '</a>';
+				}
 				$html .= '</form>';
-				$html .= '<form class="at_form" action="' . url('admin-tools/index/plugins-deactivate-browse') . '" style="display: inline; margin-right: .5em">';
-				$html .= '<button class="big green button" type="submit">' . __('Deactivate All Plugins') . '</button>';
+
+				$html .= '<form class="at_form" style="display: inline; margin-right: .5em">';
+				if (AdminTools_Service::getPluginsInstalledCount() == 0 || AdminTools_Service::getPluginsActiveCount() == 0) {
+					$html .= '<a class="button at_disabled" disabled>' . __('Deactivate All Plugins') . '</a>';
+				} else {
+					$html .= '<a class="button green" href="' . url('admin-tools/index/plugins-remove-deactivate-browse') . '">' . __('Deactivate All Plugins') . '</a>';
+				}
 				$html .= '</form>';
-				$html .= '<form class="at_form" action="' . url('admin-tools/index/plugins-remove-invalid-browse') . '" style="display: inline">';
-				$html .= '<button class="big green button" type="submit">' . __('Remove Invalid Plugins') . '</button>';
+
+				$html .= '<form class="at_form" style="display: inline">';
+				if (AdminTools_Service::getPluginsInvalidCount() > 0) {
+					$html .= '<a class="button green" href="' . url('admin-tools/index/plugins-remove-invalid-browse') . '">' . __('Remove Invalid Plugins') . '</a>';
+				} else {
+					$html .= '<a class="button at_disabled" disabled>' . __('Remove Invalid Plugins') . '</a>';
+				}
 				$html .= '</form>';
+
 				$html .= '</div>';
 				$html .= '</div>';
 				echo $html;
@@ -435,7 +467,6 @@
 		public function hookAdminItemsSearch($args)
 		{
 			if ((bool)get_option('admin_tools_has_tags')) {
-				include_once(__DIR__ . '/views/admin/javascripts/admin-items-search.js'); 
 				echo $this->_itemsSearch($args);
 			}
 		}
