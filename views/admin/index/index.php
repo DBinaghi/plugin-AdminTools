@@ -48,7 +48,13 @@
 		<label for="TDB"><?php echo __('Database Backup'); ?></label>
 	</div>
 	<div class="inputs five columns omega">
-		<p class="explanation"><?php echo __('Backup the entire Omeka database into a SQL file') . $this->lastBackupDateTime . '.' .(get_option('admin_tools_backup_sessions_ignore') ? ' ' . __('During the backup, data from "Sessions" table will be <b>ignored</b>.') : '') . (get_option('admin_tools_backup_download') ? ' ' . __('A copy of the file will be available for download') . (get_option('admin_tools_backup_compress') ? __(', <b>compressed</b> in GZip format.') : '.') : '.'); ?></p>
+		<p class="explanation">
+			<?php 
+				echo __('Backup the entire Omeka database into a SQL file, saved in Omeka\'s "Files" folder') . $this->lastBackupDateTime . '.' . 
+					(get_option('admin_tools_backup_sessions_ignore') ? ' ' . __('During the backup, data from "Sessions" table will be <b>ignored</b>.') : '') . 
+					(get_option('admin_tools_backup_download') ? ' ' . __('A copy of the file will be available for download') . (get_option('admin_tools_backup_compress') ? __(', <b>compressed</b> in GZip format.') : '.') : '.');
+			?>
+		</p>
 		<a id="TDB" class="button green" href="<?php echo url('admin-tools/index/backup'); ?>"><?php echo __('Backup Database'); ?></a>
 	</div>
 </div>
@@ -60,38 +66,28 @@
 	<div class="inputs five columns omega">
 		<?php
 			echo '<p class="explanation">';
-			if ($this->plugins == 0) {
-				// case no installed plugin
-				echo __('No Plugin is installed in the system.');
+			echo $this->pluginsDescription;
+			echo '</p>';
+			
+			if ($this->pluginsInstalled == 0) { // no installed plugin
 				$plu_btns = '<a id="PLU_ON" class="button at_disabled" disabled>' . __('Activate All Plugins') . '</a>
 							<a id="PLU_OFF" class="button at_disabled" disabled>' . __('Deactivate All Plugins') . '</a>';
 			} else {
-				echo __(plural('The system contains <b>1</b> installed Plugin', 'The system contains <b>%s</b> installed Plugins', $this->plugins), $this->plugins);
-				echo ', ';
-				if ($this->plugins == $this->pluginsActive) {
-					// case all installed plugins are active
-					echo __(plural('which is already active.', 'which are all already active.', $this->plugins));
+				if ($this->pluginsInstalled == $this->pluginsActive) { // all installed plugins are active
 					$plu_btns = '<a id="PLU_ON" class="button at_disabled" disabled>' . __('Activate All Plugins') . '</a>
 								<a id="PLU_OFF" class="button green" href="' . url('admin-tools/index/plugins-deactivate') . '">' . __('Deactivate All Plugins') . '</a>';
-				} elseif ($this->pluginsActive == 0) {
-					// case all installed plugins are inactive
-					echo __(plural('which is not active.', 'which are all not active.', $this->plugins));
+				} elseif ($this->pluginsActive == 0) { // all installed plugins are not active
 					$plu_btns = '<a id="PLU_ON" class="button green" href="' . url('admin-tools/index/plugins-activate') . '">' . __('Activate All Plugins') . '</a>
 								<a id="PLU_OFF" class="button at_disabled" disabled>' . __('Deactivate All Plugins') . '</a>';
 				} else {
-					// case else
-					echo __(plural('of which <b>1</b> active.', 'of which <b>%d</b> active.', $this->pluginsActive), $this->pluginsActive);
 					$plu_btns = '<a id="PLU_ON" class="button green" href="' . url('admin-tools/index/plugins-activate') . '">' . __('Activate All Plugins') . '</a>
 								<a id="PLU_OFF" class="button green" href="' . url('admin-tools/index/plugins-deactivate') . '">' . __('Deactivate All Plugins') . '</a>';
 				}
 			}
 			
-			echo ' ';
 			if ($this->pluginsInvalid > 0) {
-				echo __(plural('<b>1</b> Plugin appears to be invalid/damaged, and can be safely removed.', '<b>%d</b> Plugins appear to be invalid/damaged, and can be safely removed.', $this->pluginsInvalid), $this->pluginsInvalid);
 				$plu_btns .= '<a id="PLU_REMOVE" class="button green" href="' . url('admin-tools/index/plugins-remove-invalid') . '">' . __('Remove Invalid Plugins') . '</a>';
 			} else {
-				echo __('No Plugin appears to be invalid/damaged.');
 				$plu_btns .= '<a id="PLU_REMOVE" class="button at_disabled" disabled>' . __('Remove Invalid Plugins') . '</a>';
 			}
 			
