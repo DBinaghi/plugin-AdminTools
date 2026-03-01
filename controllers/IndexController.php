@@ -311,9 +311,19 @@
 		
 		private function _getItemsUntaggedCount()
 		{
-			$db = get_db();
-			$sql = 'SELECT COUNT(*) FROM ' . $db->getTableName('Item') . ' AS `items` LEFT OUTER JOIN ' . $db->getTableName('RecordsTag') . ' AS `records_tags` ON `items`.id = `records_tags`.`record_id` WHERE `records_tags`.`tag_id` IS NULL';
-			return $db->fetchOne($sql);
+		    $db = get_db();
+		    $itemTable = $db->getTableName('Item');
+		    $recordsTagTable = $db->getTableName('RecordsTag');
+		
+		    $sql = "
+		        SELECT COUNT(*) 
+		        FROM $itemTable items
+		        LEFT JOIN $recordsTagTable records_tags 
+		            ON items.id = records_tags.record_id
+		        WHERE records_tags.tag_id IS NULL
+		    ";
+		
+		    return (int) $db->fetchOne($sql);
 		}
 
 		private function _getLastBackupDateTime()
