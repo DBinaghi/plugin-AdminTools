@@ -214,14 +214,12 @@
 		private function _activatePlugins()
 		{
 			$pluginTable = get_db()->getTable('Plugin');
-
-    		// Find all inactive plugins
 			$plugins = $pluginTable->findBy(['active' => 0]);
 
 		    if (!empty($plugins)) {
 		        foreach ($plugins as $plugin) {
-		            $plugin->active = 1;        // attiva il plugin
-		            $pluginTable->save($plugin); // salva la modifica
+		            $plugin->active = 1;			// activate plugin
+		            $pluginTable->save($plugin);	// save changes
 		        }
 		        $this->_helper->flashMessenger(__('All Plugins are now active.'), 'success');
 		    } else {
@@ -231,15 +229,18 @@
 
 		private function _deactivatePlugins()
 		{
-			$db = get_db();
-			$query = 'UPDATE ' . $db->getTableName('Plugin') . ' SET active = 0';
-			$affected = $db->query($query)->rowCount();
+			$pluginTable = get_db()->getTable('Plugin');
+			$plugins = $pluginTable->findBy(['active' => 1]);
 
-            if ($affected > 0) {
-				$this->_helper->flashMessenger(__('All Plugins are now inactive.'), 'success');
-            } else {
-				$this->_helper->flashMessenger(__('All installed Plugins were already inactive.'), 'alert');
-            }    
+		    if (!empty($plugins)) {
+		        foreach ($plugins as $plugin) {
+		            $plugin->active = 0;			// deactivate plugin
+		            $pluginTable->save($plugin);	// save changes
+		        }
+		        $this->_helper->flashMessenger(__('All Plugins are now inactive.'), 'success');
+		    } else {
+		        $this->_helper->flashMessenger(__('All installed Plugins were already inactive.'), 'alert');
+		    }
 		}
 
 		private function _removeDamagedPlugins()
