@@ -381,12 +381,13 @@
 			$applicationFile = '../application/config/application.ini';
 			if (!file_exists($applicationFile)) {
 				throw new Zend_Config_Exception(__('Your Omeka application configuration file is missing.'));
-			}
-			if (!is_readable($applicationFile)) {
+			} elseif (!is_readable($applicationFile)) {
 				throw new Zend_Config_Exception(__('Your Omeka application configuration file cannot be read by the application.'));
 			}
+
 			$sessionIni = new Zend_Config_Ini($applicationFile, 'production');
 			$sessionParams = $sessionIni->toArray();
+
 			return $sessionParams['resources']['session']['gc_maxlifetime'];
 		}
 
