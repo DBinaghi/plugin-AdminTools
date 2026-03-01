@@ -213,15 +213,20 @@
 
 		private function _activatePlugins()
 		{
-            $db = get_db();
-			$query = 'UPDATE ' . $db->getTableName('Plugin') . ' SET active = 1';
-			$affected = $db->query($query)->rowCount();
+			$pluginTable = get_db()->getTable('Plugin');
 
-            if ($affected > 0) {
-				$this->_helper->flashMessenger(__('All Plugins are now active.'), 'success');
-            } else {
-				$this->_helper->flashMessenger(__('All installed Plugins were already active.'), 'alert');
-            }    
+    		// Find all inactive plugins
+			$plugins = $pluginTable->findBy(['active' => 0]);
+
+		    if (!empty($plugins)) {
+		        foreach ($plugins as $plugin) {
+		            $plugin->active = 1;        // attiva il plugin
+		            $pluginTable->save($plugin); // salva la modifica
+		        }
+		        $this->_helper->flashMessenger(__('All Plugins are now active.'), 'success');
+		    } else {
+		        $this->_helper->flashMessenger(__('All installed Plugins were already active.'), 'alert');
+		    }
 		}
 
 		private function _deactivatePlugins()
