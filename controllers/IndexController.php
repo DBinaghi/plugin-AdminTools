@@ -251,18 +251,22 @@
 
 		private function _removeDamagedPlugins()
 		{
-			$db = get_db();
-			$path = PLUGIN_DIR;
-			$directories = str_replace($path . '/', '', glob($path . '/*', GLOB_ONLYDIR));
-			$query = "DELETE FROM " . $db->getTableName('Plugin') . " WHERE name NOT IN ('" . implode("','", $directories) . "')";
-			$affected = $db->query($query)->rowCount();
-
-
-            if ($affected > 0) {
-				$this->_helper->flashMessenger(__('All invalid/damaged Plugins were removed.'), 'success');
-            } else {
-				$this->_helper->flashMessenger(__('No invalid/damaged Plugin was found to remove.'), 'alert');
-            }    
+		    $pluginTable = get_db()->getTable('Plugin');
+			$directories = array_map('basename', glob(PLUGIN_DIR . '/*', GLOB_ONLYDIR));
+		
+		    $damagedPlugins = $pluginTable->findBySql(
+		        "name NOT IN (?)",
+		        [$directories]
+		    );
+		
+		    if (!empty($damagedPlugins)) {
+		        foreach ($damagedPlugins as $plugin) {
+		            $pluginTable->delete($plugin); // remove record
+		        }
+		        $this->_helper->flashMessenger(__('All invalid/damaged Plugins were removed.'), 'success');
+		    } else {
+		        $this->_helper->flashMessenger(__('No invalid/damaged Plugin was found to remove.'), 'alert');
+		    }
 		}
 		
 		private function _getTagsUnusedCount()
