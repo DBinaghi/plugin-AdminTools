@@ -271,9 +271,18 @@
 		
 		private function _getTagsUnusedCount()
 		{
-			$db = get_db();
-			$sql = 'SELECT COUNT(*) FROM ' . $db->getTableName('Tag') . ' WHERE id IN (SELECT id FROM (SELECT t1.id FROM ' . $db->getTableName('Tag') . ' t1 LEFT OUTER JOIN ' . $db->getTableName('RecordsTag') . ' rt ON t1.id = rt.tag_id GROUP BY t1.id HAVING COUNT(rt.id) = 0) tmp)';
-			return $db->fetchOne($sql);			
+		    $db = get_db();
+		    $tagTable = $db->getTableName('Tag');
+		    $recordsTagTable = $db->getTableName('RecordsTag');
+
+		    $select = "
+		        SELECT COUNT(*) 
+		        FROM $tagTable t
+		        LEFT JOIN $recordsTagTable rt ON t.id = rt.tag_id
+		        WHERE rt.id IS NULL
+		    ";
+
+		    return (int) $db->fetchOne($select);
 		}
 
 		private function _deleteTagsUnused()
