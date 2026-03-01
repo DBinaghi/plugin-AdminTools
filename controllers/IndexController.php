@@ -213,14 +213,17 @@
 
 		private function _activatePlugins()
 		{
-			$pluginTable = get_db()->getTable('Plugin');
-			$plugins = $pluginTable->findBy(['active' => 0]);
+			$db = get_db();
+			$table = $db->getTableName('Plugin');
+			
+			// Aggiornamento bulk usando prepared statement
+			$affected = $db->update(
+			    $table,
+			    ['active' => 1],
+			    ['active = ?' => 0]
+			);
 
-		    if (!empty($plugins)) {
-		        foreach ($plugins as $plugin) {
-		            $plugin->active = 1;			// activate plugin
-		            $pluginTable->save($plugin);	// save changes
-		        }
+		    if ($affected > 0) {
 		        $this->_helper->flashMessenger(__('All Plugins are now active.'), 'success');
 		    } else {
 		        $this->_helper->flashMessenger(__('All installed Plugins were already active.'), 'alert');
@@ -229,14 +232,17 @@
 
 		private function _deactivatePlugins()
 		{
-			$pluginTable = get_db()->getTable('Plugin');
-			$plugins = $pluginTable->findBy(['active' => 1]);
+			$db = get_db();
+			$table = $db->getTableName('Plugin');
+			
+			// Bulk update using prepared statement
+			$affected = $db->update(
+			    $table,
+			    ['active' => 0],
+			    ['active = ?' => 1]
+			);
 
-		    if (!empty($plugins)) {
-		        foreach ($plugins as $plugin) {
-		            $plugin->active = 0;			// deactivate plugin
-		            $pluginTable->save($plugin);	// save changes
-		        }
+			if ($affected > 0) {
 		        $this->_helper->flashMessenger(__('All Plugins are now inactive.'), 'success');
 		    } else {
 		        $this->_helper->flashMessenger(__('All installed Plugins were already inactive.'), 'alert');
