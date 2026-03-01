@@ -287,17 +287,26 @@
 
 		private function _deleteTagsUnused()
 		{
-			$db = get_db();
-			$query = 'DELETE FROM ' . $db->getTableName('Tag') . ' WHERE id IN (SELECT id FROM (SELECT t1.id FROM ' . $db->getTableName('Tag') . ' t1 LEFT OUTER JOIN ' . $db->getTableName('RecordsTag') . ' rt ON t1.id = rt.tag_id GROUP BY t1.id HAVING COUNT(rt.id) = 0) tmp)';
-			$affected = $db->query($query)->rowCount();
-
-			if ($affected == 1) {
-				$this->_helper->flashMessenger(__('1 unused Tag has been deleted.', $affected), 'success');
-			} elseif ($affected > 1 ) {
-				$this->_helper->flashMessenger(__('All %s unused Tags have been deleted.', $affected), 'success');
-			} else {
-				$this->_helper->flashMessenger(__('No unused Tag was found.'), 'alert');
-			}
+		    $db = get_db();
+		    $tagTable = $db->getTableName('Tag');
+		    $recordsTagTable = $db->getTableName('RecordsTag');
+		
+		    $sql = "
+		        DELETE t
+		        FROM $tagTable t
+		        LEFT JOIN $recordsTagTable rt ON t.id = rt.tag_id
+		        WHERE rt.id IS NULL
+		    ";
+		
+		    $affected = $db->query($sql)->rowCount();
+		
+		    if ($affected === 1) {
+		        $this->_helper->flashMessenger(__('1 unused Tag has been deleted.'), 'success');
+		    } elseif ($affected > 1) {
+		        $this->_helper->flashMessenger(__("All %d unused Tags have been deleted.", $affected), 'success');
+		    } else {
+		        $this->_helper->flashMessenger(__('No unused Tag was found.'), 'alert');
+		    }
 		}
 		
 		private function _getItemsUntaggedCount()
