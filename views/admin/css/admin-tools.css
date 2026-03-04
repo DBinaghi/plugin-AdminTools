@@ -1,19 +1,60 @@
-<style>
-	form.at_form .hidden{
-		visibility: hidden;
-		display: none;
-	}
+form.at_form .hidden{
+	visibility: hidden;
+	display: none;
+}
 
-	form.at_form button{
-		width: 100%;
-	}
+form.at_form button{
+	width: 100%;
+}
 
-	#flash ul li.det{
-		background-color: lightyellow !important;
-	}
-	
-	.at_disabled {
-		cursor: not-allowed !important;
-		opacity: 0.6; /* Faded opacity (60% visible) */
-	}
-</style>
+#flash ul li.det{
+	background-color: lightyellow !important;
+}
+
+.at_disabled {
+	cursor: not-allowed !important;
+	opacity: 0.6; /* Faded opacity (60% visible) */
+}
+
+#similar-tags-table {
+    border-collapse: collapse;
+}
+
+#similar-tags-table th,
+#similar-tags-table td {
+    /* border: none; */
+    padding: 3px 6px;
+    vertical-align: middle;
+	text-align: center;
+}
+
+#similar-tags-table td:first-child,
+#similar-tags-table td:nth-child(3) {
+    width: 1%;
+}
+
+#similar-tags-table td:nth-child(2) {
+    width: 100%;
+}
+
+#similar-tags-table th a.button,
+#similar-tags-table td a.button {
+    margin: 0;
+	white-space: nowrap;
+}
+
+#similar-tags-table tbody td:first-child,
+#similar-tags-table thead th:first-child {
+    border-right: none;
+}
+
+#similar-tags-table tbody td:nth-child(2),
+#similar-tags-table thead th:nth-child(2) {
+    border-left: none;
+    border-right: none;
+}
+
+#similar-tags-table tbody td:last-child,
+#similar-tags-table thead th:last-child {
+    border-left: none;
+}
