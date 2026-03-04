@@ -370,6 +370,74 @@
 			<?php echo $view->formCheckbox('admin_tools_has_tags', get_option('admin_tools_has_tags'), null, array('1', '0')); ?>
 		</div>
 	</div>
+
+	<div class="field">
+		<div class="two columns alpha">
+			<label><?php echo __('Enable Merging')?></label>	
+		</div>
+		<div class="inputs five columns omega">
+			<p class="explanation"><?php echo __('If checked, when renaming a Tag in the Browse page the system will check if the new name already exists, in which case it will offer the chance to merge the two Tags.'); ?></p>
+			<?php echo $view->formCheckbox('admin_tools_tags_merge', get_option('admin_tools_tags_merge'), null, array('1', '0')); ?>
+		</div>
+	</div>
+	
+	<div class="field">
+		<div class="two columns alpha">
+			<label><?php echo __('Find Similar Tags')?></label>	
+		</div>
+		<div class="inputs five columns omega">
+			<p class="explanation"><?php echo __('If checked, a button to find Tags with similar names will be shown in the Admin Tools page. Note: with a large number of Tags, this operation may take a few seconds.'); ?></p>
+			<?php echo $view->formCheckbox('admin_tools_tags_similar', get_option('admin_tools_tags_similar'), null, array('1', '0')); ?>
+		</div>
+	</div>
+
+	<div id="tags-similarity-options">
+		<div class="field">
+			<div class="two columns alpha">
+				<label><?php echo __('Similarity Threshold')?></label>	
+			</div>
+			<div class="inputs five columns omega">
+				<p class="explanation"><?php echo __('Maximum Levenshtein distance between two Tag names to consider them similar (1 = only single-character differences, 2 = also two-character differences, 3 = more permissive).'); ?></p>
+				<?php echo $view->formSelect('admin_tools_tags_similarity_threshold', get_option('admin_tools_tags_similarity_threshold'), null, array(
+					'1' => __('1 – Strict'),
+					'2' => __('2 – Moderate'),
+					'3' => __('3 – Permissive')
+				)); ?>
+			</div>
+		</div>
+
+		<div class="field">
+			<div class="two columns alpha">
+				<label><?php echo __('Results Per Page')?></label>
+			</div>
+			<div class="inputs five columns omega">
+				<p class="explanation"><?php echo __('Maximum number of similar Tag pairs to display in each page.'); ?></p>
+				<?php echo $view->formSelect('admin_tools_tags_similarity_results', get_option('admin_tools_tags_similarity_results'), null, array(
+					'5'  => '5',
+					'10' => '10',
+					'25' => '25'
+				)); ?>
+			</div>
+		</div>
+	</div>
+
+	<script type="text/javascript">
+		jQuery(document).ready(function () {
+			var $checkbox  = jQuery('input[name="admin_tools_tags_similar"]');
+			var $dependent = jQuery('#tags-similarity-options input, #tags-similarity-options select');
+
+			function toggleSimilarityOptions() {
+				$dependent.prop('disabled', !$checkbox.is(':checked'));
+			}
+
+			// Set initial state on page load
+			toggleSimilarityOptions();
+
+			// Update on change
+			$checkbox.on('change', toggleSimilarityOptions);
+		});
+	</script>
+
 	<div>&nbsp;</div>
 </div>
 
