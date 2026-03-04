@@ -38,7 +38,7 @@
 		<label for="TRC"><?php echo __('Translations'); ?></label>
 	</div>
 	<div class="inputs five columns omega">
-		<p class="explanation"><?php echo __('Update all translations after language files have been changed manually') . ((bool)get_option('admin_tools_translations_theme') ? ', ' . __('including files that are part of the <b>active theme</b>.') : '.'); ?></p>
+		<p class="explanation"><?php echo __('Reset cache and update all translations after one or more language files have been changed manually') . (get_option('admin_tools_translations_theme') ? ', ' . __('including files that are part of the <b>active theme</b>.') : '.'); ?></p>
 		<a id="TRC" class="button green" href="<?php echo url('admin-tools/index/reset-cache'); ?>"><?php echo __('Reset Cache'); ?></a>
 	</div>
 </div>
@@ -101,54 +101,30 @@
 		<label for="TST"><?php echo __('Sessions'); ?></label>
 	</div>
 	<div class="inputs five columns omega">
-		<p class="explanation"><?php echo __('Trim Omeka\'s "Sessions" table') . (get_option('admin_tools_sessions_count') ? ' ' . __('(at the moment, the table contains <strong>%s</strong> records)', number_format($this->sessionsCount)) : '') . __(', choosing whether to delete sessions older than 1 year/month/week/day or all expired ones (at the moment, sessions expire after <strong>%s</strong> days).', $this->sessionMaxLifeTime); ?></p>
-		<?php if ($this->sessionsCount > 0 && (bool)get_option('admin_tools_sessions_graph')): ?>
+		<p class="explanation"><?php echo __('Trim Omeka\'s "Sessions" table') . (get_option('admin_tools_sessions_count') ? ' ' . __('(at the moment, the table contains <strong>%s</strong> records)', number_format($this->sessionsCount)) : '') . __(', deleting sessions older than 1 year/month/week/day or all expired ones (at the moment, sessions expire after <strong>%s</strong> days).', $this->sessionsMaxLifeTime); ?></p>
+		<?php if ((bool)get_option('admin_tools_sessions_graph')): ?>
 			<canvas id="sessionsChart" style="width:100%; height: 200px; margin-bottom: 1em"></canvas>
 			<script>
-				<?php
-					// define variables
-					$ascisse = [];
-					$ordinate = [];
-					
-					// get number of sessions grouped by date
-					$sql = "SELECT count(id) AS total, DATE(FROM_UNIXTIME(modified)) AS session_date FROM omeka_sessions GROUP BY session_date";
-					$rows = get_db()->query($sql)->fetchall();
-					
-					// limit number of entries to sessionMaxLifeTime
-					if (count($rows) > $this->sessionMaxLifeTime) {
-						array_splice($rows, 0, count($rows) - $this->sessionMaxLifeTime);
-					}
-					
-					// create coordinates for graph
-					foreach ($rows as $row) {
-						$ascisse[] = date_format(date_create($row['session_date']), 'd/m');
-						$ordinate[] = $row['total'];
-					}
-				?>
 				new Chart("sessionsChart", {
 					type: "line",
 					data: {
-						labels: <?= json_encode($ascisse) ?>,
+						labels: <?= json_encode($this->chartLabels) ?>,
 						datasets: [{
-							data: <?= json_encode($ordinate) ?>,
+							data: <?= json_encode($this->chartData) ?>,
 							borderWidth: 2,
 							tension: 0.1
 						}]
 					},
 					options: {
 						plugins: {
-							legend: {
-								display: false
-							},
+							legend: { display: false },
 							title: {
 								display: true,
-								text: '<?= __('Sessions in the last %d days', $this->sessionMaxLifeTime) ?>'
+								text: '<?= __('Sessions in the last %d days', $this->sessionsMaxLifeTime) ?>'
 							}
 						},
 						scales: {
-							y: {
-								beginAtZero: true
-							}
+							y: { beginAtZero: true }
 						}
 					}
 				});
@@ -158,35 +134,35 @@
 		<?php 
 			// adds button to prune sessions over 1 year old - disabled if there are none
 			if ($this->sessionsYearCount > 0) {
-				echo '<a id="TSTY" class="button green" href="' . url('admin-tools/index/trim-sessions/rng/year') . '">' . __('Trim sessions (+1 year)') . '</a>';
+				echo '<a id="TSTY" class="button green" href="' . url('admin-tools/index/sessions-trim/rng/year') . '">' . __('Trim sessions (+1 year)') . '</a>';
 			} else {
 				echo '<a id="TSTY" class="button at_disabled" disabled>' . __('Trim sessions (+1 year)') . '</a>';
 			}
 
 			// adds button to prune sessions over 1 month old - disabled if there are none
 			if ($this->sessionsMonthCount > 0) {
-				echo '<a id="TSTM" class="button green" href="' . url('admin-tools/index/trim-sessions/rng/month') . '">' . __('Trim sessions (+1 month)') . '</a>';
+				echo '<a id="TSTM" class="button green" href="' . url('admin-tools/index/sessions-trim/rng/month') . '">' . __('Trim sessions (+1 month)') . '</a>';
 			} else {
 				echo '<a id="TSTM" class="button at_disabled" disabled>' . __('Trim sessions (+1 month)') . '</a>';
 			}
 
 			// adds button to prune sessions over 1 week old - disabled if there are none
 			if ($this->sessionsWeekCount > 0) {
-				echo '<a id="TSTW" class="button green" href="' . url('admin-tools/index/trim-sessions/rng/week') . '">' . __('Trim sessions (+1 week)') . '</a>';
+				echo '<a id="TSTW" class="button green" href="' . url('admin-tools/index/sessions-trim/rng/week') . '">' . __('Trim sessions (+1 week)') . '</a>';
 			} else {
 				echo '<a id="TSTM" class="button at_disabled" disabled>' . __('Trim sessions (+1 week)') . '</a>';
 			}
 
 			// adds button to prune sessions over 1 day old - disabled if there are none
 			if ($this->sessionsDayCount > 0) {
-				echo '<a id="TSTD" class="button green" href="' . url('admin-tools/index/trim-sessions/rng/day') . '">' . __('Trim sessions (+1 day)') . '</a>';
+				echo '<a id="TSTD" class="button green" href="' . url('admin-tools/index/sessions-trim/rng/day') . '">' . __('Trim sessions (+1 day)') . '</a>';
 			} else {
 				echo '<a id="TSTD" class="button at_disabled" disabled>' . __('Trim sessions (+1 day)') . '</a>';
 			}
 
 			// adds button to prune sessions expired - disabled if there are none
 			if ($this->sessionsExpiredCount > 0) {
-				echo '<a id="TSTE" class="button green" href="' . url('admin-tools/index/trim-sessions/rng/expired') . '">' . __('Trim sessions (expired)') . '</a>';
+				echo '<a id="TSTE" class="button green" href="' . url('admin-tools/index/sessions-trim/rng/expired') . '">' . __('Trim sessions (expired)') . '</a>';
 			} else {
 				echo '<a id="TSTE" class="button at_disabled" disabled>' . __('Trim sessions (expired)') . '</a>';
 			}
@@ -200,6 +176,7 @@
 	</div>
 	<div class="inputs five columns omega">
 		<?php
+			// explanation
 			echo '<p class="explanation">';
 			if ($this->tagsUnused > 0) {
 				echo __(plural('<b>1</b> Tag has no correspondence to any Items', '<b>%d</b> Tags have no correspondence to any Item', $this->tagsUnused), $this->tagsUnused);
@@ -218,8 +195,9 @@
 			}
 			echo '</p>';
 
+			// buttons
 			if ($this->tagsUnused > 0) {
-				echo '<a id="DUT" class="button green" href="' . url('admin-tools/index/delete-tags') . '">' . __(plural('Delete Unused Tag', 'Delete Unused Tags', $this->total_unused_tags)) . '</a>';
+				echo '<a id="DUT" class="button green" href="' . url('admin-tools/index/tags-delete') . '">' . __(plural('Delete Unused Tag', 'Delete Unused Tags', $this->tagsUnused)) . '</a>';
 			} else {
 				echo '<a id="DUT" class="button at_disabled" disabled>' . __('Delete Unused Tags') . '</a>';
 			}
@@ -230,6 +208,31 @@
 				echo '<a id="SUI" class="button at_disabled" disabled>' . __('Show Untagged Items') . '</a>';
 			}
 		?>
+
+		<?php if (get_option('admin_tools_tags_similar')): ?>
+			<script>
+				    var AdminToolsIndex = <?php echo json_encode(array(
+					'tagsSimilarURL' => url('admin-tools/index/tags-find-similar'),
+					'tagsMergeURL'   => url('admin-tools/index/tags-merge'),
+					'csrfToken'      => $this->csrfToken,
+					'findSimilar'    => __('Find Similar Tags'),
+					'searching'      => __('Searching...'),
+					'noSimilar'      => __('No similar Tags found.'),
+					'found'          => __('<b>%d</b> possible duplicates found'),
+					'keepLeft'       => __('Keep left'),
+					'keepRight'      => __('Keep right'),
+					'mergeConfirm'   => __('The other Tag will be merged into "%s" and deleted. Proceed?'),
+					'mergeError'     => __('An error occurred during the merge.'),
+					'error'          => __('An error occurred while searching for similar Tags.'),
+					'pageSize'       => (int)get_option('admin_tools_tags_similarity_results'),
+					'prev'           => __('Prev'),
+					'next'           => __('Next'),
+					'pageInfo'       => __('page %1 of %2')
+				)); ?>;
+			</script>
+			<a id="tags-find-similar" class="button green"><?php echo __('Find Similar Tags'); ?></a>
+			<div id="tags-similar-results" style="margin-top: 1em;"></div>
+		<?php endif; ?>
 	</div>
 </div>
 
