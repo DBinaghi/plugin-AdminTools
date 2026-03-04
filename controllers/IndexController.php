@@ -1,135 +1,149 @@
 <?php
 	class AdminTools_IndexController extends Omeka_Controller_AbstractActionController
 	{
+		protected $sessionService;
+		protected $pluginService;
+		protected $tagService;
+		protected $backupService;
+
+		public function init()
+		{
+			require_once dirname(__FILE__) . '/../libraries/AdminTools/Service/BackupService.php';
+			$this->backupService = new AdminTools_Service_BackupService();
+			require_once dirname(__FILE__) . '/../libraries/AdminTools/Service/PluginService.php';
+			$this->pluginService = new AdminTools_Service_PluginService();
+			require_once dirname(__FILE__) . '/../libraries/AdminTools/Service/SessionService.php';
+			$this->sessionService = new AdminTools_Service_SessionService();
+			require_once dirname(__FILE__) . '/../libraries/AdminTools/Service/TagService.php';
+			$this->tagService = new AdminTools_Service_TagService();
+		}
+
 		public function indexAction()
 		{
-			$this->view->lastBackupDateTime = $this->_getLastBackupDateTime();
+			$csrf = new Omeka_Form_Element_SessionCsrfToken('csrf_token');
+			$this->view->csrfToken = $csrf->getToken();
+
+			$this->view->lastBackupDateTime = $this->backupService->getLastBackupDateTime();
 
 			if (get_option('admin_tools_sessions_count')) {
-				$this->view->sessionsCount = $this->_getSessionsCount();
+				$this->view->sessionsCount = $this->sessionService->countAll();
 			}
-
-			$this->view->sessionMaxLifeTime = number_format($this->_getSessionMaxLifeTime() / (60 * 60 * 24), 0);
-			$this->view->sessionsExpiredCount = $this->_getSessionsCount('EXPIRED');
-			$this->view->sessionsYearCount = $this->_getSessionsCount('YEAR');
-			$this->view->sessionsMonthCount = $this->_getSessionsCount('MONTH');
-			$this->view->sessionsWeekCount = $this->_getSessionsCount('WEEK');
-			$this->view->sessionsDayCount = $this->_getSessionsCount('DAY');
+			$this->view->sessionsMaxLifeTime = number_format($this->sessionService->maxLifeTime() / (86400), 0); // 86400 sec = 1 day
+			if ((bool)get_option('admin_tools_sessions_graph')) {
+				$rows = $this->sessionService->chartData((int)$this->view->sessionsMaxLifeTime);
+				$ascisse  = [];
+				$ordinate = [];
+				foreach ($rows as $row) {
+					$ascisse[]  = date_format(date_create($row['session_date']), 'd/m');
+					$ordinate[] = (int)$row['total'];
+				}
+				$this->view->chartLabels = $ascisse;
+				$this->view->chartData   = $ordinate;
+			}
+			$this->view->sessionsExpiredCount = $this->sessionService->countExpired();
+			$this->view->sessionsYearCount = $this->sessionService->countByInterval('YEAR');
+			$this->view->sessionsMonthCount = $this->sessionService->countByInterval('MONTH');
+			$this->view->sessionsWeekCount = $this->sessionService->countByInterval('WEEK');
+			$this->view->sessionsDayCount = $this->sessionService->countByInterval('DAY');
 			
-			$this->view->pluginsInstalled = AdminTools_Service::getPluginsInstalledCount();
-			$this->view->pluginsActive = AdminTools_Service::getPluginsActiveCount();
-			$this->view->pluginsInvalid = AdminTools_Service::getPluginsInvalidCount();
-			$this->view->pluginsDescription = AdminTools_Service::getPluginsDescription();
+			$this->view->pluginsInstalled = $this->pluginService->countInstalled();
+			$this->view->pluginsActive = $this->pluginService->countActive();
+			$this->view->pluginsInvalid = $this->pluginService->countInvalid();
+			$this->view->pluginsDescription = $this->pluginService->description();
 			
-			$this->view->tagsUnused = AdminTools_Service::getTagsUnusedCount();
-			
-			$this->view->itemsUntagged = $this->_getItemsUntaggedCount();
+			$this->view->tagsUnused = $this->tagService->countUnused();
+			$this->view->itemsUntagged = $this->tagService->countUntaggedItems();
 		}
 
 		public function backupAction()
 		{
-			$db = get_db();
-			$dbConfig = $db->getAdapter()->getConfig();
-			$isCompressed = (bool)get_option('admin_tools_backup_compress');
-			$outputFile = ($isCompressed ? ADMIN_TOOLS_BACKUP_FILENAME . '.gz' : ADMIN_TOOLS_BACKUP_FILENAME);
-			$memoryAllocated = (int)get_option('admin_tools_backup_memory');
+			$options = [
+				'compress'			=> (bool) get_option('admin_tools_backup_compress'),
+				'memoryAllocated'	=> (int)  get_option('admin_tools_backup_memory'),
+				'ignoreSessions'	=> (bool) get_option('admin_tools_backup_sessions_ignore'),
+				'download'			=> (bool) get_option('admin_tools_backup_download')
+			];
 
-			// preserve original memory value
-			$old_limit = ini_get('memory_limit');
-			
-			// set temporary memory value
-			if ($memoryAllocated > 0) ini_set('memory_limit', $memoryAllocated . 'M');
+			try {
+				$backupFile = $this->backupService->createBackup($options);
 
-			// create db dump
-			$dumper = new Mysqldump\Mysqldump(
-				'mysql:host=' . $dbConfig['host'] . ';dbname=' . $dbConfig['dbname'], 
-				$dbConfig['username'], 
-				$dbConfig['password'],
-				array(
-					'compress' => ($isCompressed ? Mysqldump\Mysqldump::GZIP : Mysqldump\Mysqldump::NONE)
-				)
-			);
-
-			if ((bool)get_option('admin_tools_backup_sessions_ignore')) {
-				$dumper->setTableLimits(array(
-					get_db()->getTableName('Session') => 0
-				));
-			}
-
-			$dumper->start($outputFile);
-
-			if ((bool)get_option('admin_tools_backup_download')) {
-				if (file_exists($outputFile)) {
-					// Disable the theme layout and prevent view script rendering
-					if ($this->_helper->hasHelper('viewRenderer')) {
-						$this->_helper->viewRenderer->setNoRender(true);
-					}
-
-					// Avoid double compression
-					if ($isCompressed) {
-						if (function_exists('apache_setenv')) {
-						    @apache_setenv('no-gzip', 1);
-						}
-						ini_set('zlib.output_compression', 'Off');
-					}
-
-					// Complete buffer cleanup; removes any CSS or HTML code already generated by Omeka
-					while (ob_get_level()) {
-						ob_end_clean();
-					}
-
-					$chunksize = 5 * (1024 * 1024); // 5 MB (= 5 242 880 bytes) per one chunk of file
-					set_time_limit(300);
-					$filesize = filesize($outputFile);
-					
-					if ($isCompressed) {
-						header('Content-Type: application/gzip');
-					} else {
-						header('Content-Type: text/plain');
-					}
-					header('Content-Disposition: attachment; filename="OmekaDB-backup_' . date('Ymd_His') . ($isCompressed ? '.sql.gz' : '.sql') . '"');
-					header('Content-Length: ' . $filesize);
-
-					if (intval(sprintf("%u", $filesize)) > $chunksize) { 
-						$handle = fopen($outputFile, 'rb');
-						if ($handle === false) {
-						    throw new Zend_Controller_Action_Exception(__('Unable to open file.'), 500);
-						}
-
-						while ($buffer = fread($handle, $chunksize)) {
-						    echo $buffer;
-
-//							if (ob_get_level() > 0) {
-//    							ob_flush();
-//							};
-							flush();
-						}
-
-						fclose($handle); 
-					} else {
-						readfile($outputFile);
-					}
-
-					exit;
-				} else {
-					throw new Zend_Controller_Action_Exception(__('File not found.'), 404);
+				if ($options['download']) {
+					$this->_sendBackupFile($backupFile);
 				}
+
+				$this->_helper->flashMessenger(__('A %s backup copy of the Omeka database has been created.', ($options['compress'] ? __('compressed') : '')), 'success');
+			} catch (\Exception $e) {
+				$this->_helper->flashMessenger(
+					__('Error during backup: %s', $e->getMessage()),
+					'error'
+				);
 			}
 
-			// if changed, restore original memory value
-			if ($memoryAllocated > 0) ini_set('memory_limit', $old_limit);
-
-			$this->_helper->flashMessenger(__('A %s backup copy of the Omeka database has been created.', ($isCompressed ? __('compressed') : '')), 'success');
-			$this->_helper->redirector('index', 'index');
+			$this->_helper->redirector('index');
 		}
+		
+		/**
+		 * Internal helper to serve the backup file
+		 */
+		protected function _sendBackupFile(string $filePath)
+		{
+			if (!file_exists($filePath)) {
+				throw new Zend_Controller_Action_Exception(__('Backup file not found.'), 404);
+			}
 
+			// Disable the theme layout and prevent view script rendering
+			if ($this->_helper->hasHelper('viewRenderer')) {
+				$this->_helper->viewRenderer->setNoRender(true);
+			}
+
+			// Avoid double compression
+			if ($isCompressed) {
+				if (function_exists('apache_setenv')) {
+					@apache_setenv('no-gzip', 1);
+				}
+				ini_set('zlib.output_compression', 'Off');
+			}
+
+			// Cleans output buffer
+			while (ob_get_level()) {
+				ob_end_clean();
+			}
+
+			$chunksize = 5 * (1024 * 1024); // 5 MB (= 5 242 880 bytes) per one chunk of file
+			set_time_limit(300);
+			$size = filesize($filePath);
+			$isCompressed = pathinfo($filePath, PATHINFO_EXTENSION) === 'gz';
+
+			header('Content-Type: ' . ($isCompressed ? 'application/gzip' : 'application/sql'));
+			header('Content-Disposition: attachment; filename="OmekaDB-backup_' . date('Ymd_His') . ($isCompressed ? '.sql.gz' : '.sql') . '"');
+			header('Content-Length: ' . $size);
+
+			if (intval(sprintf("%u", $size)) > $chunksize) { 
+				$handle = fopen($filePath, 'rb');
+				if ($handle === false) {
+					throw new Zend_Controller_Action_Exception(__('Unable to open file.'), 500);
+				}
+
+				while ($buffer = fread($handle, $chunksize)) {
+					echo $buffer;
+
+					flush();
+				}
+
+				fclose($handle); 
+			} else {
+				readfile($filePath);
+			}
+			exit; // Terminates after download
+		}
+		
 		public function resetCacheAction()
 		{
 			$cache = Zend_Registry::get('Zend_Translate');
 			$cache::clearCache();
 
 			$this->_helper->flashMessenger(__('The translations cache has been reset.'), 'success');
-			$this->_helper->redirector('index', 'index');
+			$this->_helper->redirector('index');
 		}
 
 		public function maintenanceAction()
@@ -143,281 +157,201 @@
 				$this->_helper->flashMessenger(__('The website is online again.'), 'success');
 			}
 
-			$this->_helper->redirector('index', 'index');
+			return $this->_helper->redirector('index');
 		}
 
-		public function trimSessionsAction()
+		public function sessionsTrimAction()
 		{
-			$rng = $this->getRequest()->getParam('rng');
+			$range = $this->getRequest()->getParam('rng', 'expired');
 
-			if ($rng == 'expired') {
-				if ($this->_trimSessionsTable($rng)) {
-					$this->_helper->flashMessenger(__('Omeka\'s Sessions table has been trimmed up to all unexpired sessions.'), 'success');
+			try {
+				$removed = $this->sessionService->trimByRange($range);
+
+				if ($removed === 1) {
+					$this->_helper->flashMessenger(__('1 session removed.'), 'success');
+				} elseif ($removed > 1) {
+					$this->_helper->flashMessenger(__("%d sessions removed.", $removed), 'success');
+				} else {
+					$this->_helper->flashMessenger(__('No sessions to remove.'), 'alert');
 				}
-			} elseif ($rng != '') {
-				if ($this->_trimSessionsTable($rng)) {
-					$this->_helper->flashMessenger(__('Omeka\'s Sessions table has been trimmed up to 1 %s ago.', __($rng)), 'success');
-				}
+			} catch (Exception $e) {
+				$this->_helper->flashMessenger($e->getMessage(), 'error');
 			}
 
-			$this->_helper->redirector('index', 'index');
+			return $this->_helper->redirector('index');
 		}
-
-		public function deleteTagsAction()
-		{
-			$this->_deleteTagsUnused();
-			$this->_helper->redirector('index', 'index');
-		}
-
-		public function deleteTagsBrowseAction()
-		{
-			$this->_deleteTagsUnused();
-			$this->_helper->redirector->gotoUrl(url('../tags/browse'));
-		}
-
+		
 		public function pluginsActivateAction()
 		{
-			$this->_activatePlugins();
-			$this->_helper->redirector('index', 'index');
+			if ($this->pluginService->activateAll()) {
+				$this->_helper->flashMessenger(__('All installed Plugins are now active.'), 'success');
+			} else {
+				$this->_helper->flashMessenger(__('All installed Plugins were already active.'), 'alert');
+			}	
+						
+			return $this->_helper->redirector('index');
 		}
 
 		public function pluginsActivateBrowseAction()
 		{
-			$this->_activatePlugins();
-			$this->_helper->redirector->gotoUrl(url('../plugins/browse'));
+			if ($this->pluginService->activateAll()) {
+				$this->_helper->flashMessenger(__('All installed Plugins are now active.'), 'success');
+			} else {
+				$this->_helper->flashMessenger(__('All installed Plugins were already active.'), 'alert');
+			}	
+						
+			return $this->_redirect('/plugins');
 		}
 
 		public function pluginsDeactivateAction()
 		{
-			$this->_deactivatePlugins();
-			$this->_helper->redirector->gotoUrl(url('../plugins/browse'));
+			if ($this->pluginService->deactivateAll()) {
+				$this->_helper->flashMessenger(__('All installed Plugins are now inactive.'), 'success');
+			} else {
+				$this->_helper->flashMessenger(__('All installed Plugins were already inactive.'), 'alert');
+			}	
+						
+			return $this->_redirect('/plugins');
 		}
 
 		public function pluginsDeactivateBrowseAction()
 		{
-			$this->_deactivatePlugins();
-			$this->_helper->redirector->gotoUrl(url('../plugins/browse'));
-		}
-
-		public function pluginsRemoveDamagedAction()
-		{
-			$this->_removeDamagedPlugins();
-			$this->_helper->redirector->gotoUrl(url('../plugins/browse'));
-		}
-
-		public function pluginsRemoveDamagedBrowseAction()
-		{
-			$this->_removeDamagedPlugins();
-			$this->_helper->redirector->gotoUrl(url('../plugins/browse'));
-		}
-
-		private function _activatePlugins()
-		{
-			$db = get_db();
-			$table = $db->getTableName('Plugin');
-			
-			// Aggiornamento bulk usando prepared statement
-			$affected = $db->update(
-			    $table,
-			    ['active' => 1],
-			    ['active = ?' => 0]
-			);
-
-		    if ($affected > 0) {
-		        $this->_helper->flashMessenger(__('All Plugins are now active.'), 'success');
-		    } else {
-		        $this->_helper->flashMessenger(__('All installed Plugins were already active.'), 'alert');
-		    }
-		}
-
-		private function _deactivatePlugins()
-		{
-			$db = get_db();
-			$table = $db->getTableName('Plugin');
-			
-			// Bulk update using prepared statement
-			$affected = $db->update(
-			    $table,
-			    ['active' => 0],
-			    ['active = ?' => 1]
-			);
-
-			if ($affected > 0) {
-		        $this->_helper->flashMessenger(__('All Plugins are now inactive.'), 'success');
-		    } else {
-		        $this->_helper->flashMessenger(__('All installed Plugins were already inactive.'), 'alert');
-		    }
-		}
-
-		private function _removeDamagedPlugins()
-		{
-		    $pluginTable = get_db()->getTable('Plugin');
-			$directories = array_map('basename', glob(PLUGIN_DIR . '/*', GLOB_ONLYDIR));
-		
-		    $damagedPlugins = $pluginTable->findBySql(
-		        "name NOT IN (?)",
-		        [$directories]
-		    );
-		
-		    if (!empty($damagedPlugins)) {
-		        foreach ($damagedPlugins as $plugin) {
-		            $pluginTable->delete($plugin); // remove record
-		        }
-		        $this->_helper->flashMessenger(__('All invalid/damaged Plugins were removed.'), 'success');
-		    } else {
-		        $this->_helper->flashMessenger(__('No invalid/damaged Plugin was found to remove.'), 'alert');
-		    }
+			self::pluginsDeactivateAction();
 		}
 		
-		private function _getTagsUnusedCount()
+		public function pluginsRemoveInvalidAction()
 		{
-		    $db = get_db();
-		    $tagTable = $db->getTableName('Tag');
-		    $recordsTagTable = $db->getTableName('RecordsTag');
-
-		    $select = "
-		        SELECT COUNT(*) 
-		        FROM $tagTable t
-		        LEFT JOIN $recordsTagTable rt ON t.id = rt.tag_id
-		        WHERE rt.id IS NULL
-		    ";
-
-		    return (int) $db->fetchOne($select);
-		}
-
-		private function _deleteTagsUnused()
-		{
-		    $db = get_db();
-		    $tagTable = $db->getTableName('Tag');
-		    $recordsTagTable = $db->getTableName('RecordsTag');
-		
-		    $sql = "
-		        DELETE t
-		        FROM $tagTable t
-		        LEFT JOIN $recordsTagTable rt ON t.id = rt.tag_id
-		        WHERE rt.id IS NULL
-		    ";
-		
-		    $affected = $db->query($sql)->rowCount();
-		
-		    if ($affected === 1) {
-		        $this->_helper->flashMessenger(__('1 unused Tag has been deleted.'), 'success');
-		    } elseif ($affected > 1) {
-		        $this->_helper->flashMessenger(__("All %d unused Tags have been deleted.", $affected), 'success');
-		    } else {
-		        $this->_helper->flashMessenger(__('No unused Tag was found.'), 'alert');
-		    }
-		}
-		
-		private function _getItemsUntaggedCount()
-		{
-		    $db = get_db();
-		    $itemTable = $db->getTableName('Item');
-		    $recordsTagTable = $db->getTableName('RecordsTag');
-		
-		    $sql = "
-		        SELECT COUNT(*) 
-		        FROM $itemTable items
-		        LEFT JOIN $recordsTagTable records_tags 
-		            ON items.id = records_tags.record_id
-		        WHERE records_tags.tag_id IS NULL
-		    ";
-		
-		    return (int) $db->fetchOne($sql);
-		}
-
-		private function _getLastBackupDateTime()
-		{
-			$sqlFilename = ADMIN_TOOLS_BACKUP_FILENAME;
-			$gzipFilename = ADMIN_TOOLS_BACKUP_FILENAME . '.gz';
-			if (file_exists($sqlFilename)) {
-				$sqlFileMTime = filemtime($sqlFilename);
-				if (file_exists($gzipFilename)) {
-					$gzipFileMTime = filemtime($gzipFilename);
-					if ($sqlFileMTime > $gzipFileMTime) {
-						return $this->_getLastBackupDateTimeString($sqlFileMTime, $sqlFilename);
-					} else {
-						return $this->_getLastBackupDateTimeString($gzipFileMTime, $gzipFilename);
-					}
-				} else {
-					return $this->_getLastBackupDateTimeString($sqlFileMTime, $sqlFilename);
-				}
-			} elseif (file_exists($gzipFilename)) {
-				$gzipFileMTime = filemtime($gzipFilename);
-				return $this->_getLastBackupDateTimeString($gzipFileMTime, $gzipFilename);
+			if ($this->pluginService->removeInvalid()) {
+				$this->_helper->flashMessenger(__('All invalid/damaged Plugins were removed.'), 'success');
 			} else {
-				return null;
+				$this->_helper->flashMessenger(__('No invalid/damaged Plugin was found to remove.'), 'alert');
+			}
+			
+			return $this->_helper->redirector('index');
+		}
+
+		public function pluginsRemoveInvalidBrowseAction()
+		{
+			if ($this->pluginService->removeInvalid()) {
+				$this->_helper->flashMessenger(__('All invalid/damaged Plugins were removed.'), 'success');
+			} else {
+				$this->_helper->flashMessenger(__('No invalid/damaged Plugin was found to remove.'), 'alert');
+			}
+
+			return $this->_redirect('/plugins');
+		}
+
+		public function tagsDeleteUnusedAction()
+		{
+			if ($this->tagsService->deleteUnused()) {
+				$this->_helper->flashMessenger(__('All unused Tags have been deleted.'), 'success');
+			} else {
+				$this->_helper->flashMessenger(__('No unused Tag was found.'), 'alert');
+			}
+			
+			return $this->_helper->redirector('index');
+		}
+
+		public function tagsDeleteUnusedBrowseAction()
+		{
+			if ($this->tagsService->deleteUnused()) {
+				$this->_helper->flashMessenger(__('All unused Tags have been deleted.'), 'success');
+			} else {
+				$this->_helper->flashMessenger(__('No unused Tag was found.'), 'alert');
+			}
+			
+			return $this->_redirect('/tags');
+		}
+		
+		public function tagsRenameAction()
+		{
+			$this->_helper->viewRenderer->setNoRender();
+
+			$csrf = new Omeka_Form_SessionCsrf;
+			if (!$csrf->isValid($_POST)) {
+				$this->getResponse()->setHttpResponseCode(403);
+				$this->getResponse()->setBody('CSRF invalid');
+				return;
+			}
+
+			$oldId   = (int)$_POST['pk'];
+			$newName = trim($_POST['value']);
+
+			if (!$oldId || $newName === '') {
+				$this->getResponse()->setHttpResponseCode(400);
+				$this->getResponse()->setBody('Invalid input');
+				return;
+			}
+			
+			$duplicate = $this->tagService->checkDuplicate($oldId, $newName);
+
+			if ($duplicate) {
+				$this->getResponse()->setHeader('Content-Type', 'application/json');
+				$this->getResponse()->setBody(json_encode([
+					'duplicate' => true,
+					'target_id' => (int)$duplicate['id'],
+					'message'   => __('A Tag named "%s" already exists.', $newName),
+				]));
+				return;
+			}
+
+			// No duplicate: proceed with rename
+			$tag = get_db()->getTable('Tag')->find($oldId);
+			if (!$tag) {
+				$this->getResponse()->setHttpResponseCode(404);
+				return;
+			}
+
+			$tag->name = $newName;
+			if ($tag->save(false)) {
+				$this->getResponse()->setHeader('Content-Type', 'application/json');
+				$this->getResponse()->setBody(json_encode($newName));
+			} else {
+				$this->getResponse()->setHttpResponseCode(500);
 			}
 		}
 
-		private function _getLastBackupDateTimeString($mtime, $filepath)
+		public function tagsMergeAction()
 		{
-			return ' (' . __('<a href="%s" title="%s">last backup</a> was created on %s at %s', $filepath, __('download file'), date('d/m/Y', $mtime), date('H:i:s', $mtime)) . ')';
-		}
+			$this->_helper->viewRenderer->setNoRender();
 
-		private function _getSessionsCount($range = '') 
-		{
-			$db = get_db();
-			switch ($range) {
-				case '':
-					return $db->getTable('Session')->count();
-					break;
-				case 'YEAR':
-				case 'MONTH':
-				case 'WEEK':
-				case 'DAY':
-					$sql = "SELECT COUNT(*) FROM " . $db->getTableName('Session') . " WHERE modified < UNIX_TIMESTAMP(NOW() - INTERVAL 1 " . $range . ")";
-					return $db->fetchOne($sql);
-					break;
-				case 'EXPIRED':
-					$sql = "SELECT COUNT(*) FROM " . $db->getTableName('Session') . " WHERE modified < UNIX_TIMESTAMP(NOW() - " . $this->_getSessionMaxLifeTime() . ")";
-					return $db->fetchOne($sql);
-					break;
+			$csrf = new Omeka_Form_SessionCsrf;
+			if (!$csrf->isValid($_POST)) {
+				$this->getResponse()->setHttpResponseCode(403);
+				return;
+			}
+
+			$sourceId = (int)$_POST['source_id'];
+			$targetId = (int)$_POST['target_id'];
+
+			if (!$sourceId || !$targetId || $sourceId === $targetId) {
+				$this->getResponse()->setHttpResponseCode(400);
+				return;
+			}
+
+			$newCount = $this->tagService->merge($sourceId, $targetId);
+
+			if ($newCount >= 0) {
+				$this->getResponse()->setHeader('Content-Type', 'application/json');
+				$this->getResponse()->setBody(json_encode([
+					'count' => $newCount,
+				]));
+			} else {
+				$this->getResponse()->setHttpResponseCode(500);
 			}
 		}
 
-		private function _getSessionMaxLifeTime()
+		public function tagsFindSimilarAction()
 		{
-			$applicationFile = '../application/config/application.ini';
-			if (!file_exists($applicationFile)) {
-				throw new Zend_Config_Exception(__('Your Omeka application configuration file is missing.'));
-			} elseif (!is_readable($applicationFile)) {
-				throw new Zend_Config_Exception(__('Your Omeka application configuration file cannot be read by the application.'));
-			}
-
-			$sessionIni = new Zend_Config_Ini($applicationFile, 'production');
-			$sessionParams = $sessionIni->toArray();
-
-			return $sessionParams['resources']['session']['gc_maxlifetime'];
-		}
-
-		private function _trimSessionsTable($rng)
-		{
-			$date = new DateTime();
-			$db = get_db();
-
-			switch($rng) {
-				case 'day':
-					$query = 'DELETE FROM ' . $db->getTableName('Session') . ' WHERE modified < ' . $date->modify("-1 day")->getTimeStamp();
-					break;
-				case 'week':
-					$query = 'DELETE FROM ' . $db->getTableName('Session') . ' WHERE modified < ' . $date->modify("-1 week")->getTimeStamp();
-					break;
-				case 'month':
-					$query = 'DELETE FROM ' . $db->getTableName('Session') . ' WHERE modified < ' . $date->modify("-1 month")->getTimeStamp();
-					break;
-				case 'year':
-					$query = 'DELETE FROM ' . $db->getTableName('Session') . ' WHERE modified < ' . $date->modify("-1 year")->getTimeStamp();
-					break;
-				case 'expired':
-					$query = 'DELETE FROM ' . $db->getTableName('Session') . ' WHERE modified+lifetime < ' . $date->getTimeStamp();
-					break;
-				default:
-					return false;
-			}
-
-			$db->query($query);
-			return true;
+			$this->_helper->viewRenderer->setNoRender();
+			$threshold  = max(1, (int)get_option('admin_tools_tags_similarity_threshold'));
+			$tagService = new AdminTools_Service_TagService();
+			$pairs      = $tagService->findSimilar($threshold);
+			$this->getResponse()->setHeader('Content-Type', 'application/json');
+			$this->getResponse()->setBody(json_encode([
+				'total' => count($pairs),
+				'pairs' => $pairs,
+			]));
 		}
 	}
 ?>
