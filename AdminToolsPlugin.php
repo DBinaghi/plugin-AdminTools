@@ -17,12 +17,13 @@
 
 	// Helper functions for database backup
 	require_once 'views/helpers/Mysqldump.php';
-
+	
 	class AdminToolsPlugin extends Omeka_Plugin_AbstractPlugin
 	{
 		protected $_hooks = array(
 			'install',
 			'uninstall',
+			'upgrade',
 			'initialize',
 			'config',
 			'config_form',
@@ -77,49 +78,109 @@
 			set_option('admin_tools_sessions_graph', 0);
 			set_option('admin_tools_unused_tags_btn', 0);
 			set_option('admin_tools_has_tags', 0);
+			set_option('admin_tools_tags_merge', 0);
+			set_option('admin_tools_tags_similar', 0);
+			set_option('admin_tools_tags_similarity_threshold', 2);
+			set_option('admin_tools_tags_similarity_results', 10);
 			set_option('admin_tools_plugins_btns', 0);
 			set_option('admin_tools_translations_theme', 0);
+			
+			$this->_addSessionsModifiedIndex();
 		}
 
 		public function hookUninstall()
 		{
-			delete_option('admin_tools_maintenance_active');
-			delete_option('admin_tools_maintenance_title');
-			delete_option('admin_tools_maintenance_message');
-			delete_option('admin_tools_maintenance_scope_extended');
-			delete_option('admin_tools_usermanual_url');
-			delete_option('admin_tools_usermanual_label');
-			delete_option('admin_tools_usermanual_link_positions');
-			delete_option('admin_tools_cookiebar_active');
-			delete_option('admin_tools_cookiebar_all_users');
-			delete_option('admin_tools_cookiebar_text');
-			delete_option('admin_tools_cookiebar_position');
-			delete_option('admin_tools_cookiebar_policy_url');
-			delete_option('admin_tools_limit_visibility_to_own_items_roles');
-			delete_option('admin_tools_limit_visibility_to_own_collections_roles');
-			delete_option('admin_tools_limit_visibility_to_own_exhibits_roles');
-			delete_option('admin_tools_public_edit_link_types');
-			delete_option('admin_tools_public_edit_link_blank');
-			delete_option('admin_tools_backup_sessions_ignore');
-			delete_option('admin_tools_backup_compress');
-			delete_option('admin_tools_backup_download');
-			delete_option('admin_tools_sessions_count');
-			delete_option('admin_tools_sessions_graph');
-			delete_option('admin_tools_unused_tags_btn');
-			delete_option('admin_tools_has_tags');
-			delete_option('admin_tools_plugins_btns');
-			delete_option('admin_tools_translations_theme');
+			$options = array(
+				'admin_tools_maintenance_active',
+				'admin_tools_maintenance_title',
+				'admin_tools_maintenance_message',
+				'admin_tools_maintenance_scope_extended',
+				'admin_tools_usermanual_url',
+				'admin_tools_usermanual_label',
+				'admin_tools_usermanual_link_positions',
+				'admin_tools_cookiebar_active',
+				'admin_tools_cookiebar_all_users',
+				'admin_tools_cookiebar_text',
+				'admin_tools_cookiebar_position',
+				'admin_tools_cookiebar_policy_url',
+				'admin_tools_limit_visibility_to_own_items_roles',
+				'admin_tools_limit_visibility_to_own_collections_roles',
+				'admin_tools_limit_visibility_to_own_exhibits_roles',
+				'admin_tools_public_edit_link_types',
+				'admin_tools_public_edit_link_blank',
+				'admin_tools_backup_sessions_ignore',
+				'admin_tools_backup_compress',
+				'admin_tools_backup_download',
+				'admin_tools_sessions_count',
+				'admin_tools_sessions_graph',
+				'admin_tools_unused_tags_btn',
+				'admin_tools_has_tags',
+				'admin_tools_tags_merge',
+				'admin_tools_tags_similar',
+				'admin_tools_tags_similarity_threshold',
+				'admin_tools_tags_similarity_results',
+				'admin_tools_plugins_btns',
+				'admin_tools_translations_theme'
+			);
+
+			foreach ($options as $option) {
+				delete_option($option);
+			}
+		}
+
+		public function hookUpgrade($args)
+		{
+			if (version_compare($args['new_version'], '2.3', '>')) {
+				$this->_addSessionsModifiedIndex();
+			}
+		}
+
+		private function _addSessionsModifiedIndex()
+		{
+			$db = get_db();
+			$sessionTable = $db->getTableName('Session');
+
+			$indexes = $db->fetchAll("SHOW INDEX FROM `{$sessionTable}` WHERE Key_name = 'idx_modified'");
+			if (empty($indexes)) {
+				$db->query("ALTER TABLE `{$sessionTable}` ADD INDEX `idx_modified` (`modified`)");
+			}
 		}
 
 		public function hookInitialize()
 		{
 			add_translation_source(dirname(__FILE__) . '/languages');
-			if ((bool)get_option('admin_tools_translations_theme')) add_translation_source(dirname(dirname(dirname(__FILE__))) . '/themes/' . get_option('public_theme') . '/languages');
+			if (get_option('admin_tools_translations_theme')) add_translation_source(dirname(dirname(dirname(__FILE__))) . '/themes/' . get_option('public_theme') . '/languages');
+
+			set_include_path(dirname(__FILE__) . '/libraries' . PATH_SEPARATOR . get_include_path());
 
 			$front = Zend_Controller_Front::getInstance();
 			$front->registerPlugin(new AdminTools_Controller_Plugin_Maintenance);
-		}
 
+			$router = $front->getRouter();
+			$router->addRoute(
+				'admin-tools-tags-rename',
+				new Zend_Controller_Router_Route(
+					'admin-tools/tags-rename',
+					[
+						'module'	 => 'admin-tools',
+						'controller' => 'index',
+						'action'	 => 'tags-rename',
+					]
+				)
+			);
+			$router->addRoute(
+				'admin-tools-tags-merge',
+				new Zend_Controller_Router_Route(
+					'admin-tools/tags-merge',
+					[
+						'module'	 => 'admin-tools',
+						'controller' => 'index',
+						'action'	 => 'tags-merge',
+					]
+				)
+			);
+		}
+		
 		public function hookConfig($args)
 		{
 			$post = $args['post'];
@@ -146,6 +207,10 @@
 			set_option('admin_tools_sessions_graph',							$post['admin_tools_sessions_graph']);
 			set_option('admin_tools_unused_tags_btn',							$post['admin_tools_unused_tags_btn']);
 			set_option('admin_tools_has_tags',									$post['admin_tools_has_tags']);
+			set_option('admin_tools_tags_merge',								$post['admin_tools_tags_merge']);
+			set_option('admin_tools_tags_similar',			  					$post['admin_tools_tags_similar']);
+			set_option('admin_tools_tags_similarity_threshold', 				$post['admin_tools_tags_similarity_threshold']);
+			set_option('admin_tools_tags_similarity_results', 					$post['admin_tools_tags_similarity_results']);
 			set_option('admin_tools_plugins_btns',								$post['admin_tools_plugins_btns']);
 			set_option('admin_tools_translations_theme',						$post['admin_tools_translations_theme']);
 		}
@@ -167,8 +232,10 @@
 			} elseif ($controller === 'plugins' && $action === 'browse') {
 				queue_css_file('admin-tools');
 				queue_js_file('admin-plugins-browse');
-			} elseif ((bool)get_option('admin_tools_has_tags') && $controller === 'items' && $action === 'search') {
+			} elseif (get_option('admin_tools_has_tags') && $controller === 'items' && $action === 'search') {
 				queue_js_file('admin-items-search');
+			} elseif (get_option('admin_tools_tags_similar') && $controller === 'index' && $action === 'index') {
+				queue_js_file('admin-tools-index');
 			}
 		}
 
@@ -189,7 +256,7 @@
 		public function hookPublicHead() 
 		{
 			$user = current_user();
-			if (!isset($user) && (bool)get_option('admin_tools_cookiebar_active')) {
+			if (!isset($user) && get_option('admin_tools_cookiebar_active')) {
 				queue_js_file('cookie_bar');
 				queue_css_file('cookie_bar');
 			}
@@ -198,7 +265,7 @@
 		public function hookPublicFooter() 
 		{
 			$user = current_user();
-			if ((bool)get_option('admin_tools_cookiebar_active') && (!isset($user) || (bool)get_option('admin_tools_cookiebar_all_users'))) {
+			if (get_option('admin_tools_cookiebar_active') && (!isset($user) || get_option('admin_tools_cookiebar_all_users'))) {
 				echo get_view()->partial('cookie_bar.php', array(
 					'message' => get_option('admin_tools_cookiebar_text'),
 					'policyButton' => (get_option('admin_tools_cookiebar_policy_url') != '' ? 1 : 0),
@@ -211,9 +278,10 @@
 		public function hookNeatlinePublicStatic($exhibit)
 		{
 			$user = current_user();
-			if ((bool)get_option('admin_tools_cookiebar_active') && (!isset($user) || (bool)get_option('admin_tools_cookiebar_all_users'))) {
+			if (get_option('admin_tools_cookiebar_active') && (!isset($user) || get_option('admin_tools_cookiebar_all_users'))) {
 				queue_js_file('cookie_bar');
 				queue_css_file('cookie_bar');
+
 				echo get_view()->partial('cookie_bar.php', array(
 					'message' => get_option('admin_tools_cookiebar_text'),
 					'policyButton' => (get_option('admin_tools_cookiebar_policy_url') != '' ? 1 : 0),
@@ -295,7 +363,7 @@
 				}
 			}
 
-			if ((bool)get_option('admin_tools_maintenance_active')) {
+			if (get_option('admin_tools_maintenance_active')) {
 				array_unshift($nav, array(
 					'label' => __('** Maintenance Mode Active **'),
 					'uri' => admin_url('/admin-tools'),
@@ -366,7 +434,7 @@
 				}
 			}
 
-			if ((bool)get_option('admin_tools_maintenance_active')) {
+			if (get_option('admin_tools_maintenance_active')) {
 				array_unshift($navLinks, array(
 					'label' => __('** Maintenance Mode Active **'),
 					'uri' => admin_url('/admin-tools')
@@ -399,15 +467,17 @@
 		/**
 		 * Adds delete empty tags button to admin/tags
 		 */
-		public function hookAdminTagsBrowse($args, $deleted=0, $html=null)
+		public function hookAdminTagsBrowse($args)
 		{
-			if ((bool)get_option('admin_tools_unused_tags_btn')) {
+			if (get_option('admin_tools_unused_tags_btn')) {
 				if (!$args || !isset($args['tags'])) return;
+
+				$getTagService = new AdminTools_Service_TagService();
 
 				$html  = '<form class="at_form hidden" action="' . url('admin-tools/index/delete-tags-browse') . '">';
 				$html .= '<h2 style="margin-top:1em">' . __('Delete Tags') . '</h2>';
 				$html .= '<p>' . __('Delete all Tags that have no correspondence with any record.') . '</p>';
-				if (AdminTools_Service::getTagsUnusedCount() == 0) {
+				if ($getTagService->countUnused() == 0) {
 					$html .= '<a class="button at_disabled" disabled>' . __('Delete Unused Tags') . '</a>';
 				} else {
 					$html .= '<a class="big green button" href="' . url('admin-tools/index/plugins-delete_tags-browse') . '">' . __('Delete Unused Tags') . '</a>';
@@ -415,38 +485,52 @@
 				$html .= '</form>';
 				echo $html;
 			}
+			
+			if (get_option('admin_tools_tags_merge')) {
+				echo '<script>window.AdminTools = {'
+					. 'renameTagURL: ' . js_escape(url('admin-tools/tags-rename')) . ','
+					. 'mergeTagsURL: ' . js_escape(url('admin-tools/tags-merge')) . ','
+					. 'tagURLBase:   ' . js_escape(url('items/browse?tags=')) . ','
+					. 'csrfToken:	' . js_escape($args['view']->csrfToken) . ','
+					. 'mergeConfirm: ' . js_escape(__('Tags will be merged and the renamed one will be deleted. Proceed?')) . ','
+					. 'mergeError:   ' . js_escape(__('An error occurred during the merge.')) . ','
+					. 'renameError:  ' . js_escape(__('An error occurred during the rename.')) . ''
+					. '};</script>';
+			}
 		}
 
 		/**
 		 * Adds activate and deactivate buttons to admin/plugins
 		 */
-		public function hookAdminPluginsBrowse($args, $deleted=0, $html=null)
+		public function hookAdminPluginsBrowse($args)
 		{
-			if ((bool)get_option('admin_tools_plugins_btns')) {
+			if (get_option('admin_tools_plugins_btns')) {
 				if (!$args || !isset($args['plugins'])) return;
+				
+				$getPluginService = new AdminTools_Service_PluginService();
 
 				$html  = '<div id="activate_deactivate_btns" class="plugin hidden" style="display: block; padding-top: 0">';
-				$html .= '<p class="explanation">' . AdminTools_Service::getPluginsDescription() . '</p>';
+				$html .= '<p class="explanation">' . $getPluginService->description() . '</p>';
 				$html .= '<div style="display: flex">';
 
 				$html .= '<form class="at_form" style="display: inline; margin-right: .5em">';
-				if (AdminTools_Service::getPluginsInstalledCount() == 0 || AdminTools_Service::getPluginsActiveCount() == AdminTools_Service::getPluginsInstalledCount()) {
+				if ($getPluginService->countInstalled() == 0 || $getPluginService->countActive() == $getPluginService->countInstalled()) {
 					$html .= '<a class="button at_disabled" disabled>' . __('Activate All Plugins') . '</a>';
 				} else {
-					$html .= '<a class="button green" href="' . url('admin-tools/index/plugins-remove-activate-browse') . '">' . __('Activate All Plugins') . '</a>';
+					$html .= '<a class="button green" href="' . url('admin-tools/index/plugins-activate-browse') . '">' . __('Activate All Plugins') . '</a>';
 				}
 				$html .= '</form>';
 
 				$html .= '<form class="at_form" style="display: inline; margin-right: .5em">';
-				if (AdminTools_Service::getPluginsInstalledCount() == 0 || AdminTools_Service::getPluginsActiveCount() == 0) {
+				if ($getPluginService->countInstalled() == 0 || $getPluginService->countActive() == 0) {
 					$html .= '<a class="button at_disabled" disabled>' . __('Deactivate All Plugins') . '</a>';
 				} else {
-					$html .= '<a class="button green" href="' . url('admin-tools/index/plugins-remove-deactivate-browse') . '">' . __('Deactivate All Plugins') . '</a>';
+					$html .= '<a class="button green" href="' . url('admin-tools/index/plugins-deactivate-browse') . '">' . __('Deactivate All Plugins') . '</a>';
 				}
 				$html .= '</form>';
 
 				$html .= '<form class="at_form" style="display: inline">';
-				if (AdminTools_Service::getPluginsInvalidCount() > 0) {
+				if ($getPluginService->countInvalid() > 0) {
 					$html .= '<a class="button green" href="' . url('admin-tools/index/plugins-remove-invalid-browse') . '">' . __('Remove Invalid Plugins') . '</a>';
 				} else {
 					$html .= '<a class="button at_disabled" disabled>' . __('Remove Invalid Plugins') . '</a>';
@@ -466,7 +550,7 @@
 		 */
 		public function hookAdminItemsSearch($args)
 		{
-			if ((bool)get_option('admin_tools_has_tags')) {
+			if (get_option('admin_tools_has_tags')) {
 				echo $this->_itemsSearch($args);
 			}
 		}
