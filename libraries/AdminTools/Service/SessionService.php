@@ -89,7 +89,6 @@
 			return $this->_chartData($maxDays);
 		}
 
-
 		/**
 		 * Retrieve session's max lifetime from PHP.ini
 		 */
@@ -122,6 +121,5 @@
 
 			return $db->fetchAll($sql, [(int)$maxDays]);
 		}		
-
 	}
 ?>
