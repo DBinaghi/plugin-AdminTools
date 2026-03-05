@@ -101,7 +101,7 @@
 		<label for="TST"><?php echo __('Sessions'); ?></label>
 	</div>
 	<div class="inputs five columns omega">
-		<p class="explanation"><?php echo __('Trim Omeka\'s "Sessions" table') . (get_option('admin_tools_sessions_count') ? ' ' . __('(at the moment, the table contains <strong>%s</strong> records)', number_format($this->sessionsCount)) : '') . __(', deleting sessions older than 1 year/month/week/day or all expired ones (at the moment, sessions expire after <strong>%s</strong> days).', $this->sessionsMaxLifeTime); ?></p>
+		<p class="explanation"><?php echo __('Trim Omeka\'s "Sessions" table') . (get_option('admin_tools_sessions_count') ? ' ' . __('(at the moment, the table contains <strong>%s</strong> records, and its size is <strong>%s</strong> MB)', number_format($this->sessionsCount), $this->sessionsTblSize) : '') . __(', deleting sessions older than 1 year/month/week/day or all expired ones (at the moment, sessions expire after <strong>%s</strong> days).', $this->sessionsMaxLifeTime); ?></p>
 		<?php if ((bool)get_option('admin_tools_sessions_graph')): ?>
 			<canvas id="sessionsChart" style="width:100%; height: 200px; margin-bottom: 1em"></canvas>
 			<script>
