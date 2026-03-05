@@ -1,22 +1,869 @@
-# Translation for the Admin Tools plugin for Omeka.
-# Copyright (C) 2022-2026 Daniele Binaghi
-# This file is distributed under the same license as the Omeka package.
-# Daniele Binaghi <admin@bitoteko.it>, 2022-2026
-#
-#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: Admin Tools\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-08 16:34+0100\n"
-"PO-Revision-Date: 2026-02-08 16:39+0100\n"
-"PO-Revision-Date: 2026-02-14 03:41+0100\n"
+"Project-Id-Version: \n"
+"POT-Creation-Date: 2026-03-04 00:58+0100\n"
+"PO-Revision-Date: 2026-03-04 00:59+0100\n"
 "Last-Translator: Daniele Binaghi\n"
-"Language-Team: Italian\n"
-"Language: it\n"
+"Language-Team: \n"
+"Language: en_GB\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 3.8\n"
-"X-Poedit-KeywordsList: __\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-KeywordsList: __;plural\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: AdminToolsPlugin.php:248 AdminToolsPlugin.php:356 AdminToolsPlugin.php:394
+#: config_form.php:42 config_form.php:462
+msgid "User Manual"
+msgstr ""
+
+#: AdminToolsPlugin.php:366 AdminToolsPlugin.php:437
+msgid "** Maintenance Mode Active **"
+msgstr ""
+
+#: AdminToolsPlugin.php:381 views/admin/index/index.php:7
+msgid "Admin Tools"
+msgstr ""
+
+#: AdminToolsPlugin.php:457
+msgid "Edit"
+msgstr ""
+
+#: AdminToolsPlugin.php:476
+msgid "Delete Tags"
+msgstr ""
+
+#: AdminToolsPlugin.php:477
+msgid "Delete all Tags that have no correspondence with any record."
+msgstr ""
+
+#: AdminToolsPlugin.php:479 AdminToolsPlugin.php:481
+#: views/admin/index/index.php:202
+msgid "Delete Unused Tags"
+msgstr ""
+
+#: AdminToolsPlugin.php:493
+msgid "Tags will be merged and the renamed one will be deleted. Proceed?"
+msgstr ""
+
+#: AdminToolsPlugin.php:494 views/admin/index/index.php:226
+msgid "An error occurred during the merge."
+msgstr ""
+
+#: AdminToolsPlugin.php:495
+msgid "An error occurred during the rename."
+msgstr ""
+
+#: AdminToolsPlugin.php:516 AdminToolsPlugin.php:518
+#: views/admin/index/index.php:73 views/admin/index/index.php:77
+#: views/admin/index/index.php:80 views/admin/index/index.php:83
+msgid "Activate All Plugins"
+msgstr ""
+
+#: AdminToolsPlugin.php:524 AdminToolsPlugin.php:526
+#: views/admin/index/index.php:74 views/admin/index/index.php:78
+#: views/admin/index/index.php:81 views/admin/index/index.php:84
+msgid "Deactivate All Plugins"
+msgstr ""
+
+#: AdminToolsPlugin.php:532 AdminToolsPlugin.php:534
+#: views/admin/index/index.php:89 views/admin/index/index.php:91
+msgid "Remove Invalid Plugins"
+msgstr ""
+
+#: AdminToolsPlugin.php:565
+msgid "With Tags/Without Tags"
+msgstr ""
+
+#: AdminToolsPlugin.php:568
+msgid "Choose"
+msgstr ""
+
+#: AdminToolsPlugin.php:568
+msgid "Has No Tags Associated"
+msgstr ""
+
+#: AdminToolsPlugin.php:568
+msgid "Has Tags Associated"
+msgstr ""
+
+#: config_form.php:33 config_form.php:46 views/admin/index/index.php:48
+msgid "Database Backup"
+msgstr ""
+
+#: config_form.php:34 config_form.php:94
+msgid "Cookie Bar"
+msgstr ""
+
+#: config_form.php:35 config_form.php:160
+msgid "Edit Link"
+msgstr ""
+
+#: config_form.php:36 config_form.php:201
+msgid "Limit Visibility"
+msgstr ""
+
+#: config_form.php:37 config_form.php:260 views/admin/index/index.php:28
+msgid "Site Maintenance"
+msgstr ""
+
+#: config_form.php:38 config_form.php:310 views/admin/index/index.php:64
+msgid "Plugins"
+msgstr ""
+
+#: config_form.php:39 config_form.php:326 views/admin/index/index.php:101
+msgid "Sessions"
+msgstr ""
+
+#: config_form.php:40 config_form.php:352 views/admin/index/index.php:175
+msgid "Tags"
+msgstr ""
+
+#: config_form.php:41 config_form.php:446 views/admin/index/index.php:38
+msgid "Translations"
+msgstr ""
+
+#: config_form.php:50
+msgid "Ignore Sessions"
+msgstr ""
+
+#: config_form.php:53
+msgid ""
+"If checked, the backup will ignore the data contained in Sessions table."
+msgstr ""
+
+#: config_form.php:60
+msgid "Compress Backup"
+msgstr ""
+
+#: config_form.php:63
+msgid "If checked, the backup SQL file will be compressed (format: GZip)."
+msgstr ""
+
+#: config_form.php:70
+msgid "Download Backup"
+msgstr ""
+
+#: config_form.php:73
+msgid ""
+"If checked, the backup SQL file will be downloadable (by default, it sits in "
+"the Omeka's files directory)."
+msgstr ""
+
+#: config_form.php:80
+msgid "Temporarily Allocated Memory"
+msgstr ""
+
+#: config_form.php:84
+msgid ""
+"The plugin will try to stream the backup file in small chunks, in order not "
+"to overload the system available memory. In case of persistent error caused "
+"by the size of the backup file, the following amount of memory (MB) can be "
+"temporarily allocated for the backup operation."
+msgstr ""
+
+#: config_form.php:98
+msgid "Active"
+msgstr ""
+
+#: config_form.php:102
+msgid ""
+"If checked, a cookie bar with a warning will be shown to all visitors not "
+"logged in."
+msgstr ""
+
+#: config_form.php:110
+msgid "Extend To All Users"
+msgstr ""
+
+#: config_form.php:114
+msgid "If checked, the cookie bar will be shown to all Public interface users."
+msgstr ""
+
+#: config_form.php:122
+msgid "Text"
+msgstr ""
+
+#: config_form.php:126
+msgid "The text to be shown in the cookie bar."
+msgstr ""
+
+#: config_form.php:134
+msgid "Position"
+msgstr ""
+
+#: config_form.php:138
+msgid "The position of the cookie bar."
+msgstr ""
+
+#: config_form.php:140
+msgid "Top of page"
+msgstr ""
+
+#: config_form.php:140
+msgid "Bottom of page"
+msgstr ""
+
+#: config_form.php:146
+msgid "Privacy Policy URL"
+msgstr ""
+
+#: config_form.php:150
+msgid ""
+"The URL of the Privacy Policy document for the website; if empty, no link "
+"will be shown."
+msgstr ""
+
+#: config_form.php:164
+msgid "Content Types"
+msgstr ""
+
+#: config_form.php:167
+msgid ""
+"Content types for which a link will be added to the public UI for quick "
+"editing (only when user is logged in)."
+msgstr ""
+
+#: config_form.php:189
+msgid "Open in New Tab"
+msgstr ""
+
+#: config_form.php:192
+msgid "If checked, opens editing page in new tab (recommended)."
+msgstr ""
+
+#: config_form.php:205
+msgid "Limited Roles"
+msgstr ""
+
+#: config_form.php:208
+msgid ""
+"Roles allowed to see only their own records (in Admin mode). Please note "
+"that Super User's role cannot be limited."
+msgstr ""
+
+#: config_form.php:213
+msgid "Role"
+msgstr ""
+
+#: config_form.php:214
+msgid "Item"
+msgstr ""
+
+#: config_form.php:215
+msgid "Collection"
+msgstr ""
+
+#: config_form.php:216
+msgid "Exhibit"
+msgstr ""
+
+#: config_form.php:264
+msgid "Title"
+msgstr ""
+
+#: config_form.php:268
+msgid ""
+"The title of the message to display to visitors when the site is in "
+"maintenance mode."
+msgstr ""
+
+#: config_form.php:276
+msgid "Message"
+msgstr ""
+
+#: config_form.php:280
+msgid ""
+"The message to display to visitors when the site is in maintenance mode."
+msgstr ""
+
+#: config_form.php:296
+msgid "Extend Scope"
+msgstr ""
+
+#: config_form.php:300
+msgid ""
+"If checked, site will not be accessible even to logged-in users (excluding "
+"Super User and Admin roles)."
+msgstr ""
+
+#: config_form.php:314
+msgid "Show Buttons"
+msgstr ""
+
+#: config_form.php:317
+msgid ""
+"If checked, buttons to activate or deactivate all Plugins will be shown in "
+"the Plugins Browse page."
+msgstr ""
+
+#: config_form.php:327
+msgid ""
+"Note: in the case of a very large number of records in the Sessions table, 
+the plugin page could take some extra time to load."
+msgstr ""
+
+#: config_form.php:331
+msgid "Show Stats"
+msgstr ""
+
+#: config_form.php:334
+msgid ""
+"If checked, the amount of actual records in the Session table will be shown "
+", together with the size of the table."
+msgstr ""
+
+#: config_form.php:341
+msgid "Show Graph"
+msgstr ""
+
+#: config_form.php:344
+msgid "If checked, a graph showing the sessions total per day will be shown."
+msgstr ""
+
+#: config_form.php:356
+msgid "Show Button"
+msgstr ""
+
+#: config_form.php:359
+msgid ""
+"If checked, a button to delete all unused Tags will be shown in the Tags "
+"Browse page."
+msgstr ""
+
+#: config_form.php:366
+msgid "Add Search Option"
+msgstr ""
+
+#: config_form.php:369
+msgid ""
+"If checked, an extra \"With Tags/Without Tags\" option will be added to the "
+"Items Advanced Search page."
+msgstr ""
+
+#: config_form.php:376
+msgid "Enable Merging"
+msgstr ""
+
+#: config_form.php:379
+msgid ""
+"If checked, when renaming a Tag in the Browse page the system will check if "
+"the new name already exists, in which case it will offer the chance to merge "
+"the two Tags."
+msgstr ""
+
+#: config_form.php:386 views/admin/index/index.php:218
+#: views/admin/index/index.php:230
+msgid "Find Similar Tags"
+msgstr ""
+
+#: config_form.php:389
+msgid ""
+"If checked, a button to find Tags with similar names will be shown in the "
+"Admin Tools page. Note: with a large number of Tags, this operation may take "
+"a few seconds."
+msgstr ""
+
+#: config_form.php:397
+msgid "Similarity Threshold"
+msgstr ""
+
+#: config_form.php:400
+msgid ""
+"Maximum Levenshtein distance between two Tag names to consider them similar "
+"(1 = only single-character differences, 2 = also two-character differences, "
+"3 = more permissive)."
+msgstr ""
+
+#: config_form.php:402
+msgid "1 – Strict"
+msgstr ""
+
+#: config_form.php:403
+msgid "2 – Moderate"
+msgstr ""
+
+#: config_form.php:404
+msgid "3 – Permissive"
+msgstr ""
+
+#: config_form.php:411
+msgid "Results Per Page"
+msgstr ""
+
+#: config_form.php:414
+msgid "Maximum number of similar Tag pairs to display in each page."
+msgstr ""
+
+#: config_form.php:450
+msgid "Add Theme Translations"
+msgstr ""
+
+#: config_form.php:453
+msgid ""
+"If checked, all translation files located in the \"Languages\" folder of the "
+"Public Theme will be used as well."
+msgstr ""
+
+#: config_form.php:466
+msgid "URL"
+msgstr ""
+
+#: config_form.php:470
+msgid "The URL of the user manual to be made available to logged-in users."
+msgstr ""
+
+#: config_form.php:478
+msgid "Label"
+msgstr ""
+
+#: config_form.php:482
+msgid "The label to be shown to logged-in users."
+msgstr ""
+
+#: config_form.php:490
+msgid "Link Position"
+msgstr ""
+
+#: config_form.php:494
+msgid "Choose where the user manual link should be displayed."
+msgstr ""
+
+#: controllers/IndexController.php:74
+msgid "compressed"
+msgstr ""
+
+#: controllers/IndexController.php:74
+msgid "A %s backup copy of the Omeka database has been created."
+msgstr ""
+
+#: controllers/IndexController.php:77
+msgid "Error during backup: %s"
+msgstr ""
+
+#: controllers/IndexController.php:91
+msgid "Backup file not found."
+msgstr ""
+
+#: controllers/IndexController.php:124
+msgid "Unable to open file."
+msgstr ""
+
+#: controllers/IndexController.php:145
+msgid "The translations cache has been reset."
+msgstr ""
+
+#: controllers/IndexController.php:154
+msgid ""
+"The \"Under Maintenance\" sign is on, and access to the website has been "
+"limited."
+msgstr ""
+
+#: controllers/IndexController.php:157
+msgid "The website is online again."
+msgstr ""
+
+#: controllers/IndexController.php:171
+msgid "1 session removed."
+msgstr ""
+
+#: controllers/IndexController.php:173
+msgid "%d sessions removed."
+msgstr ""
+
+#: controllers/IndexController.php:175
+msgid "No sessions to remove."
+msgstr ""
+
+#: controllers/IndexController.php:187 controllers/IndexController.php:198
+msgid "All installed Plugins are now active."
+msgstr ""
+
+#: controllers/IndexController.php:189 controllers/IndexController.php:200
+msgid "All installed Plugins were already active."
+msgstr ""
+
+#: controllers/IndexController.php:209
+msgid "All installed Plugins are now inactive."
+msgstr ""
+
+#: controllers/IndexController.php:211
+msgid "All installed Plugins were already inactive."
+msgstr ""
+
+#: controllers/IndexController.php:225 controllers/IndexController.php:236
+msgid "All invalid/damaged Plugins were removed."
+msgstr ""
+
+#: controllers/IndexController.php:227 controllers/IndexController.php:238
+msgid "No invalid/damaged Plugin was found to remove."
+msgstr ""
+
+#: controllers/IndexController.php:247 controllers/IndexController.php:258
+msgid "All unused Tags have been deleted."
+msgstr ""
+
+#: controllers/IndexController.php:249 controllers/IndexController.php:260
+msgid "No unused Tag was found."
+msgstr ""
+
+#: controllers/IndexController.php:293
+msgid "A Tag named \"%s\" already exists."
+msgstr ""
+
+#: libraries/AdminTools/Service/BackupService.php:69
+msgid "download file"
+msgstr ""
+
+#: libraries/AdminTools/Service/BackupService.php:69
+msgid "<a href=\"%s\" title=\"%s\">last backup</a> was created on %s at %s"
+msgstr ""
+
+#: libraries/AdminTools/Service/PluginService.php:49
+msgid "No Plugin is installed in the system."
+msgstr ""
+
+#: libraries/AdminTools/Service/PluginService.php:51
+msgid "The system contains <b>1</b> installed Plugin"
+msgid_plural "The system contains <b>%d</b> installed Plugins"
+msgstr[0] ""
+msgstr[1] ""
+
+#: libraries/AdminTools/Service/PluginService.php:58
+msgid "which is already active."
+msgid_plural "which are already active."
+msgstr[0] ""
+msgstr[1] ""
+
+#: libraries/AdminTools/Service/PluginService.php:60
+msgid "which is not active."
+msgid_plural "which are not active."
+msgstr[0] ""
+msgstr[1] ""
+
+#: libraries/AdminTools/Service/PluginService.php:62
+msgid "of which <b>1</b> active."
+msgid_plural "of which <b>%d</b> active."
+msgstr[0] ""
+msgstr[1] ""
+
+#: libraries/AdminTools/Service/PluginService.php:68
+msgid "No Plugin appears to be invalid/damaged."
+msgstr ""
+
+#: libraries/AdminTools/Service/PluginService.php:70
+msgid "<b>1</b> Plugin appears to be invalid/damaged, and can be safely removed."
+msgid_plural "<b>%d</b> Plugins appear to be invalid/damaged, and can be safely removed."
+msgstr[0] ""
+msgstr[1] ""
+
+#: libraries/AdminTools/Service/SessionService.php:29
+#: libraries/AdminTools/Service/SessionService.php:64
+msgid "Invalid range: %s"
+msgstr ""
+
+#: libraries/AdminTools/Service/SessionService.php:100
+msgid "Your Omeka application configuration file is missing."
+msgstr ""
+
+#: libraries/AdminTools/Service/SessionService.php:102
+msgid ""
+"Your Omeka application configuration file cannot be read by the application."
+msgstr ""
+
+#: views/admin/index/index.php:13
+msgid "Stop Maintenance"
+msgstr ""
+
+#: views/admin/index/index.php:17
+msgid "Start Maintenance"
+msgstr ""
+
+#: views/admin/index/index.php:31
+msgid "Block out from Public interface not-logged in users"
+msgstr ""
+
+#: views/admin/index/index.php:31
+msgid " (and also, from Admin interface, some logged-in users)"
+msgstr ""
+
+#: views/admin/index/index.php:31
+msgid ", displaying instead an \"Under Maintenance\" sign."
+msgstr ""
+
+#: views/admin/index/index.php:41
+msgid ""
+"Reset cache and update all translations after one or more language files "
+"have been changed manually"
+msgstr ""
+
+#: views/admin/index/index.php:41
+msgid "including files that are part of the <b>active theme</b>."
+msgstr ""
+
+#: views/admin/index/index.php:42
+msgid "Reset Cache"
+msgstr ""
+
+#: views/admin/index/index.php:53
+msgid ""
+"Backup the entire Omeka database into a SQL file, saved in Omeka's \"Files\" "
+"folder"
+msgstr ""
+
+#: views/admin/index/index.php:54
+msgid "During the backup, data from \"Sessions\" table will be <b>ignored</b>."
+msgstr ""
+
+#: views/admin/index/index.php:55
+msgid "A copy of the file will be available for download"
+msgstr ""
+
+#: views/admin/index/index.php:55
+msgid ", <b>compressed</b> in GZip format."
+msgstr ""
+
+#: views/admin/index/index.php:58
+msgid "Backup Database"
+msgstr ""
+
+#: views/admin/index/index.php:104
+msgid "Trim Omeka's \"Sessions\" table"
+msgstr ""
+
+#: views/admin/index/index.php:104
+msgid 
+"(at the moment, the table contains <strong>%s</strong> records, and its "
+"size is <strong>%s</strong> MB)"
+msgstr ""
+
+#: views/admin/index/index.php:104
+msgid ""
+", deleting sessions older than 1 year/month/week/day or all expired ones (at "
+"the moment, sessions expire after <strong>%s</strong> days)."
+msgstr ""
+
+#: views/admin/index/index.php:123
+msgid "Sessions in the last %d days"
+msgstr ""
+
+#: views/admin/index/index.php:137 views/admin/index/index.php:139
+msgid "Trim sessions (+1 year)"
+msgstr ""
+
+#: views/admin/index/index.php:144 views/admin/index/index.php:146
+msgid "Trim sessions (+1 month)"
+msgstr ""
+
+#: views/admin/index/index.php:151 views/admin/index/index.php:153
+msgid "Trim sessions (+1 week)"
+msgstr ""
+
+#: views/admin/index/index.php:158 views/admin/index/index.php:160
+msgid "Trim sessions (+1 day)"
+msgstr ""
+
+#: views/admin/index/index.php:165 views/admin/index/index.php:167
+msgid "Trim sessions (expired)"
+msgstr ""
+
+#: views/admin/index/index.php:182
+msgid "<b>1</b> Tag has no correspondence to any Items"
+msgid_plural "<b>%d</b> Tags have no correspondence to any Item"
+msgstr[0] ""
+msgstr[1] ""
+
+#: views/admin/index/index.php:184 views/admin/index/index.php:193
+msgid "and"
+msgstr ""
+
+#: views/admin/index/index.php:184 views/admin/index/index.php:191
+msgid "<b>1</b> Item has no Tags associated."
+msgid_plural "<b>%d</b> Items have no Tags associated."
+msgstr[0] ""
+msgstr[1] ""
+
+#: views/admin/index/index.php:186 views/admin/index/index.php:191
+msgid "but"
+msgstr ""
+
+#: views/admin/index/index.php:186 views/admin/index/index.php:193
+msgid "all Items have at least one Tag associated."
+msgstr ""
+
+#: views/admin/index/index.php:189
+msgid "All Tags are associated to at least one Item"
+msgstr ""
+
+#: views/admin/index/index.php:200
+msgid "Delete Unused Tag"
+msgid_plural "Delete Unused Tags"
+msgstr[0] ""
+msgstr[1] ""
+
+#: views/admin/index/index.php:206
+msgid "Show Untagged Item"
+msgid_plural "Show Untagged Items"
+msgstr[0] ""
+msgstr[1] ""
+
+#: views/admin/index/index.php:208
+msgid "Show Untagged Items"
+msgstr ""
+
+#: views/admin/index/index.php:219
+msgid "Searching..."
+msgstr ""
+
+#: views/admin/index/index.php:220
+msgid "No similar Tags found."
+msgstr ""
+
+#: views/admin/index/index.php:221
+msgid "<b>%d</b> possible duplicates found"
+msgstr ""
+
+#: views/admin/index/index.php:222
+msgid "(out of <b>%d</b> total; increase limit in configuration to see more)"
+msgstr ""
+
+#: views/admin/index/index.php:223
+msgid "Keep left"
+msgstr ""
+
+#: views/admin/index/index.php:224
+msgid "Keep right"
+msgstr ""
+
+#: views/admin/index/index.php:225
+msgid "The other Tag will be merged into \"%s\" and deleted. Proceed?"
+msgstr ""
+
+#: views/admin/index/index.php:227
+msgid "An error occurred while searching for similar Tags."
+msgstr ""
+
+#: views/admin/index/index.php:228
+msgid "Prev"
+msgstr ""
+
+#: views/admin/index/index.php:229
+msgid "Next"
+msgstr ""
+
+#: views/admin/index/index.php:230
+msgid "page %1 of %2"
+msgstr ""
+
+#: views/helpers/Mysqldump.php:197
+msgid "Unexpected value in dumpSettings: (%s)"
+msgstr ""
+
+#: views/helpers/Mysqldump.php:202
+msgid "Include-tables and exclude-tables should be arrays"
+msgstr ""
+
+#: views/helpers/Mysqldump.php:292
+msgid "Empty DSN string"
+msgstr ""
+
+#: views/helpers/Mysqldump.php:299
+msgid "Missing database type from DSN string"
+msgstr ""
+
+#: views/helpers/Mysqldump.php:311
+msgid "Missing host from DSN string"
+msgstr ""
+
+#: views/helpers/Mysqldump.php:317
+msgid "Missing database name from DSN string"
+msgstr ""
+
+#: views/helpers/Mysqldump.php:355
+msgid "Unsupported database type (%s)"
+msgstr ""
+
+#: views/helpers/Mysqldump.php:358
+msgid "Connection to %s failed with message:"
+msgstr ""
+
+#: views/helpers/Mysqldump.php:362
+msgid "Connection to %s failed"
+msgstr ""
+
+#: views/helpers/Mysqldump.php:429
+msgid "Table %s not found in database"
+msgstr ""
+
+#: views/helpers/Mysqldump.php:1336
+msgid "Compression method (%s) is not defined yet"
+msgstr ""
+
+#: views/helpers/Mysqldump.php:1352
+msgid ""
+"Compression is enabled, but bzip2 lib is not installed or configured properly"
+msgstr ""
+
+#: views/helpers/Mysqldump.php:1363 views/helpers/Mysqldump.php:1402
+#: views/helpers/Mysqldump.php:1434 views/helpers/Mysqldump.php:1468
+msgid "Output file is not writable"
+msgstr ""
+
+#: views/helpers/Mysqldump.php:1373 views/helpers/Mysqldump.php:1412
+#: views/helpers/Mysqldump.php:1444 views/helpers/Mysqldump.php:1480
+msgid "Writing to file failed! Probably, there is no more free space left?"
+msgstr ""
+
+#: views/helpers/Mysqldump.php:1391
+msgid ""
+"Compression is enabled, but gzip lib is not installed or configured properly"
+msgstr ""
+
+#: views/helpers/Mysqldump.php:1530
+msgid "Database type support for (%s) not yet available"
+msgstr ""
+
+#: views/helpers/Mysqldump.php:1892
+msgid "Error getting view structure, unknown output"
+msgstr ""
+
+#: views/helpers/Mysqldump.php:1917
+msgid "Error getting trigger code, unknown output"
+msgstr ""
+
+#: views/helpers/Mysqldump.php:1941
+msgid ""
+"Error getting procedure code, unknown output. Please check 'https://"
+"bugs.mysql.com/bug.php?id=14564'"
+msgstr ""
+
+#: views/helpers/Mysqldump.php:1971
+msgid ""
+"Error getting function code, unknown output. Please check 'https://"
+"bugs.mysql.com/bug.php?id=14564'"
+msgstr ""
+
+#: views/helpers/Mysqldump.php:2017
+msgid ""
+"Error getting event code, unknown output. Please check 'http://"
+"stackoverflow.com/questions/10853826/mysql-5-5-create-event-gives-syntax-"
+"error'"
+msgstr ""
+
+#: views/helpers/Mysqldump.php:2318
+msgid "Unexpected parameter passed to %s"
+msgstr ""
+
+#: views/public/cookie_bar.php:5
+msgid "I understand"
+msgstr ""
+
+#: views/public/cookie_bar.php:7
+msgid "Privacy Policy"
+msgstr ""
+
+#: views/shared/maintenance/maintenance.php:1
+msgid "Maintenance Mode"
+msgstr ""
