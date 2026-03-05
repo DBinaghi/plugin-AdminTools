@@ -27,6 +27,7 @@
 
 			if (get_option('admin_tools_sessions_count')) {
 				$this->view->sessionsCount = $this->sessionService->countAll();
+				$this->view->sessionsTblSize = self::dbTableSize(get_db()->getTableName('Session'));
 			}
 			$this->view->sessionsMaxLifeTime = number_format($this->sessionService->maxLifeTime() / (86400), 0); // 86400 sec = 1 day
 			if ((bool)get_option('admin_tools_sessions_graph')) {
@@ -352,6 +353,53 @@
 				'total' => count($pairs),
 				'pairs' => $pairs,
 			]));
+		}
+		
+		/**
+		 * Returns the size in MB of a specific table or all tables in the database.
+		 *
+		 * @param string $tbl_name Table name (optional). If empty, returns all tables.
+		 * @return float|array Size in MB of the table, or associative array ['table_name' => size_MB]
+		 * @throws InvalidArgumentException if the given table name does not exist in the database.
+		 */
+		public function dbTableSize(string $tbl_name = '')
+		{
+			$db = get_db();
+			$db_name = $db->getAdapter()->getConfig()['dbname'];
+
+			if ($tbl_name !== '') {
+				// Check that the table exists in the current database
+				$checkSql = "SELECT COUNT(*) FROM information_schema.TABLES 
+							 WHERE table_schema = ? AND table_name = ?";
+				$exists = $db->fetchOne($checkSql, [$db_name, $tbl_name]);
+
+				if (!$exists) {
+					throw new InvalidArgumentException(__("Table '%s' does not exist in database '%s'.", $tbl_name, $db_name));
+				}
+
+				// Retrieve the size of the single table
+				$sql = "SELECT ROUND(((data_length + index_length) / 1024 / 1024), 2) AS size_mb
+						FROM information_schema.TABLES
+						WHERE table_schema = ? AND table_name = ?";
+				$size = $db->fetchOne($sql, [$db_name, $tbl_name]);
+
+				return (float) $size;
+			}
+
+			// No table name provided: return all tables with their sizes
+			$sql = "SELECT table_name, 
+						   ROUND(((data_length + index_length) / 1024 / 1024), 2) AS size_mb
+					FROM information_schema.TABLES
+					WHERE table_schema = ?
+					ORDER BY (data_length + index_length) DESC";
+			$rows = $db->fetchAll($sql, [$db_name]);
+
+			$result = [];
+			foreach ($rows as $row) {
+				$result[$row['table_name']] = (float) $row['size_mb'];
+			}
+
+			return $result;
 		}
 	}
 ?>
