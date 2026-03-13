@@ -52,7 +52,6 @@
 			$this->view->pluginsInvalid = $this->pluginService->countInvalid();
 			$this->view->pluginsDescription = $this->pluginService->description();
 			
-			$this->view->tagsUnused = $this->tagService->countUnused();
 			$this->view->itemsUntagged = $this->tagService->countUntaggedItems();
 		}
 
@@ -240,119 +239,6 @@
 			}
 
 			return $this->_redirect('/plugins');
-		}
-
-		public function tagsDeleteUnusedAction()
-		{
-			if ($this->tagsService->deleteUnused()) {
-				$this->_helper->flashMessenger(__('All unused Tags have been deleted.'), 'success');
-			} else {
-				$this->_helper->flashMessenger(__('No unused Tag was found.'), 'alert');
-			}
-			
-			return $this->_helper->redirector('index');
-		}
-
-		public function tagsDeleteUnusedBrowseAction()
-		{
-			if ($this->tagsService->deleteUnused()) {
-				$this->_helper->flashMessenger(__('All unused Tags have been deleted.'), 'success');
-			} else {
-				$this->_helper->flashMessenger(__('No unused Tag was found.'), 'alert');
-			}
-			
-			return $this->_redirect('/tags');
-		}
-		
-		public function tagsRenameAction()
-		{
-			$this->_helper->viewRenderer->setNoRender();
-
-			$csrf = new Omeka_Form_SessionCsrf;
-			if (!$csrf->isValid($_POST)) {
-				$this->getResponse()->setHttpResponseCode(403);
-				$this->getResponse()->setBody('CSRF invalid');
-				return;
-			}
-
-			$oldId   = (int)$_POST['pk'];
-			$newName = trim($_POST['value']);
-
-			if (!$oldId || $newName === '') {
-				$this->getResponse()->setHttpResponseCode(400);
-				$this->getResponse()->setBody('Invalid input');
-				return;
-			}
-			
-			$duplicate = $this->tagService->checkDuplicate($oldId, $newName);
-
-			if ($duplicate) {
-				$this->getResponse()->setHeader('Content-Type', 'application/json');
-				$this->getResponse()->setBody(json_encode([
-					'duplicate' => true,
-					'target_id' => (int)$duplicate['id'],
-					'message'   => __('A Tag named "%s" already exists.', $newName),
-				]));
-				return;
-			}
-
-			// No duplicate: proceed with rename
-			$tag = get_db()->getTable('Tag')->find($oldId);
-			if (!$tag) {
-				$this->getResponse()->setHttpResponseCode(404);
-				return;
-			}
-
-			$tag->name = $newName;
-			if ($tag->save(false)) {
-				$this->getResponse()->setHeader('Content-Type', 'application/json');
-				$this->getResponse()->setBody(json_encode($newName));
-			} else {
-				$this->getResponse()->setHttpResponseCode(500);
-			}
-		}
-
-		public function tagsMergeAction()
-		{
-			$this->_helper->viewRenderer->setNoRender();
-
-			$csrf = new Omeka_Form_SessionCsrf;
-			if (!$csrf->isValid($_POST)) {
-				$this->getResponse()->setHttpResponseCode(403);
-				return;
-			}
-
-			$sourceId = (int)$_POST['source_id'];
-			$targetId = (int)$_POST['target_id'];
-
-			if (!$sourceId || !$targetId || $sourceId === $targetId) {
-				$this->getResponse()->setHttpResponseCode(400);
-				return;
-			}
-
-			$newCount = $this->tagService->merge($sourceId, $targetId);
-
-			if ($newCount >= 0) {
-				$this->getResponse()->setHeader('Content-Type', 'application/json');
-				$this->getResponse()->setBody(json_encode([
-					'count' => $newCount,
-				]));
-			} else {
-				$this->getResponse()->setHttpResponseCode(500);
-			}
-		}
-
-		public function tagsFindSimilarAction()
-		{
-			$this->_helper->viewRenderer->setNoRender();
-			$threshold  = max(1, (int)get_option('admin_tools_tags_similarity_threshold'));
-			$tagService = new AdminTools_Service_TagService();
-			$pairs      = $tagService->findSimilar($threshold);
-			$this->getResponse()->setHeader('Content-Type', 'application/json');
-			$this->getResponse()->setBody(json_encode([
-				'total' => count($pairs),
-				'pairs' => $pairs,
-			]));
 		}
 		
 		/**
