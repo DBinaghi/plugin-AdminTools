@@ -31,31 +31,6 @@ msgstr ""
 msgid "Edit"
 msgstr ""
 
-#: AdminToolsPlugin.php:476
-msgid "Delete Tags"
-msgstr ""
-
-#: AdminToolsPlugin.php:477
-msgid "Delete all Tags that have no correspondence with any record."
-msgstr ""
-
-#: AdminToolsPlugin.php:479 AdminToolsPlugin.php:481
-#: views/admin/index/index.php:202
-msgid "Delete Unused Tags"
-msgstr ""
-
-#: AdminToolsPlugin.php:493
-msgid "Tags will be merged and the renamed one will be deleted. Proceed?"
-msgstr ""
-
-#: AdminToolsPlugin.php:494 views/admin/index/index.php:226
-msgid "An error occurred during the merge."
-msgstr ""
-
-#: AdminToolsPlugin.php:495
-msgid "An error occurred during the rename."
-msgstr ""
-
 #: AdminToolsPlugin.php:516 AdminToolsPlugin.php:518
 #: views/admin/index/index.php:73 views/admin/index/index.php:77
 #: views/admin/index/index.php:80 views/admin/index/index.php:83
@@ -323,10 +298,6 @@ msgstr ""
 msgid "If checked, a graph showing the sessions total per day will be shown."
 msgstr ""
 
-#: config_form.php:356
-msgid "Show Button"
-msgstr ""
-
 #: config_form.php:359
 msgid ""
 "If checked, a button to delete all unused Tags will be shown in the Tags "
@@ -343,20 +314,11 @@ msgid ""
 "Items Advanced Search page."
 msgstr ""
 
-#: config_form.php:376
-msgid "Enable Merging"
-msgstr ""
-
 #: config_form.php:379
 msgid ""
 "If checked, when renaming a Tag in the Browse page the system will check if "
 "the new name already exists, in which case it will offer the chance to merge "
 "the two Tags."
-msgstr ""
-
-#: config_form.php:386 views/admin/index/index.php:218
-#: views/admin/index/index.php:230
-msgid "Find Similar Tags"
 msgstr ""
 
 #: config_form.php:389
@@ -366,35 +328,11 @@ msgid ""
 "a few seconds."
 msgstr ""
 
-#: config_form.php:397
-msgid "Similarity Threshold"
-msgstr ""
-
 #: config_form.php:400
 msgid ""
 "Maximum Levenshtein distance between two Tag names to consider them similar "
 "(1 = only single-character differences, 2 = also two-character differences, "
 "3 = more permissive)."
-msgstr ""
-
-#: config_form.php:402
-msgid "1 – Strict"
-msgstr ""
-
-#: config_form.php:403
-msgid "2 – Moderate"
-msgstr ""
-
-#: config_form.php:404
-msgid "3 – Permissive"
-msgstr ""
-
-#: config_form.php:411
-msgid "Results Per Page"
-msgstr ""
-
-#: config_form.php:414
-msgid "Maximum number of similar Tag pairs to display in each page."
 msgstr ""
 
 #: config_form.php:450
@@ -469,10 +407,6 @@ msgstr ""
 msgid "1 session removed."
 msgstr ""
 
-#: controllers/IndexController.php:173
-msgid "%d sessions removed."
-msgstr ""
-
 #: controllers/IndexController.php:175
 msgid "No sessions to remove."
 msgstr ""
@@ -499,18 +433,6 @@ msgstr ""
 
 #: controllers/IndexController.php:227 controllers/IndexController.php:238
 msgid "No invalid/damaged Plugin was found to remove."
-msgstr ""
-
-#: controllers/IndexController.php:247 controllers/IndexController.php:258
-msgid "All unused Tags have been deleted."
-msgstr ""
-
-#: controllers/IndexController.php:249 controllers/IndexController.php:260
-msgid "No unused Tag was found."
-msgstr ""
-
-#: controllers/IndexController.php:293
-msgid "A Tag named \"%s\" already exists."
 msgstr ""
 
 #: libraries/AdminTools/Service/BackupService.php:69
@@ -558,11 +480,6 @@ msgid "<b>1</b> Plugin appears to be invalid/damaged, and can be safely removed.
 msgid_plural "<b>%d</b> Plugins appear to be invalid/damaged, and can be safely removed."
 msgstr[0] ""
 msgstr[1] ""
-
-#: libraries/AdminTools/Service/SessionService.php:29
-#: libraries/AdminTools/Service/SessionService.php:64
-msgid "Invalid range: %s"
-msgstr ""
 
 #: libraries/AdminTools/Service/SessionService.php:100
 msgid "Your Omeka application configuration file is missing."
@@ -669,37 +586,9 @@ msgstr ""
 msgid "Trim sessions (expired)"
 msgstr ""
 
-#: views/admin/index/index.php:182
-msgid "<b>1</b> Tag has no correspondence to any Items"
-msgid_plural "<b>%d</b> Tags have no correspondence to any Item"
-msgstr[0] ""
-msgstr[1] ""
-
-#: views/admin/index/index.php:184 views/admin/index/index.php:193
-msgid "and"
-msgstr ""
-
 #: views/admin/index/index.php:184 views/admin/index/index.php:191
 msgid "<b>1</b> Item has no Tags associated."
 msgid_plural "<b>%d</b> Items have no Tags associated."
-msgstr[0] ""
-msgstr[1] ""
-
-#: views/admin/index/index.php:186 views/admin/index/index.php:191
-msgid "but"
-msgstr ""
-
-#: views/admin/index/index.php:186 views/admin/index/index.php:193
-msgid "all Items have at least one Tag associated."
-msgstr ""
-
-#: views/admin/index/index.php:189
-msgid "All Tags are associated to at least one Item"
-msgstr ""
-
-#: views/admin/index/index.php:200
-msgid "Delete Unused Tag"
-msgid_plural "Delete Unused Tags"
 msgstr[0] ""
 msgstr[1] ""
 
@@ -711,50 +600,6 @@ msgstr[1] ""
 
 #: views/admin/index/index.php:208
 msgid "Show Untagged Items"
-msgstr ""
-
-#: views/admin/index/index.php:219
-msgid "Searching..."
-msgstr ""
-
-#: views/admin/index/index.php:220
-msgid "No similar Tags found."
-msgstr ""
-
-#: views/admin/index/index.php:221
-msgid "<b>%d</b> possible duplicates found"
-msgstr ""
-
-#: views/admin/index/index.php:222
-msgid "(out of <b>%d</b> total; increase limit in configuration to see more)"
-msgstr ""
-
-#: views/admin/index/index.php:223
-msgid "Keep left"
-msgstr ""
-
-#: views/admin/index/index.php:224
-msgid "Keep right"
-msgstr ""
-
-#: views/admin/index/index.php:225
-msgid "The other Tag will be merged into \"%s\" and deleted. Proceed?"
-msgstr ""
-
-#: views/admin/index/index.php:227
-msgid "An error occurred while searching for similar Tags."
-msgstr ""
-
-#: views/admin/index/index.php:228
-msgid "Prev"
-msgstr ""
-
-#: views/admin/index/index.php:229
-msgid "Next"
-msgstr ""
-
-#: views/admin/index/index.php:230
-msgid "page %1 of %2"
 msgstr ""
 
 #: views/helpers/Mysqldump.php:197

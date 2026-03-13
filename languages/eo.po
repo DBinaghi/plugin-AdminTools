@@ -37,30 +37,6 @@ msgstr "Administraj Iloj"
 msgid "Edit"
 msgstr "Redakti"
 
-#: AdminToolsPlugin.php:476
-msgid "Delete Tags"
-msgstr "Forigi etikedojn"
-
-#: AdminToolsPlugin.php:477
-msgid "Delete all Tags that have no correspondence with any record."
-msgstr "Forigi ĉiujn etikedojn kiuj ne havas korespondon kun iu ajn rekordo."
-
-#: AdminToolsPlugin.php:479 AdminToolsPlugin.php:481 views/admin/index/index.php:202
-msgid "Delete Unused Tags"
-msgstr "Forigi neuzatajn etikedojn"
-
-#: AdminToolsPlugin.php:493
-msgid "Tags will be merged and the renamed one will be deleted. Proceed?"
-msgstr "La etikedoj estos kunfanditaj kaj la renomita estos forigita. Daŭrigi?"
-
-#: AdminToolsPlugin.php:494 views/admin/index/index.php:226
-msgid "An error occurred during the merge."
-msgstr "Okazis eraro dum la kunfando."
-
-#: AdminToolsPlugin.php:495
-msgid "An error occurred during the rename."
-msgstr "Okazis eraro dum la renomado."
-
 #: AdminToolsPlugin.php:516 AdminToolsPlugin.php:518 views/admin/index/index.php:73
 #: views/admin/index/index.php:77 views/admin/index/index.php:80 views/admin/index/index.php:83
 msgid "Activate All Plugins"
@@ -330,15 +306,6 @@ msgstr "Montri grafikon"
 msgid "If checked, a graph showing the sessions total per day will be shown."
 msgstr "Se markita, grafiko montranta la totalon da sesioj por tago estos montrata."
 
-#: config_form.php:356
-msgid "Show Button"
-msgstr "Montri butonon"
-
-#: config_form.php:359
-msgid "If checked, a button to delete all unused Tags will be shown in the Tags Browse page."
-msgstr ""
-"Se markita, butono por forigi ĉiujn neuzatajn etikedojn estos montrata en la paĝo Trafoliumi etikedojn."
-
 #: config_form.php:366
 msgid "Add Search Option"
 msgstr "Aldoni serĉopcion"
@@ -350,10 +317,6 @@ msgstr ""
 "Se markita, la aldona opcio \"Kun etikedoj / Sen etikedoj\" estos aldonita al la paĝo de Altnivela "
 "serĉo de Eroj."
 
-#: config_form.php:376
-msgid "Enable Merging"
-msgstr "Ebligi kunfandon"
-
 #: config_form.php:379
 msgid ""
 "If checked, when renaming a Tag in the Browse page the system will check if the new name already exists, "
@@ -361,10 +324,6 @@ msgid ""
 msgstr ""
 "Se markita, kiam renomante etikedon en la paĝo Trafoliumi la sistemo kontrolos se la nova nomo jam "
 "ekzistas, en kiu kazo ĝi ofertos la eblecon kunfandi la du etikedojn."
-
-#: config_form.php:386 views/admin/index/index.php:218 views/admin/index/index.php:230
-msgid "Find Similar Tags"
-msgstr "Trovi similajn etikedojn"
 
 #: config_form.php:389
 msgid ""
@@ -374,10 +333,6 @@ msgstr ""
 "Se markita, butono por trovi etikedojn kun similaj nomoj estos montrata en la paĝo de Administraj Iloj. "
 "Noto: kun granda nombro da etikedoj, ĉi tiu operacio povus daŭri kelkajn sekundojn."
 
-#: config_form.php:397
-msgid "Similarity Threshold"
-msgstr "Simileco-sojlo"
-
 #: config_form.php:400
 msgid ""
 "Maximum Levenshtein distance between two Tag names to consider them similar (1 = only single-character "
@@ -385,26 +340,6 @@ msgid ""
 msgstr ""
 "Maksimuma Levenshtein-distanco inter du etikedonomoj por konsideri ilin similaj (1 = nur unukarakteaj "
 "diferencoj, 2 = ankaŭ dukarakteaj diferencoj, 3 = pli permesiva)."
-
-#: config_form.php:402
-msgid "1 – Strict"
-msgstr "1 – Strikta"
-
-#: config_form.php:403
-msgid "2 – Moderate"
-msgstr "2 – Modera"
-
-#: config_form.php:404
-msgid "3 – Permissive"
-msgstr "3 – Permesiva"
-
-#: config_form.php:411
-msgid "Results Per Page"
-msgstr "Rezultoj por paĝo"
-
-#: config_form.php:414
-msgid "Maximum number of similar Tag pairs to display in each page."
-msgstr "Maksimuma nombro da similaj etiked-paroj por montri en ĉiu paĝo."
 
 #: config_form.php:450
 msgid "Add Theme Translations"
@@ -478,10 +413,6 @@ msgstr "La retejo estas denove reta."
 msgid "1 session removed."
 msgstr "1 sesio forigita."
 
-#: controllers/IndexController.php:173
-msgid "%d sessions removed."
-msgstr "%d sesioj forigitaj."
-
 #: controllers/IndexController.php:175
 msgid "No sessions to remove."
 msgstr "Neniu sesio por forigi."
@@ -509,18 +440,6 @@ msgstr "Ĉiuj nevalidaj/difektitaj kromprogramoj estis forigitaj."
 #: controllers/IndexController.php:227 controllers/IndexController.php:238
 msgid "No invalid/damaged Plugin was found to remove."
 msgstr "Neniu nevalida/difektita kromprogramo estis trovita por forigi."
-
-#: controllers/IndexController.php:247 controllers/IndexController.php:258
-msgid "All unused Tags have been deleted."
-msgstr "Ĉiuj neuzataj etikedoj estis forigitaj."
-
-#: controllers/IndexController.php:249 controllers/IndexController.php:260
-msgid "No unused Tag was found."
-msgstr "Neniu neuzata etikedo estis trovita."
-
-#: controllers/IndexController.php:293
-msgid "A Tag named \"%s\" already exists."
-msgstr "Etikedo nomata \"%s\" jam ekzistas."
 
 #: libraries/AdminTools/Service/BackupService.php:69
 msgid "download file"
@@ -567,10 +486,6 @@ msgid "<b>1</b> Plugin appears to be invalid/damaged, and can be safely removed.
 msgid_plural "<b>%d</b> Plugins appear to be invalid/damaged, and can be safely removed."
 msgstr[0] "<b>1</b> kromprogramo ŝajnas esti nevalida/difektita, kaj povas esti sekure forigita."
 msgstr[1] "<b>%d</b> kromprogramoj ŝajnas esti nevalidaj/difektitaj, kaj povas esti sekure forigitaj."
-
-#: libraries/AdminTools/Service/SessionService.php:29 libraries/AdminTools/Service/SessionService.php:64
-msgid "Invalid range: %s"
-msgstr "Nevalida intervalo: %s"
 
 #: libraries/AdminTools/Service/SessionService.php:100
 msgid "Your Omeka application configuration file is missing."
@@ -677,39 +592,11 @@ msgstr "Tranĉi sesiojn (+1 tago)"
 msgid "Trim sessions (expired)"
 msgstr "Tranĉi sesiojn (eksvalidiĝintaj)"
 
-#: views/admin/index/index.php:182
-msgid "<b>1</b> Tag has no correspondence to any Items"
-msgid_plural "<b>%d</b> Tags have no correspondence to any Item"
-msgstr[0] "<b>1</b> etikedo ne havas korespondon kun iu ajn ero"
-msgstr[1] "<b>%d</b> etikedoj ne havas korespondon kun iu ajn ero"
-
-#: views/admin/index/index.php:184 views/admin/index/index.php:193
-msgid "and"
-msgstr "kaj"
-
 #: views/admin/index/index.php:184 views/admin/index/index.php:191
 msgid "<b>1</b> Item has no Tags associated."
 msgid_plural "<b>%d</b> Items have no Tags associated."
 msgstr[0] "<b>1</b> ero ne havas asociitajn etikedojn."
 msgstr[1] "<b>%d</b> eroj ne havas asociitajn etikedojn."
-
-#: views/admin/index/index.php:186 views/admin/index/index.php:191
-msgid "but"
-msgstr "sed"
-
-#: views/admin/index/index.php:186 views/admin/index/index.php:193
-msgid "all Items have at least one Tag associated."
-msgstr "ĉiuj eroj havas almenaŭ unu asociitan etikedon."
-
-#: views/admin/index/index.php:189
-msgid "All Tags are associated to at least one Item"
-msgstr "Ĉiuj etikedoj estas asociitaj al almenaŭ unu ero"
-
-#: views/admin/index/index.php:200
-msgid "Delete Unused Tag"
-msgid_plural "Delete Unused Tags"
-msgstr[0] "Forigi neuzatan etikedon"
-msgstr[1] "Forigi neuzatajn etikedojn"
 
 #: views/admin/index/index.php:206
 msgid "Show Untagged Item"
@@ -720,50 +607,6 @@ msgstr[1] "Montri neetikeditajn erojn"
 #: views/admin/index/index.php:208
 msgid "Show Untagged Items"
 msgstr "Montri neetikeditajn erojn"
-
-#: views/admin/index/index.php:219
-msgid "Searching..."
-msgstr "Serĉante..."
-
-#: views/admin/index/index.php:220
-msgid "No similar Tags found."
-msgstr "Neniuj similaj etikedoj trovitaj."
-
-#: views/admin/index/index.php:221
-msgid "<b>%d</b> possible duplicates found"
-msgstr "<b>%d</b> eblaj duoblaĵoj trovitaj"
-
-#: views/admin/index/index.php:222
-msgid "(out of <b>%d</b> total; increase limit in configuration to see more)"
-msgstr "(el <b>%d</b> totalaj; pliigi la limon en agordo por vidi pliajn)"
-
-#: views/admin/index/index.php:223
-msgid "Keep left"
-msgstr "Konservi maldekstran"
-
-#: views/admin/index/index.php:224
-msgid "Keep right"
-msgstr "Konservi dekstran"
-
-#: views/admin/index/index.php:225
-msgid "The other Tag will be merged into \"%s\" and deleted. Proceed?"
-msgstr "La alia etikedo estos kunfandita en \"%s\" kaj forigita. Daŭrigi?"
-
-#: views/admin/index/index.php:227
-msgid "An error occurred while searching for similar Tags."
-msgstr "Okazis eraro dum la serĉado de similaj etikedoj."
-
-#: views/admin/index/index.php:228
-msgid "Prev"
-msgstr "Antaŭa"
-
-#: views/admin/index/index.php:229
-msgid "Next"
-msgstr "Sekva"
-
-#: views/admin/index/index.php:230
-msgid "page %1 of %2"
-msgstr "paĝo %1 el %2"
 
 #: views/helpers/Mysqldump.php:197
 msgid "Unexpected value in dumpSettings: (%s)"

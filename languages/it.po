@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Admin Tools\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-03-04 00:58+0100\n"
-"PO-Revision-Date: 2026-03-04 13:50+0100\n"
+"PO-Revision-Date: 2026-03-05 16:46+0100\n"
 "Last-Translator: Daniele Binaghi\n"
 "Language-Team: Italian\n"
 "Language: it\n"
@@ -20,8 +20,8 @@ msgstr ""
 "X-Generator: Poedit 3.8\n"
 "X-Poedit-KeywordsList: __\n"
 
-#: AdminToolsPlugin.php:248 AdminToolsPlugin.php:356 AdminToolsPlugin.php:394
-#: config_form.php:42 config_form.php:462
+#: AdminToolsPlugin.php:248 AdminToolsPlugin.php:356 AdminToolsPlugin.php:394 config_form.php:42
+#: config_form.php:462
 msgid "User Manual"
 msgstr "Manuale utente"
 
@@ -37,39 +37,13 @@ msgstr "Strumenti amministrativi"
 msgid "Edit"
 msgstr "Modifica"
 
-#: AdminToolsPlugin.php:476
-msgid "Delete Tags"
-msgstr "Cancella etichette"
-
-#: AdminToolsPlugin.php:477
-msgid "Delete all Tags that have no correspondence with any record."
-msgstr "Cancella tutte le etichette che non hanno corrispondenza con un record."
-
-#: AdminToolsPlugin.php:479 AdminToolsPlugin.php:481 views/admin/index/index.php:202
-msgid "Delete Unused Tags"
-msgstr "Cancella etichette non usate"
-
-#: AdminToolsPlugin.php:493
-msgid "Tags will be merged and the renamed one will be deleted. Proceed?"
-msgstr "Le etichette verranno fuse e quella rinominata verrà eliminata. Procedere?"
-
-#: AdminToolsPlugin.php:494 views/admin/index/index.php:226
-msgid "An error occurred during the merge."
-msgstr "È avvenuto un errore durante la fusione."
-
-#: AdminToolsPlugin.php:495
-msgid "An error occurred during the rename."
-msgstr "È avvenuto un errore durante la rinomina."
-
 #: AdminToolsPlugin.php:516 AdminToolsPlugin.php:518 views/admin/index/index.php:73
-#: views/admin/index/index.php:77 views/admin/index/index.php:80
-#: views/admin/index/index.php:83
+#: views/admin/index/index.php:77 views/admin/index/index.php:80 views/admin/index/index.php:83
 msgid "Activate All Plugins"
 msgstr "Attiva tutti i plugin"
 
 #: AdminToolsPlugin.php:524 AdminToolsPlugin.php:526 views/admin/index/index.php:74
-#: views/admin/index/index.php:78 views/admin/index/index.php:81
-#: views/admin/index/index.php:84
+#: views/admin/index/index.php:78 views/admin/index/index.php:81 views/admin/index/index.php:84
 msgid "Deactivate All Plugins"
 msgstr "Disattiva tutti i plugin"
 
@@ -152,11 +126,10 @@ msgstr "Scarica backup"
 
 #: config_form.php:73
 msgid ""
-"If checked, the backup SQL file will be downloadable (by default, it sits in the "
-"Omeka's files directory)."
+"If checked, the backup SQL file will be downloadable (by default, it sits in the Omeka's files directory)."
 msgstr ""
-"Se selezionata, il file SQL del backup sarà scaricabile (per default, viene solo "
-"creato nella cartella files di Omeka)."
+"Se selezionata, il file SQL del backup sarà scaricabile (per default, viene solo creato nella cartella "
+"files di Omeka)."
 
 #: config_form.php:80
 msgid "Temporarily Allocated Memory"
@@ -164,26 +137,21 @@ msgstr "Memoria allocata temporaneamente"
 
 #: config_form.php:84
 msgid ""
-"The plugin will try to stream the backup file in small chunks, in order not to "
-"overload the system available memory. In case of persistent error caused by the "
-"size of the backup file, the following amount of memory (MB) can be temporarily "
-"allocated for the backup operation."
+"The plugin will try to stream the backup file in small chunks, in order not to overload the system "
+"available memory. In case of persistent error caused by the size of the backup file, the following amount "
+"of memory (MB) can be temporarily allocated for the backup operation."
 msgstr ""
-"Il plugin proverà a scaricare il file di backup in piccole parti, per non "
-"sovraccaricare la memoria disponibile nel sistema. Nel caso di un errore permanente "
-"causato dalla dimensione del file di backup, la seguente quantità di memoria (MB) "
-"potrà essere temporaneamente allocata per l'operazione di backup."
+"Il plugin proverà a scaricare il file di backup in piccole parti, per non sovraccaricare la memoria "
+"disponibile nel sistema. Nel caso di un errore permanente causato dalla dimensione del file di backup, la "
+"seguente quantità di memoria (MB) potrà essere temporaneamente allocata per l'operazione di backup."
 
 #: config_form.php:98
 msgid "Active"
 msgstr "Attivo"
 
 #: config_form.php:102
-msgid ""
-"If checked, a cookie bar with a warning will be shown to all visitors not logged in."
-msgstr ""
-"Se selezionata, una barra cookie con una notifica verrà mostrata ai visitatori non "
-"connessi."
+msgid "If checked, a cookie bar with a warning will be shown to all visitors not logged in."
+msgstr "Se selezionata, una barra cookie con una notifica verrà mostrata ai visitatori non connessi."
 
 #: config_form.php:110
 msgid "Extend To All Users"
@@ -192,8 +160,8 @@ msgstr "Estendi a tutti gli utenti"
 #: config_form.php:114
 msgid "If checked, the cookie bar will be shown to all Public interface users."
 msgstr ""
-"Se selezionata, una barra cookie con una notifica verrà mostrata a tutti gli utenti "
-"dell'interfaccia pubblica."
+"Se selezionata, una barra cookie con una notifica verrà mostrata a tutti gli utenti dell'interfaccia "
+"pubblica."
 
 #: config_form.php:122
 msgid "Text"
@@ -224,12 +192,8 @@ msgid "Privacy Policy URL"
 msgstr "URL politica privacy"
 
 #: config_form.php:150
-msgid ""
-"The URL of the Privacy Policy document for the website; if empty, no link will be "
-"shown."
-msgstr ""
-"L'URL del documento di politica privacy del sito; se vuoto, nessun collegamento "
-"verrà mostrato."
+msgid "The URL of the Privacy Policy document for the website; if empty, no link will be shown."
+msgstr "L'URL del documento di politica privacy del sito; se vuoto, nessun collegamento verrà mostrato."
 
 #: config_form.php:164
 msgid "Content Types"
@@ -237,11 +201,11 @@ msgstr "Tipologie contenuto"
 
 #: config_form.php:167
 msgid ""
-"Content types for which a link will be added to the public UI for quick editing "
-"(only when user is logged in)."
+"Content types for which a link will be added to the public UI for quick editing (only when user is logged "
+"in)."
 msgstr ""
-"Tipologie contenuto per le quali verrà aggiunto alla interfaccia pubblica un "
-"collegamento per modifica rapida (solo quando l'utente è connesso)."
+"Tipologie contenuto per le quali verrà aggiunto alla interfaccia pubblica un collegamento per modifica "
+"rapida (solo quando l'utente è connesso)."
 
 #: config_form.php:189
 msgid "Open in New Tab"
@@ -249,8 +213,7 @@ msgstr "Apri in nuova scheda"
 
 #: config_form.php:192
 msgid "If checked, opens editing page in new tab (recommended)."
-msgstr ""
-"Se selezionata, apre la pagina di modifica in una nuova scheda (raccomandato)."
+msgstr "Se selezionata, apre la pagina di modifica in una nuova scheda (raccomandato)."
 
 #: config_form.php:205
 msgid "Limited Roles"
@@ -258,11 +221,11 @@ msgstr "Ruoli limitati"
 
 #: config_form.php:208
 msgid ""
-"Roles allowed to see only their own records (in Admin mode). Please note that Super "
-"User's role cannot be limited."
+"Roles allowed to see only their own records (in Admin mode). Please note that Super User's role cannot be "
+"limited."
 msgstr ""
-"Ruoli a cui è permesso vedere solo i propri record (nell'interfaccia "
-"amministrativa). N.B.: il ruolo Super User non può essere limitato."
+"Ruoli a cui è permesso vedere solo i propri record (nell'interfaccia amministrativa). N.B.: il ruolo "
+"Super User non può essere limitato."
 
 #: config_form.php:213
 msgid "Role"
@@ -285,12 +248,8 @@ msgid "Title"
 msgstr "Titolo"
 
 #: config_form.php:268
-msgid ""
-"The title of the message to display to visitors when the site is in maintenance "
-"mode."
-msgstr ""
-"Il titolo del messaggio da mostrare ai visitatori quando il sito è in modalità "
-"manutenzione."
+msgid "The title of the message to display to visitors when the site is in maintenance mode."
+msgstr "Il titolo del messaggio da mostrare ai visitatori quando il sito è in modalità manutenzione."
 
 #: config_form.php:276
 msgid "Message"
@@ -298,8 +257,7 @@ msgstr "Messaggio"
 
 #: config_form.php:280
 msgid "The message to display to visitors when the site is in maintenance mode."
-msgstr ""
-"Il messaggio da mostrare ai visitatori quando il sito è in modalità manutenzione."
+msgstr "Il messaggio da mostrare ai visitatori quando il sito è in modalità manutenzione."
 
 #: config_form.php:296
 msgid "Extend Scope"
@@ -307,58 +265,47 @@ msgstr "Estendi ambito"
 
 #: config_form.php:300
 msgid ""
-"If checked, site will not be accessible even to logged-in users (excluding Super "
-"User and Admin roles)."
+"If checked, site will not be accessible even to logged-in users (excluding Super User and Admin roles)."
 msgstr ""
-"Se selezionata, il sito non sarà accessibile neppure ad utenti connessi (con "
-"eccezione dei ruoli Super User e Admin)."
+"Se selezionata, il sito non sarà accessibile neppure ad utenti connessi (con eccezione dei ruoli Super "
+"User e Admin)."
 
 #: config_form.php:314
 msgid "Show Buttons"
 msgstr "Mostra pulsanti"
 
 #: config_form.php:317
-msgid ""
-"If checked, buttons to activate or deactivate all Plugins will be shown in the "
-"Plugins Browse page."
+msgid "If checked, buttons to activate or deactivate all Plugins will be shown in the Plugins Browse page."
 msgstr ""
-"Se selezionata, pulsanti per attivare o disattivare tutti i plugin verranno "
-"mostrati nella pagina Plugin."
+"Se selezionata, pulsanti per attivare o disattivare tutti i plugin verranno mostrati nella pagina Plugin."
 
-#: config_form.php:330
-msgid "Sessions Count"
-msgstr "Conteggio sessioni"
-
-#: config_form.php:333
+#: config_form.php:327
 msgid ""
-"If checked, the amount of actual records in the Session table will be shown (in "
-"case of a very large number of records, Admin Tool Plugin page could take some "
-"extra time to load)."
+"Note: in the case of a very large number of records in the Sessions table, the plugin page could take "
+"some extra time to load."
 msgstr ""
-"Se selezionata, l'ammontare dei record presenti nella tabella Session verrà "
-"mostrato (nel caso di un numero davvero grande di record, la pagina del plugin "
-"Strumenti Amministrativi potrebbe impiegare del tempo a caricarsi)."
+"Nota: nel caso di un numero davvero grande di record nella tabella Sessioni, la pagina del plugin "
+"potrebbe impiegare del tempo extra per caricarsi."
 
-#: config_form.php:340
-msgid "Sessions Graph"
-msgstr "Grafico sessioni"
+#: config_form.php:331
+msgid "Show Stats"
+msgstr "Mostra statistiche"
 
-#: config_form.php:343
+#: config_form.php:334
+msgid ""
+"If checked, the amount of actual records in the Session table will be shown, together with the size of "
+"the table."
+msgstr ""
+"Se selezionata, il numero totale di record presenti nella tabella Sessioni verrà mostrato, assieme alla "
+"dimensione della tabella."
+
+#: config_form.php:341
+msgid "Show Graph"
+msgstr "Mostra grafico"
+
+#: config_form.php:344
 msgid "If checked, a graph showing the sessions total per day will be shown."
-msgstr ""
-"Se selezionata, verrà mostrato un grafico con il totale delle sessioni per giorno."
-
-#: config_form.php:356
-msgid "Show Button"
-msgstr "Mostra pulsante"
-
-#: config_form.php:359
-msgid ""
-"If checked, a button to delete all unused Tags will be shown in the Tags Browse "
-"page."
-msgstr ""
-"Se selezionata, un pulsante per cancellare tutte le etichette non utilizzate verrà "
-"mostrato nella pagina Sfoglia Etichette."
+msgstr "Se selezionata, verrà mostrato un grafico con il totale delle sessioni per giorno."
 
 #: config_form.php:366
 msgid "Add Search Option"
@@ -366,72 +313,34 @@ msgstr "Aggiungi opzione ricerca"
 
 #: config_form.php:369
 msgid ""
-"If checked, an extra \"With Tags/Without Tags\" option will be added to the Items "
-"Advanced Search page."
+"If checked, an extra \"With Tags/Without Tags\" option will be added to the Items Advanced Search page."
 msgstr ""
-"Se selezionata, l'opzione addizionale \"Con etichette / Senza etichette\" verrà "
-"aggiunta alla pagina di ricerca avanzata per i Documenti."
-
-#: config_form.php:376
-msgid "Enable Merging"
-msgstr "Abilita fusione"
+"Se selezionata, l'opzione addizionale \"Con etichette / Senza etichette\" verrà aggiunta alla pagina di "
+"ricerca avanzata per i Documenti."
 
 #: config_form.php:379
 msgid ""
-"If checked, when renaming a Tag in the Browse page the system will check if the new "
-"name already exists, in which case it will offer the chance to merge the two Tags."
+"If checked, when renaming a Tag in the Browse page the system will check if the new name already exists, "
+"in which case it will offer the chance to merge the two Tags."
 msgstr ""
-"Se selezionata, quanto si sta rinominando un'etichetta nella pagina Browse il "
-"sistema verificherà se il nuovo nome esiste già, nel qual caso offrirà la "
-"possibilità di fondere le due etichette."
-
-#: config_form.php:386 views/admin/index/index.php:218 views/admin/index/index.php:230
-msgid "Find Similar Tags"
-msgstr "Trova etichette simili"
+"Se selezionata, quanto si sta rinominando un'etichetta nella pagina Browse il sistema verificherà se il "
+"nuovo nome esiste già, nel qual caso offrirà la possibilità di fondere le due etichette."
 
 #: config_form.php:389
 msgid ""
-"If checked, a button to find Tags with similar names will be shown in the Admin "
-"Tools page. Note: with a large number of Tags, this operation may take a few "
-"seconds."
+"If checked, a button to find Tags with similar names will be shown in the Admin Tools page. Note: with a "
+"large number of Tags, this operation may take a few seconds."
 msgstr ""
-"Se selezionata, un bottone per trovare etichette con nome simile verrà mostrato "
-"nella pagine di Strumenti Amministrativi. Nota: con un grande numero di etichette, "
-"l'operazione potrebbe richiedere vari secondi."
-
-#: config_form.php:397
-msgid "Similarity Threshold"
-msgstr "Soglia similarità"
+"Se selezionata, un bottone per trovare etichette con nome simile verrà mostrato nella pagine di Strumenti "
+"Amministrativi. Nota: con un grande numero di etichette, l'operazione potrebbe richiedere vari secondi."
 
 #: config_form.php:400
 msgid ""
-"Maximum Levenshtein distance between two Tag names to consider them similar (1 = "
-"only single-character differences, 2 = also two-character differences, 3 = more "
-"permissive)."
+"Maximum Levenshtein distance between two Tag names to consider them similar (1 = only single-character "
+"differences, 2 = also two-character differences, 3 = more permissive)."
 msgstr ""
-"Distanza Levenshtein massima tra due etichette per considerarle simili (1 = solo "
-"differenze di un carattere, 2 = anche differenze di due caratteri, 3 = più "
-"permissiva)."
-
-#: config_form.php:402
-msgid "1 – Strict"
-msgstr "1– Stretta"
-
-#: config_form.php:403
-msgid "2 – Moderate"
-msgstr "2 – Moderata"
-
-#: config_form.php:404
-msgid "3 – Permissive"
-msgstr "3 – Permissiva"
-
-#: config_form.php:411
-msgid "Results Per Page"
-msgstr "Risultati per pagina"
-
-#: config_form.php:414
-msgid "Maximum number of similar Tag pairs to display in each page."
-msgstr "Numero massimo di coppie di etichette simili da mostrare in ogni pagina."
+"Distanza Levenshtein massima tra due etichette per considerarle simili (1 = solo differenze di un "
+"carattere, 2 = anche differenze di due caratteri, 3 = più permissiva)."
 
 #: config_form.php:450
 msgid "Add Theme Translations"
@@ -439,11 +348,11 @@ msgstr "Aggiungi traduzioni del tema"
 
 #: config_form.php:453
 msgid ""
-"If checked, all translation files located in the \"Languages\" folder of the Public "
-"Theme will be used as well."
+"If checked, all translation files located in the \"Languages\" folder of the Public Theme will be used as "
+"well."
 msgstr ""
-"Se selezionata, verranno usati anche tutti i file di traduzione posti nella "
-"cartella \"Languages\" del tema pubblico."
+"Se selezionata, verranno usati anche tutti i file di traduzione posti nella cartella \"Languages\" del "
+"tema pubblico."
 
 #: config_form.php:466
 msgid "URL"
@@ -474,12 +383,10 @@ msgid "compressed"
 msgstr "compressa"
 
 #: controllers/IndexController.php:74
-#, php-format
 msgid "A %s backup copy of the Omeka database has been created."
 msgstr "Una copia di backup %s della base dati Omeka è stata creata."
 
 #: controllers/IndexController.php:77
-#, php-format
 msgid "Error during backup: %s"
 msgstr "Errore durante il backup: %s"
 
@@ -496,10 +403,8 @@ msgid "The translations cache has been reset."
 msgstr "La cache traduzioni è stata ripristinata."
 
 #: controllers/IndexController.php:154
-msgid ""
-"The \"Under Maintenance\" sign is on, and access to the website has been limited."
-msgstr ""
-"Il cartello \"Sito in manutenzione\" è attivo, e l'accesso al sito è stato limitato."
+msgid "The \"Under Maintenance\" sign is on, and access to the website has been limited."
+msgstr "Il cartello \"Sito in manutenzione\" è attivo, e l'accesso al sito è stato limitato."
 
 #: controllers/IndexController.php:157
 msgid "The website is online again."
@@ -508,11 +413,6 @@ msgstr "Il sito web è nuovamente online."
 #: controllers/IndexController.php:171
 msgid "1 session removed."
 msgstr "1 sessione rimossa."
-
-#: controllers/IndexController.php:173
-#, php-format
-msgid "%d sessions removed."
-msgstr "%d sessioni rimosse."
 
 #: controllers/IndexController.php:175
 msgid "No sessions to remove."
@@ -542,25 +442,11 @@ msgstr "Tutti i plugin invalidi o danneggiati sono stati rimossi."
 msgid "No invalid/damaged Plugin was found to remove."
 msgstr "Non è stato trovato alcun plugin invalido o danneggiato da rimuovere."
 
-#: controllers/IndexController.php:247 controllers/IndexController.php:258
-msgid "All unused Tags have been deleted."
-msgstr "Tutte le etichette non utilizzate sono state cancellate."
-
-#: controllers/IndexController.php:249 controllers/IndexController.php:260
-msgid "No unused Tag was found."
-msgstr "Non è stata trovata nessuna etichetta non utilizzata."
-
-#: controllers/IndexController.php:293
-#, php-format
-msgid "A Tag named \"%s\" already exists."
-msgstr "Una etichetta dal nome \"%s\" esiste già."
-
 #: libraries/AdminTools/Service/BackupService.php:69
 msgid "download file"
 msgstr "scarica file"
 
 #: libraries/AdminTools/Service/BackupService.php:69
-#, php-format
 msgid "<a href=\"%s\" title=\"%s\">last backup</a> was created on %s at %s"
 msgstr "<a href=\"%s\" title=\"%s\">l'ultimo backup</a> è stato creato il %s alle %s"
 
@@ -598,20 +484,9 @@ msgstr "Nessun plugin pare essere invalido o danneggiato."
 
 #: libraries/AdminTools/Service/PluginService.php:70
 msgid "<b>1</b> Plugin appears to be invalid/damaged, and can be safely removed."
-msgid_plural ""
-"<b>%d</b> Plugins appear to be invalid/damaged, and can be safely removed."
-msgstr[0] ""
-"<b>1</b> plugin pare essere invalido/danneggiato, e può essere tranquillamente "
-"rimosso."
-msgstr[1] ""
-"<b>%d</b> plugin paiono essere invalidi/danneggiati, e possono essere "
-"tranquillamente rimossi."
-
-#: libraries/AdminTools/Service/SessionService.php:29
-#: libraries/AdminTools/Service/SessionService.php:64
-#, php-format
-msgid "Invalid range: %s"
-msgstr "Intervallo non valido: %s"
+msgid_plural "<b>%d</b> Plugins appear to be invalid/damaged, and can be safely removed."
+msgstr[0] "<b>1</b> plugin pare essere invalido/danneggiato, e può essere tranquillamente rimosso."
+msgstr[1] "<b>%d</b> plugin paiono essere invalidi/danneggiati, e possono essere tranquillamente rimossi."
 
 #: libraries/AdminTools/Service/SessionService.php:100
 msgid "Your Omeka application configuration file is missing."
@@ -619,9 +494,7 @@ msgstr "Il file di configurazione della tua applicazione Omeka non si trova."
 
 #: libraries/AdminTools/Service/SessionService.php:102
 msgid "Your Omeka application configuration file cannot be read by the application."
-msgstr ""
-"Il file di configurazione della tua applicazione Omeka non può essere letto "
-"dall'applicazione."
+msgstr "Il file di configurazione della tua applicazione Omeka non può essere letto dall'applicazione."
 
 #: views/admin/index/index.php:13
 msgid "Stop Maintenance"
@@ -644,12 +517,10 @@ msgid ", displaying instead an \"Under Maintenance\" sign."
 msgstr ", mostrando invece un cartello \"In manutenzione\"."
 
 #: views/admin/index/index.php:41
-msgid ""
-"Reset cache and update all translations after one or more language files have been "
-"changed manually"
+msgid "Reset cache and update all translations after one or more language files have been changed manually"
 msgstr ""
-"Ripristina la cache e aggiorna tutte le traduzioni dopo che uno o più file di "
-"lingua sono stati modificati manualmente"
+"Ripristina la cache e aggiorna tutte le traduzioni dopo che uno o più file di lingua sono stati "
+"modificati manualmente"
 
 #: views/admin/index/index.php:41
 msgid "including files that are part of the <b>active theme</b>."
@@ -660,11 +531,9 @@ msgid "Reset Cache"
 msgstr "Ripristina cache"
 
 #: views/admin/index/index.php:53
-msgid ""
-"Backup the entire Omeka database into a SQL file, saved in Omeka's \"Files\" folder"
+msgid "Backup the entire Omeka database into a SQL file, saved in Omeka's \"Files\" folder"
 msgstr ""
-"Effettua un backup dell'intera base dati Omeka in un file SQL, salvato nella "
-"cartella \"Files\" di Omeka"
+"Effettua un backup dell'intera base dati Omeka in un file SQL, salvato nella cartella \"Files\" di Omeka"
 
 #: views/admin/index/index.php:54
 msgid "During the backup, data from \"Sessions\" table will be <b>ignored</b>."
@@ -687,21 +556,20 @@ msgid "Trim Omeka's \"Sessions\" table"
 msgstr "Riduce la tabella \"Sessions\" di Omeka"
 
 #: views/admin/index/index.php:104
-#, php-format
-msgid "(at the moment, the table contains <strong>%s</strong> records)"
-msgstr "(al momento, la tabella contiene <strong>%s</strong> record)"
+msgid ""
+"(at the moment, the table contains <strong>%s</strong> records, and its size is <strong>%s</strong> MB)"
+msgstr ""
+"(al momento, la tabella contiene <strong>%s</strong> record, e la sua dimensione è <strong>%s</strong> MB)"
 
 #: views/admin/index/index.php:104
-#, php-format
 msgid ""
-", deleting sessions older than 1 year/month/week/day or all expired ones (at the "
-"moment, sessions expire after <strong>%s</strong> days)."
+", deleting sessions older than 1 year/month/week/day or all expired ones (at the moment, sessions expire "
+"after <strong>%s</strong> days)."
 msgstr ""
-", eliminando le sessioni più vecchie di 1 anno / mese / settimana / giorno o tutte "
-"quelle scadute (al momento, le sessioni scadono dopo <strong>%s</strong> giorni)."
+", eliminando le sessioni più vecchie di 1 anno / mese / settimana / giorno o tutte quelle scadute (al "
+"momento, le sessioni scadono dopo <strong>%s</strong> giorni)."
 
 #: views/admin/index/index.php:123
-#, php-format
 msgid "Sessions in the last %d days"
 msgstr "Sessioni negli ultimi %d giorni"
 
@@ -725,39 +593,11 @@ msgstr "Elimina sessioni (+1 giorno)"
 msgid "Trim sessions (expired)"
 msgstr "Elimina sessioni scadute"
 
-#: views/admin/index/index.php:182
-msgid "<b>1</b> Tag has no correspondence to any Items"
-msgid_plural "<b>%d</b> Tags have no correspondence to any Item"
-msgstr[0] "<b>1</b> etichetta non ha corrispondenza con alcun Documento"
-msgstr[1] "<b>%d</b> etichette non hanno corrispondenza con alcun Documento"
-
-#: views/admin/index/index.php:184 views/admin/index/index.php:193
-msgid "and"
-msgstr "e"
-
 #: views/admin/index/index.php:184 views/admin/index/index.php:191
 msgid "<b>1</b> Item has no Tags associated."
 msgid_plural "<b>%d</b> Items have no Tags associated."
 msgstr[0] "<b>1</b> Documento non ha alcuna etichetta associata."
 msgstr[1] "<b>%d</b> Documenti non hanno alcuna etichetta associata."
-
-#: views/admin/index/index.php:186 views/admin/index/index.php:191
-msgid "but"
-msgstr "ma"
-
-#: views/admin/index/index.php:186 views/admin/index/index.php:193
-msgid "all Items have at least one Tag associated."
-msgstr "tutti i Documenti hanno almeno una etichetta associata."
-
-#: views/admin/index/index.php:189
-msgid "All Tags are associated to at least one Item"
-msgstr "Tutte le etichette sono associate ad almeno un Documento"
-
-#: views/admin/index/index.php:200
-msgid "Delete Unused Tag"
-msgid_plural "Delete Unused Tags"
-msgstr[0] "Cancella etichetta non usata"
-msgstr[1] "Cancella etichette non usate"
 
 #: views/admin/index/index.php:206
 msgid "Show Untagged Item"
@@ -769,55 +609,7 @@ msgstr[1] "Mostra Documenti senza etichette"
 msgid "Show Untagged Items"
 msgstr "Mostra Documenti senza etichette"
 
-#: views/admin/index/index.php:219
-msgid "Searching..."
-msgstr "Cercando..."
-
-#: views/admin/index/index.php:220
-msgid "No similar Tags found."
-msgstr "Etichette simili non trovate."
-
-#: views/admin/index/index.php:221
-#, php-format
-msgid "<b>%d</b> possible duplicates found"
-msgstr "<b>%d</b> possibili duplicati trovati"
-
-#: views/admin/index/index.php:222
-#, php-format
-msgid "(out of <b>%d</b> total; increase limit in configuration to see more)"
-msgstr "(di <b>%d</b> totali; aumenta il limite in configurazione per vederne di più)"
-
-#: views/admin/index/index.php:223
-msgid "Keep left"
-msgstr "Mantieni sinistra"
-
-#: views/admin/index/index.php:224
-msgid "Keep right"
-msgstr "Mantieni destra"
-
-#: views/admin/index/index.php:225
-#, php-format
-msgid "The other Tag will be merged into \"%s\" and deleted. Proceed?"
-msgstr "L'altra etichetta verrà fusa con \"%s\" e cancellata. Procedere?"
-
-#: views/admin/index/index.php:227
-msgid "An error occurred while searching for similar Tags."
-msgstr "È avvenuto un errore durante la ricerca di etichette simili."
-
-#: views/admin/index/index.php:228
-msgid "Prev"
-msgstr "Prec."
-
-#: views/admin/index/index.php:229
-msgid "Next"
-msgstr "Succ."
-
-#: views/admin/index/index.php:230
-msgid "page %1 of %2"
-msgstr "pagina %1 di %2"
-
 #: views/helpers/Mysqldump.php:197
-#, php-format
 msgid "Unexpected value in dumpSettings: (%s)"
 msgstr "Valore inatteso nella configurazione del dump: (%s)"
 
@@ -842,55 +634,44 @@ msgid "Missing database name from DSN string"
 msgstr "Nome base dati mancante nella stringa DSN"
 
 #: views/helpers/Mysqldump.php:355
-#, php-format
 msgid "Unsupported database type (%s)"
 msgstr "Tipologia base dati (%s) non supportata"
 
 #: views/helpers/Mysqldump.php:358
-#, php-format
 msgid "Connection to %s failed with message:"
 msgstr "Connessione a %s fallita con messaggio:"
 
 #: views/helpers/Mysqldump.php:362
-#, php-format
 msgid "Connection to %s failed"
 msgstr "Connessione a %s fallita"
 
 #: views/helpers/Mysqldump.php:429
-#, php-format
 msgid "Table %s not found in database"
 msgstr "Tabella %s non trovata nella base dati"
 
 #: views/helpers/Mysqldump.php:1336
-#, php-format
 msgid "Compression method (%s) is not defined yet"
 msgstr "Il metodo di compressione (%s) non è ancora definito"
 
 #: views/helpers/Mysqldump.php:1352
 msgid "Compression is enabled, but bzip2 lib is not installed or configured properly"
-msgstr ""
-"La compressione è abilitata, ma la libreria bzip2 non è installata o configurata "
-"propriamente"
+msgstr "La compressione è abilitata, ma la libreria bzip2 non è installata o configurata propriamente"
 
-#: views/helpers/Mysqldump.php:1363 views/helpers/Mysqldump.php:1402
-#: views/helpers/Mysqldump.php:1434 views/helpers/Mysqldump.php:1468
+#: views/helpers/Mysqldump.php:1363 views/helpers/Mysqldump.php:1402 views/helpers/Mysqldump.php:1434
+#: views/helpers/Mysqldump.php:1468
 msgid "Output file is not writable"
 msgstr "Il file di uscita dati non è scrivibile"
 
-#: views/helpers/Mysqldump.php:1373 views/helpers/Mysqldump.php:1412
-#: views/helpers/Mysqldump.php:1444 views/helpers/Mysqldump.php:1480
+#: views/helpers/Mysqldump.php:1373 views/helpers/Mysqldump.php:1412 views/helpers/Mysqldump.php:1444
+#: views/helpers/Mysqldump.php:1480
 msgid "Writing to file failed! Probably, there is no more free space left?"
-msgstr ""
-"Scrittura sul file fallita! Probabilmente, non c'è più spazio vuoto disponibile?"
+msgstr "Scrittura sul file fallita! Probabilmente, non c'è più spazio vuoto disponibile?"
 
 #: views/helpers/Mysqldump.php:1391
 msgid "Compression is enabled, but gzip lib is not installed or configured properly"
-msgstr ""
-"La compressione è abilitata, ma la libreria gzip non è installata o configurata "
-"propriamente"
+msgstr "La compressione è abilitata, ma la libreria gzip non è installata o configurata propriamente"
 
 #: views/helpers/Mysqldump.php:1530
-#, php-format
 msgid "Database type support for (%s) not yet available"
 msgstr "Supporto tipologia base dati per (%s) non ancora disponibile"
 
@@ -903,32 +684,26 @@ msgid "Error getting trigger code, unknown output"
 msgstr "Errore recuperando il codice trigger, output sconosciuto"
 
 #: views/helpers/Mysqldump.php:1941
-msgid ""
-"Error getting procedure code, unknown output. Please check 'https://bugs.mysql.com/"
-"bug.php?id=14564'"
+msgid "Error getting procedure code, unknown output. Please check 'https://bugs.mysql.com/bug.php?id=14564'"
 msgstr ""
-"Errore recuperando il codice di procedura, output sconosciuto. Si prega di "
-"verificare 'https://bugs.mysql.com/bug.php?id=14564'"
+"Errore recuperando il codice di procedura, output sconosciuto. Si prega di verificare 'https://"
+"bugs.mysql.com/bug.php?id=14564'"
 
 #: views/helpers/Mysqldump.php:1971
-msgid ""
-"Error getting function code, unknown output. Please check 'https://bugs.mysql.com/"
-"bug.php?id=14564'"
+msgid "Error getting function code, unknown output. Please check 'https://bugs.mysql.com/bug.php?id=14564'"
 msgstr ""
-"Errore ottenendo il codice funzione, output sconosciuto. Si prega di controllare "
-"'https://bugs.mysql.com/bug.php?id=14564'"
+"Errore ottenendo il codice funzione, output sconosciuto. Si prega di controllare 'https://bugs.mysql.com/"
+"bug.php?id=14564'"
 
 #: views/helpers/Mysqldump.php:2017
 msgid ""
-"Error getting event code, unknown output. Please check 'http://stackoverflow.com/"
-"questions/10853826/mysql-5-5-create-event-gives-syntax-error'"
+"Error getting event code, unknown output. Please check 'http://stackoverflow.com/questions/10853826/"
+"mysql-5-5-create-event-gives-syntax-error'"
 msgstr ""
-"Errore ottenendo il codice evento, output sconosciuto. Si prega di controllare "
-"'http://stackoverflow.com/questions/10853826/mysql-5-5-create-event-gives-syntax-"
-"error'"
+"Errore ottenendo il codice evento, output sconosciuto. Si prega di controllare 'http://stackoverflow.com/"
+"questions/10853826/mysql-5-5-create-event-gives-syntax-error'"
 
 #: views/helpers/Mysqldump.php:2318
-#, php-format
 msgid "Unexpected parameter passed to %s"
 msgstr "Parametro inatteso passato a %s"
 
@@ -951,8 +726,7 @@ msgstr "Modalità manutenzione"
 #~ msgstr "Inoltre, rimuovi plugin invalidi o danneggiati."
 
 #~ msgid "Omeka's Sessions table has been trimmed up to all unexpired sessions."
-#~ msgstr ""
-#~ "La tabella Sessions di Omeka è stata ripulita di tutte le sessioni scadute."
+#~ msgstr "La tabella Sessions di Omeka è stata ripulita di tutte le sessioni scadute."
 
 #~ msgid "Omeka's Sessions table has been trimmed up to 1 %s ago."
 #~ msgstr "La tabella Sessions di Omeka è stata ridotta fino ad 1 %s fa."
