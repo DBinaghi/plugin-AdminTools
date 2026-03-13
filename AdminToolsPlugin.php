@@ -33,7 +33,6 @@
 			'public_footer',
 			'neatline_public_static',
 			'define_acl',
-			'admin_tags_browse',
 			'admin_plugins_browse',
 			'admin_items_search',
 			'items_browse_sql'
@@ -76,12 +75,7 @@
 			set_option('admin_tools_backup_download', 1);
 			set_option('admin_tools_sessions_count', 0);
 			set_option('admin_tools_sessions_graph', 0);
-			set_option('admin_tools_unused_tags_btn', 0);
 			set_option('admin_tools_has_tags', 0);
-			set_option('admin_tools_tags_merge', 0);
-			set_option('admin_tools_tags_similar', 0);
-			set_option('admin_tools_tags_similarity_threshold', 2);
-			set_option('admin_tools_tags_similarity_results', 10);
 			set_option('admin_tools_plugins_btns', 0);
 			set_option('admin_tools_translations_theme', 0);
 			
@@ -113,12 +107,7 @@
 				'admin_tools_backup_download',
 				'admin_tools_sessions_count',
 				'admin_tools_sessions_graph',
-				'admin_tools_unused_tags_btn',
 				'admin_tools_has_tags',
-				'admin_tools_tags_merge',
-				'admin_tools_tags_similar',
-				'admin_tools_tags_similarity_threshold',
-				'admin_tools_tags_similarity_results',
 				'admin_tools_plugins_btns',
 				'admin_tools_translations_theme'
 			);
@@ -155,30 +144,6 @@
 
 			$front = Zend_Controller_Front::getInstance();
 			$front->registerPlugin(new AdminTools_Controller_Plugin_Maintenance);
-
-			$router = $front->getRouter();
-			$router->addRoute(
-				'admin-tools-tags-rename',
-				new Zend_Controller_Router_Route(
-					'admin-tools/tags-rename',
-					[
-						'module'	 => 'admin-tools',
-						'controller' => 'index',
-						'action'	 => 'tags-rename',
-					]
-				)
-			);
-			$router->addRoute(
-				'admin-tools-tags-merge',
-				new Zend_Controller_Router_Route(
-					'admin-tools/tags-merge',
-					[
-						'module'	 => 'admin-tools',
-						'controller' => 'index',
-						'action'	 => 'tags-merge',
-					]
-				)
-			);
 		}
 		
 		public function hookConfig($args)
@@ -205,12 +170,7 @@
 			set_option('admin_tools_backup_download',							$post['admin_tools_backup_download']);
 			set_option('admin_tools_sessions_count',							$post['admin_tools_sessions_count']);
 			set_option('admin_tools_sessions_graph',							$post['admin_tools_sessions_graph']);
-			set_option('admin_tools_unused_tags_btn',							$post['admin_tools_unused_tags_btn']);
 			set_option('admin_tools_has_tags',									$post['admin_tools_has_tags']);
-			set_option('admin_tools_tags_merge',								$post['admin_tools_tags_merge']);
-			set_option('admin_tools_tags_similar',			  					$post['admin_tools_tags_similar']);
-			set_option('admin_tools_tags_similarity_threshold', 				$post['admin_tools_tags_similarity_threshold']);
-			set_option('admin_tools_tags_similarity_results', 					$post['admin_tools_tags_similarity_results']);
 			set_option('admin_tools_plugins_btns',								$post['admin_tools_plugins_btns']);
 			set_option('admin_tools_translations_theme',						$post['admin_tools_translations_theme']);
 		}
@@ -226,16 +186,11 @@
 			$controller = $request->getControllerName();
 			$action = $request->getActionName();
 
-			if ($controller === 'tags' && $action === 'browse') {
-				queue_css_file('admin-tools');
-				queue_js_file('admin-tags-browse');
-			} elseif ($controller === 'plugins' && $action === 'browse') {
+			if ($controller === 'plugins' && $action === 'browse') {
 				queue_css_file('admin-tools');
 				queue_js_file('admin-plugins-browse');
 			} elseif (get_option('admin_tools_has_tags') && $controller === 'items' && $action === 'search') {
 				queue_js_file('admin-items-search');
-			} elseif (get_option('admin_tools_tags_similar') && $controller === 'index' && $action === 'index') {
-				queue_js_file('admin-tools-index');
 			}
 		}
 
@@ -462,41 +417,6 @@
 			);
 			$navLinks[] = $element;
 			return array_merge($navLinks, $lastLink);
-		}
-
-		/**
-		 * Adds delete empty tags button to admin/tags
-		 */
-		public function hookAdminTagsBrowse($args)
-		{
-			if (get_option('admin_tools_unused_tags_btn')) {
-				if (!$args || !isset($args['tags'])) return;
-
-				$getTagService = new AdminTools_Service_TagService();
-
-				$html  = '<form class="at_form hidden" action="' . url('admin-tools/index/delete-tags-browse') . '">';
-				$html .= '<h2 style="margin-top:1em">' . __('Delete Tags') . '</h2>';
-				$html .= '<p>' . __('Delete all Tags that have no correspondence with any record.') . '</p>';
-				if ($getTagService->countUnused() == 0) {
-					$html .= '<a class="button at_disabled" disabled>' . __('Delete Unused Tags') . '</a>';
-				} else {
-					$html .= '<a class="big green button" href="' . url('admin-tools/index/plugins-delete_tags-browse') . '">' . __('Delete Unused Tags') . '</a>';
-				}
-				$html .= '</form>';
-				echo $html;
-			}
-			
-			if (get_option('admin_tools_tags_merge')) {
-				echo '<script>window.AdminTools = {'
-					. 'renameTagURL: ' . js_escape(url('admin-tools/tags-rename')) . ','
-					. 'mergeTagsURL: ' . js_escape(url('admin-tools/tags-merge')) . ','
-					. 'tagURLBase:   ' . js_escape(url('items/browse?tags=')) . ','
-					. 'csrfToken:	' . js_escape($args['view']->csrfToken) . ','
-					. 'mergeConfirm: ' . js_escape(__('Tags will be merged and the renamed one will be deleted. Proceed?')) . ','
-					. 'mergeError:   ' . js_escape(__('An error occurred during the merge.')) . ','
-					. 'renameError:  ' . js_escape(__('An error occurred during the rename.')) . ''
-					. '};</script>';
-			}
 		}
 
 		/**
