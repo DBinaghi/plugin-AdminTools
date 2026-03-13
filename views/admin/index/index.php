@@ -171,37 +171,21 @@
 </div>
 
 <div class="field">
-	<div id="DUT-label" class="two columns alpha">
-		<label for="DUT"><?php echo __('Tags'); ?></label>
+	<div id="SUI-label" class="two columns alpha">
+		<label for="SUI"><?php echo __('Tags'); ?></label>
 	</div>
 	<div class="inputs five columns omega">
 		<?php
 			// explanation
 			echo '<p class="explanation">';
-			if ($this->tagsUnused > 0) {
-				echo __(plural('<b>1</b> Tag has no correspondence to any Items', '<b>%d</b> Tags have no correspondence to any Item', $this->tagsUnused), $this->tagsUnused);
-				if ($this->itemsUntagged > 0) {
-					echo ', ' . __('and') . ' ' . __(plural('<b>1</b> Item has no Tags associated.', '<b>%d</b> Items have no Tags associated.', $this->itemsUntagged), $this->itemsUntagged);
-				} else {
-					echo ', ' . __('but') . ' ' . __('all Items have at least one Tag associated.');
-				}
+			if ($this->itemsUntagged > 0) {
+				echo __(plural('<b>1</b> Item has no Tags associated.', '<b>%d</b> Items have no Tags associated.', $this->itemsUntagged), $this->itemsUntagged);
 			} else {
-				echo __('All Tags are associated to at least one Item');
-				if ($this->itemsUntagged > 0) {
-					echo ', ' . __('but') . ' ' . __(plural('<b>1</b> Item has no Tags associated.', '<b>%d</b> Items have no Tags associated.', $this->itemsUntagged), $this->itemsUntagged);
-				} else {
-					echo ', ' . __('and') . ' ' . __('all Items have at least one Tag associated.');
-				}
+				echo __('All Items have at least one Tag associated.');
 			}
 			echo '</p>';
 
 			// buttons
-			if ($this->tagsUnused > 0) {
-				echo '<a id="DUT" class="button green" href="' . url('admin-tools/index/tags-delete') . '">' . __(plural('Delete Unused Tag', 'Delete Unused Tags', $this->tagsUnused)) . '</a>';
-			} else {
-				echo '<a id="DUT" class="button at_disabled" disabled>' . __('Delete Unused Tags') . '</a>';
-			}
-
 			if ($this->itemsUntagged > 0) {
 				echo '<a id="SUI" class="button green" href="' . url('items/browse?search=&advanced-joiner=and&advanced-element_id=&advanced-type=&advanced-terms=&has-tags=0') . '">' . __(plural('Show Untagged Item', 'Show Untagged Items', $this->itemsUntagged)) . '</a>';
 			} else {
@@ -209,30 +193,6 @@
 			}
 		?>
 
-		<?php if (get_option('admin_tools_tags_similar')): ?>
-			<script>
-				    var AdminToolsIndex = <?php echo json_encode(array(
-					'tagsSimilarURL' => url('admin-tools/index/tags-find-similar'),
-					'tagsMergeURL'   => url('admin-tools/index/tags-merge'),
-					'csrfToken'      => $this->csrfToken,
-					'findSimilar'    => __('Find Similar Tags'),
-					'searching'      => __('Searching...'),
-					'noSimilar'      => __('No similar Tags found.'),
-					'found'          => __('<b>%d</b> possible duplicates found'),
-					'keepLeft'       => __('Keep left'),
-					'keepRight'      => __('Keep right'),
-					'mergeConfirm'   => __('The other Tag will be merged into "%s" and deleted. Proceed?'),
-					'mergeError'     => __('An error occurred during the merge.'),
-					'error'          => __('An error occurred while searching for similar Tags.'),
-					'pageSize'       => (int)get_option('admin_tools_tags_similarity_results'),
-					'prev'           => __('Prev'),
-					'next'           => __('Next'),
-					'pageInfo'       => __('page %1 of %2')
-				)); ?>;
-			</script>
-			<a id="tags-find-similar" class="button green"><?php echo __('Find Similar Tags'); ?></a>
-			<div id="tags-similar-results" style="margin-top: 1em;"></div>
-		<?php endif; ?>
 	</div>
 </div>
 
