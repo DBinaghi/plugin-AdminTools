@@ -3,12 +3,18 @@
 	{
 		public function routeShutdown(Zend_Controller_Request_Abstract $request)
 		{
-			if ((bool)get_option('admin_tools_maintenance_active')) {
+			if (get_option('admin_tools_maintenance_active')) {
 				$controller = $request->getControllerName();
 				$action = $request->getActionName();
 				$user = current_user();
 
-				if ($controller != 'users' || ($action != 'login' && $action != 'logout')) {
+				$allowedActions = array('login', 'logout');
+				if (get_option('admin_tools_preserve_login_functions')) {
+				    $allowedActions = array_merge($allowedActions, array('forgot-password', 'reset-password', 'activate'));
+				}
+				$isAllowedAuthAction = ($controller === 'users' && in_array($action, $allowedActions));
+				
+				if (!$isAllowedAuthAction) {
 					if (empty($user))  {
 						// case user is not logged in
 						$request->setModuleName('admin-tools');
