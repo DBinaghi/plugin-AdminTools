@@ -57,7 +57,7 @@
 				<p>- the Team -</p>'
 			);
 			set_option('admin_tools_maintenance_scope_extended', 0);
-			set_option('admin_tools_maintenance_preserve_login_functions', 1);
+			set_option('admin_tools_maintenance_preserve_user_functions', 1);
 			set_option('admin_tools_usermanual_url', '');
 			set_option('admin_tools_usermanual_label', 'User manual');
 			set_option('admin_tools_usermanual_link_positions', '');
@@ -91,7 +91,7 @@
 				'admin_tools_maintenance_title',
 				'admin_tools_maintenance_message',
 				'admin_tools_maintenance_scope_extended',
-				'admin_tools_maintenance_preserve_login_functions',
+				'admin_tools_maintenance_preserve_user_functions',
 				'admin_tools_usermanual_url',
 				'admin_tools_usermanual_label',
 				'admin_tools_usermanual_link_positions',
@@ -205,7 +205,7 @@
 			set_option('admin_tools_maintenance_title',							$post['admin_tools_maintenance_title']);
 			set_option('admin_tools_maintenance_message',						$post['admin_tools_maintenance_message']);
 			set_option('admin_tools_maintenance_scope_extended',				$post['admin_tools_maintenance_scope_extended']);
-			set_option('admin_tools_maintenance_preserve_login_functions', 		$post['admin_tools_maintenance_preserve_login_functions']);
+			set_option('admin_tools_maintenance_preserve_user_functions', 		$post['admin_tools_maintenance_preserve_user_functions']);
 			set_option('admin_tools_usermanual_url',							$post['admin_tools_usermanual_url']);
 			set_option('admin_tools_usermanual_label',							$post['admin_tools_usermanual_label']);
 			set_option('admin_tools_usermanual_link_positions',					(isset($post['admin_tools_usermanual_link_positions']) ? serialize($post['admin_tools_usermanual_link_positions']) : ''));
