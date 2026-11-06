@@ -9,7 +9,7 @@
 				$user = current_user();
 
 				$allowedActions = array('login', 'logout');
-				if (get_option('admin_tools_preserve_login_functions')) {
+				if (get_option('admin_tools_maintenance_preserve_user_functions')) {
 				    $allowedActions = array_merge($allowedActions, array('forgot-password', 'reset-password', 'activate'));
 				}
 				$isAllowedAuthAction = ($controller === 'users' && in_array($action, $allowedActions));
