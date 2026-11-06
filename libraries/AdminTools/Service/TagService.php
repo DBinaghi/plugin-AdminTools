@@ -11,18 +11,13 @@
 				
 		public function countUntaggedItems(): int
 		{
-			$select = $this->db->select()
-				->from(
-					array('i' => $this->db->Item),
-					new Zend_Db_Expr('COUNT(*)')
-				)
-				->joinLeft(
-					array('rt' => $this->db->RecordsTag),
-					'i.id = rt.record_id',
-					array()
-				)
-				->where('rt.tag_id IS NULL');
-			return (int) $this->db->fetchOne($select);
+			$sql = "SELECT COUNT(*) FROM {$this->db->Item} i
+            WHERE NOT EXISTS (
+                SELECT 1 FROM {$this->db->RecordsTag} rt
+                WHERE rt.record_id = i.id
+                  AND rt.record_type = 'Item'
+            )";
+    		return (int)$this->db->fetchOne($sql);
 		}
 	}
 ?>
