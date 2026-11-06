@@ -302,6 +302,18 @@
 			<?php echo $view->formCheckbox('admin_tools_maintenance_scope_extended', get_option('admin_tools_maintenance_scope_extended'), null, array('1', '0')); ?>
 		</div>
 	</div>
+
+	<div class="field">
+		<div class="two columns alpha">
+			<?php echo $view->formLabel('admin_tools_maintenance_preserve_login_operations', __('Preserve Login Operations')); ?>
+		</div>
+		<div class="inputs five columns omega">
+			<p class="explanation">
+				<?php echo __('If checked, operations like login and password recovery will be preserved.'); ?>
+			</p>
+			<?php echo $view->formCheckbox('admin_tools_maintenance_preserve_login_operations', get_option('admin_tools_maintenance_preserve_login_operations'), null, array('1', '0')); ?>
+		</div>
+	</div>
 	
 	<div>&nbsp;</div>
 </div>
