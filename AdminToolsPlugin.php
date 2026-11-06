@@ -80,6 +80,7 @@
 			set_option('admin_tools_translations_theme', 0);
 			
 			$this->_addSessionsModifiedIndex();
+			$this->_addIndex();
 		}
 
 		public function hookUninstall()
@@ -115,6 +116,8 @@
 			foreach ($options as $option) {
 				delete_option($option);
 			}
+
+			$this->_dropIndex();
 		}
 
 		public function hookUpgrade($args)
@@ -122,6 +125,10 @@
 			if (version_compare($args['new_version'], '2.3', '>')) {
 				$this->_addSessionsModifiedIndex();
 			}
+
+			if (version_compare($args['old_version'], '2.5', '<')) {
+		        $this->_addIndex();
+		    }
 		}
 
 		private function _addSessionsModifiedIndex()
@@ -133,6 +140,50 @@
 			if (empty($indexes)) {
 				$db->query("ALTER TABLE `{$sessionTable}` ADD INDEX `idx_modified` (`modified`)");
 			}
+		}
+
+		/**
+		 * Check whether the plugin's index exists on the records_tags table.
+		 */
+		protected function _hasIndex()
+		{
+		    $table = $this->_db->RecordsTag;
+		    $rows = $this->_db->fetchAll(
+		        "SHOW INDEX FROM `$table` WHERE Key_name = 'tagsplus_record_lookup'"
+		    );
+		    return !empty($rows);
+		}
+		
+		/**
+		 * Add an index on (record_id, record_type) to speed up the counts of untagged items.
+		 * The index is only an optimization, so a failure must not block install/upgrade.
+		 */
+		protected function _addIndex()
+		{
+		    try {
+		        if (!$this->_hasIndex()) {
+		            $table = $this->_db->RecordsTag;
+		            $this->_db->query(
+		                "ALTER TABLE `$table` ADD INDEX `tagsplus_record_lookup` (`record_id`, `record_type`)"
+		            );
+		        }
+		    } catch (Exception $e) {
+		        _log('TagsPlus: unable to create index tagsplus_record_lookup: ' . $e->getMessage(), Zend_Log::WARN);
+		    }
+		}
+		
+		protected function _dropIndex()
+		{
+		    try {
+		        if ($this->_hasIndex()) {
+		            $table = $this->_db->RecordsTag;
+		            $this->_db->query(
+		                "ALTER TABLE `$table` DROP INDEX `tagsplus_record_lookup`"
+		            );
+		        }
+		    } catch (Exception $e) {
+		        _log('TagsPlus: unable to drop index tagsplus_record_lookup: ' . $e->getMessage(), Zend_Log::WARN);
+		    }
 		}
 
 		public function hookInitialize()
